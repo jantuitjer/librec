@@ -7,6 +7,7 @@ import net.librec.recommender.item.GenericRecommendedItem;
 import net.librec.recommender.item.RecommendedItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class WeightedHybridRecommender extends AbstractHybridRecommender {
@@ -46,22 +47,22 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
     private ArrayList<RecommendedItem> handleRecommendedItemsWithWeights(AbstractRecommender _recommender, ArrayList<RecommendedItem> _commonElements) throws LibrecException {
         ArrayList<RecommendedItem> toRemove = new ArrayList<>();
         int recommenderIndex = recommenders.indexOf(_recommender);
+        ArrayList<RecommendedItem> recommenderItems = (ArrayList<RecommendedItem>) _recommender.getRecommendedList();
         if (_recommender == recommenders.get(0)) {
             // first recommender -> can add all elements
-            ArrayList<RecommendedItem> items = (ArrayList<RecommendedItem>) _recommender.getRecommendedList();
-            for (RecommendedItem recItem : items) {
+            for (RecommendedItem recItem : recommenderItems) {
                 ((GenericRecommendedItem) recItem).setValue(recItem.getValue() * weights[recommenderIndex]);
                 _commonElements.add(recItem);
             }
             return _commonElements;
         } else {
             for (RecommendedItem item : _commonElements) {
-                if (!_recommender.getRecommendedList().contains(item)) {
+                if (!recommenderItems.contains(item)) {
                     //item is not in the recommendedItem list
                     toRemove.add(item);
                 } else {
                     //item is in recommendedItem list
-                    ((GenericRecommendedItem) item).setValue(item.getValue() + _recommender.getRecommendedList().get(_recommender.getRecommendedList().indexOf(item)).getValue());
+                    ((GenericRecommendedItem) item).setValue(item.getValue() + weights[recommenderIndex] * recommenderItems.get(recommenderItems.indexOf(item)).getValue());
                 }
             }
             _commonElements.removeAll(toRemove);
@@ -95,5 +96,23 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
         }
         _commonElements.removeAll(toRemove);
         return _commonElements;
+    }
+
+    public double[] getWeights() {
+        return weights;
+    }
+
+    public void setWeights(double[] _weights) {
+        if(_weights.length != recommenders.size()){
+            throw new IllegalArgumentException(getClass().getSimpleName() + " :Each given recommender must have it's own weight!");
+        }
+        double totalWeight = 0.0;
+        for (double w : _weights) {
+            totalWeight += w;
+        }
+        if (Double.compare(1.0, totalWeight) != 0) {
+            throw new IllegalArgumentException(getClass().getSimpleName() + " :The combined weights must have a value of 1.0. Given: " + Arrays.toString(weights));
+        }
+        this.weights = _weights;
     }
 }
