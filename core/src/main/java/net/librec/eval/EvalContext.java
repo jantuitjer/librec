@@ -24,6 +24,8 @@ public class EvalContext {
     private Map<String, RecommenderSimilarity> similarities = null;
     private Configuration conf;
     private Recommender recommender;
+    //change from original
+    private boolean debugMode = false;
 
     public EvalContext(Configuration conf, RecommendedList recommendedList, SequentialAccessSparseMatrix testMatrix,
                        SymmMatrix similarityMatrix, Map<String, RecommenderSimilarity> similarities) {
@@ -149,4 +151,13 @@ public class EvalContext {
     public void setConf(Configuration conf) {
         this.conf = conf;
     }
+
+    //change from original
+    public boolean getDebugMode(){
+        return debugMode;
+    }
+    public void setDebugMode(boolean _mode){
+        debugMode = _mode;
+    }
+
 }
