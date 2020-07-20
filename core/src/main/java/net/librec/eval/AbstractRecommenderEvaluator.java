@@ -20,9 +20,11 @@ package net.librec.eval;
 import net.librec.conf.Configuration;
 import net.librec.math.structure.SymmMatrix;
 import net.librec.recommender.RecommenderContext;
+import net.librec.recommender.item.ContextKeyValueEntry;
 import net.librec.recommender.item.RecommendedList;
 import net.librec.similarity.RecommenderSimilarity;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -31,7 +33,6 @@ import java.util.Map;
  * @author WangYuFeng
  */
 public abstract class AbstractRecommenderEvaluator implements RecommenderEvaluator {
-
     /**
      * the number of  recommended items
      */
@@ -75,6 +76,10 @@ public abstract class AbstractRecommenderEvaluator implements RecommenderEvaluat
 
         if (evalContext.getSimilarities() != null){
             similarities = evalContext.getSimilarities();
+        }
+        //change from original
+        if (evalContext.getDebugMode()){
+            check(evalContext.getGroundTruthList(), evalContext.getRecommendedList());
         }
         return evaluate(evalContext.getGroundTruthList(), evalContext.getRecommendedList());
     }
@@ -127,4 +132,13 @@ public abstract class AbstractRecommenderEvaluator implements RecommenderEvaluat
         return conf;
     }
 
+    //change from original
+    protected void check(RecommendedList groundTruthList, RecommendedList recommendedList){
+        Iterator recommendedEntryIter = recommendedList.iterator();
+        Iterator groundTruthIter = groundTruthList.iterator();
+        while(groundTruthIter.hasNext() && recommendedEntryIter.hasNext()){
+            ContextKeyValueEntry groundEntry = (ContextKeyValueEntry) groundTruthIter.next();
+            ContextKeyValueEntry recommendedEntry = (ContextKeyValueEntry) recommendedEntryIter.next();
+        }
+    }
 }
