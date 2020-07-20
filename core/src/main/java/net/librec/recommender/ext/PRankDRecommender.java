@@ -96,7 +96,7 @@ public class PRankDRecommender extends RankSGDRecommender {
      * @throws LibrecException if error occurs
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
 
             loss = 0.0d;

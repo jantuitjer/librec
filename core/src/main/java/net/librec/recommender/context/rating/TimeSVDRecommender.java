@@ -211,7 +211,7 @@ public class TimeSVDRecommender extends BiasedMFRecommender {
         }
     }
 
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         DenseVector factorVector = new VectorBasedDenseVector(numFactors);
 
         for (int iterationStep = 1; iterationStep <= numIterations; iterationStep++) {

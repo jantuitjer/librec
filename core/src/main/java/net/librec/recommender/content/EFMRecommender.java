@@ -173,7 +173,7 @@ public class EFMRecommender extends TensorRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= conf.getInt("rec.iterator.maximum"); iter++) {
             loss = 0.0;
             updateProgress(0);

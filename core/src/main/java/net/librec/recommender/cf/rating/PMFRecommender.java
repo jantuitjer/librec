@@ -38,7 +38,7 @@ public class PMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
 
             loss = 0.0d;

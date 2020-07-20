@@ -160,7 +160,7 @@ public class RBMRecommender extends MatrixRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         int loopcount = 0;
         while (loopcount < maxIter) {
             loopcount++;

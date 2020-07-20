@@ -27,7 +27,7 @@ public class ExternalRecommender extends MatrixRecommender {
     List<Map<Integer, Integer>> userItemsPosList = Lists.newArrayList();
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // plus to adapt to 3.0
         for (int userIdx = 0; userIdx < numUsers; userIdx++) {
             Map<Integer, Integer> itemIndexPosMap = Maps.newHashMap();

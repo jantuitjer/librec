@@ -75,4 +75,17 @@ public class GenericRecommendedItem implements RecommendedItem {
         this.value = value;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof GenericRecommendedItem){
+            GenericRecommendedItem oth = (GenericRecommendedItem) o;
+            return this.getUserId().equals(oth.getUserId()) && this.getItemId().equals(oth.itemId);
+        }
+        return false;
+    }
+    @Override
+    public String toString(){
+        return "User:\t"+userId+" item:\t"+itemId+" Value:\t"+value;
+    }
+
 }

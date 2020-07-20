@@ -87,7 +87,7 @@ public class TrustMFRecommender extends SocialRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         switch (model) {
             case "Tr":
                 TrusterMF();

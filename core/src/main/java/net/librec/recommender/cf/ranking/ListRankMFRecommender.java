@@ -41,7 +41,7 @@ public class ListRankMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
             loss = 0;
             for(int u=0;u<numUsers;u++){

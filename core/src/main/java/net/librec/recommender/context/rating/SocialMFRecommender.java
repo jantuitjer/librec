@@ -43,7 +43,7 @@ public class SocialMFRecommender extends SocialRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
 
             loss = 0.0d;

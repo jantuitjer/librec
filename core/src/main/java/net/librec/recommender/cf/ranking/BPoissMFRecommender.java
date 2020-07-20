@@ -71,7 +71,7 @@ public class BPoissMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // cdef float k_shp = a_prime + k*a
         double kShp = aPrime + numFactors * a;
         // cdef float t_shp = c_prime + k*c

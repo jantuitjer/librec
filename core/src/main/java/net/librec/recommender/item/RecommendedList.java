@@ -282,6 +282,7 @@ public class RecommendedList {
     }
 
 
+
     /**
      * iterator of context-key-score entry
      */
@@ -331,5 +332,40 @@ public class RecommendedList {
             elementData.get(contextIdx).get(keyIdx).setValue(value);
             entry.setValue(value);
         }
+    }
+
+    //TODO: change from original
+    public void sort(){
+        int user =0;
+        for (List<KeyValue<Integer, Double>> list: elementData){
+            try {
+                list.sort(Comparator.comparingInt(KeyValue::getKey));
+                elementData.set(user, list);
+                user++;
+            }catch (IndexOutOfBoundsException e){
+                System.err.println(user);
+            }
+        }
+    }
+    public void reshape() {
+        int cnt =0;
+        for (List<KeyValue<Integer, Double>> elementDatum : elementData) {
+            if (elementDatum.size() == 0) {
+                cnt++;
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecommendedList that = (RecommendedList) o;
+        return elementData.equals(that.elementData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elementData, getContextMultimap());
     }
 }

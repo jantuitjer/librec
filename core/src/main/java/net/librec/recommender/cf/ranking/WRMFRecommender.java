@@ -72,7 +72,7 @@ public class WRMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // To be consistent with the symbols in the paper
         DenseMatrix X = userFactors, Y = itemFactors;
 

@@ -202,7 +202,7 @@ public abstract class TensorRecommender extends AbstractRecommender {
      *
      * @throws LibrecException if error occurs during training
      */
-    protected abstract void trainModel() throws LibrecException;
+    public abstract void trainModel() throws LibrecException;
 
 
     /**

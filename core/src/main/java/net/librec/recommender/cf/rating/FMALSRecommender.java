@@ -66,7 +66,7 @@ public class FMALSRecommender extends FactorizationMachineRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // precomputing Q and errors, for efficiency
         VectorBasedDenseVector errors = new VectorBasedDenseVector(n);
         int ind = 0;

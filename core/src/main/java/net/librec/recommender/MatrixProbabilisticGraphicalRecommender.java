@@ -69,7 +69,7 @@ public abstract class MatrixProbabilisticGraphicalRecommender extends MatrixReco
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
             // E-step: infer parameters
             eStep();

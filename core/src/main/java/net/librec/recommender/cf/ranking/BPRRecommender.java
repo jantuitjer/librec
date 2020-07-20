@@ -42,7 +42,7 @@ public class BPRRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
         IntOpenHashSet[] userItemsSet = getUserItemsSet(trainMatrix);
         int maxSample = trainMatrix.size();

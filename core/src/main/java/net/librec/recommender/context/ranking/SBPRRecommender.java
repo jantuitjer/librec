@@ -115,7 +115,7 @@ public class SBPRRecommender extends SocialRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         int maxSample = trainMatrix.size();
         for (int iter = 1; iter <= numIterations; iter++) {
 

@@ -1,5 +1,7 @@
 package net.librec.recommender.item;
 
+import java.util.Objects;
+
 /**
  * Created by wkq on 13/05/2017.
  */
@@ -68,5 +70,26 @@ public class ContextKeyValueEntry {
 
     public void setKeyIdx(int keyIdx) {
         this.keyIdx = keyIdx;
+    }
+
+    //TODO: change from original
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContextKeyValueEntry entry = (ContextKeyValueEntry) o;
+        return getContextIdx() == entry.getContextIdx() &&
+                getKey() == entry.getKey() &&
+                getKeyIdx() == entry.getKeyIdx();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getContextIdx(), getKey(), getKeyIdx());
+    }
+    @Override
+    public String toString(){
+        return "ContextIdx: "+getContextIdx()+"\tKey: " + getKey()+ "\tKeyIdx: "+getKeyIdx();
     }
 }

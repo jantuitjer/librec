@@ -118,7 +118,7 @@ public class AutoRecRecommender extends MatrixRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .iterations(1)
                 .updater(Updater.NESTEROVS)

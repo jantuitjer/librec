@@ -79,7 +79,7 @@ public class CoFiSetRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 1; iter <= numIterations; iter++) {
             loss = 0.0d;
             for (int iter_rand = 0; iter_rand < numUsers; iter_rand++) {

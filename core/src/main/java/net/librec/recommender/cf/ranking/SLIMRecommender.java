@@ -109,7 +109,7 @@ public class SLIMRecommender extends MatrixFactorizationRecommender {
      * @throws LibrecException if error occurs
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // number of iteration cycles
         for (int iter = 1; iter <= numIterations; iter++) {
 

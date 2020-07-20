@@ -56,7 +56,7 @@ public class RankSGDRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         List<Set<Integer>> userItemsSet = getUserItemsSet(trainMatrix);
         for (int iter = 1; iter <= numIterations; iter++) {
 

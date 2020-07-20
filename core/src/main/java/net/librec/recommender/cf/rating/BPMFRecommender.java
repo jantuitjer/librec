@@ -109,7 +109,7 @@ public class BPMFRecommender extends MatrixFactorizationRecommender {
      *
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         initModel();
 
         // Speed up getting user or item vector in Gibbs sampling

@@ -49,7 +49,7 @@ public class BipolarSlopeOneRecommender extends MatrixRecommender {
      * @throws LibrecException if error occurs
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
         // compute items' differences
         for (int userIdx = 0; userIdx < numUsers; userIdx++) {

@@ -105,7 +105,7 @@ public class ReMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         getLayers();
         getIDs();
         createHierarchy();

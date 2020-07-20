@@ -34,7 +34,7 @@ public class RandomGuessRecommender extends MatrixRecommender {
 
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
     }
 

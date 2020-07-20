@@ -79,7 +79,7 @@ public class AoBPRRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         userItemsSet = getUserItemsSet(trainMatrix);
         List<Integer>[] dataLists = getTrainList(trainMatrix);
         List<Integer> userTrainList = dataLists[0];

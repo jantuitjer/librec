@@ -78,7 +78,7 @@ public class AssociationRuleRecommender extends MatrixRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // plus to adapt to 3.0
         List<Map<Integer, Integer>> userItemsPosList = Lists.newArrayList();
         for (int userIdx = 0; userIdx < numUsers; userIdx++) {

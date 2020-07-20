@@ -62,10 +62,10 @@ public class RecommenderJob {
     private Configuration conf;
 
     private DataModel dataModel;
-
-    private Map<String, List<Double>> cvEvalResults;
-
-    private Map<MeasureValue, Double> evaluatedMap;
+    //TODO: change from original access modifier private ->protected
+    protected Map<String, List<Double>> cvEvalResults;
+    //TODO: change from original access modifier private ->protected
+    protected Map<MeasureValue, Double> evaluatedMap;
 
     private Recommender recommender;
 
@@ -170,6 +170,8 @@ public class RecommenderJob {
                     RecommenderSimilarity similarity = ReflectionUtil.newInstance(getSimilarityClass(), conf);
                     conf.set("rec.recommender.similarity.key", similarityKeys[i]);
                     similarity.buildSimilarityMatrix(dataModel);
+                    System.out.println("similarity.getSimilarityMatrix().toSparseMatrix().rowSize() = " + similarity.getSimilarityMatrix().toSparseMatrix().rowSize());
+                    System.out.println("similarity.getSimilarityMatrix().toSparseMatrix().columnSize() = " + similarity.getSimilarityMatrix().toSparseMatrix().columnSize());
                     if (i == 0) {
                         context.setSimilarity(similarity);
                     }

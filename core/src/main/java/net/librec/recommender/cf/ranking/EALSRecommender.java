@@ -107,7 +107,7 @@ public class EALSRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         double[] usersPredictions = new double[numUsers];
         double[] itemsPredictions = new double[numItems];
         double weight;

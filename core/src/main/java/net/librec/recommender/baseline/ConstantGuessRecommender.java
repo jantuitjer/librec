@@ -32,7 +32,7 @@ public class ConstantGuessRecommender extends MatrixRecommender {
     private double constant;
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         constant = (minRate + maxRate) / 2.0; // can also use given constant
     }
 

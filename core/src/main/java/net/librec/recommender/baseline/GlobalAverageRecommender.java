@@ -27,7 +27,7 @@ import net.librec.recommender.MatrixRecommender;
 public class GlobalAverageRecommender extends MatrixRecommender {
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
     }
 

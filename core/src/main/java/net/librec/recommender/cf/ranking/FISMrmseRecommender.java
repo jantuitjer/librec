@@ -97,7 +97,7 @@ public class FISMrmseRecommender extends MatrixFactorizationRecommender {
 	}
 
 	@Override
-	protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
 		int sampleSize = (int) (rho * nnz);
 		int totalSize = numUsers * numItems;

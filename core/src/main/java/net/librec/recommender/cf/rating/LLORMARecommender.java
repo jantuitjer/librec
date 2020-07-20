@@ -94,7 +94,7 @@ public class LLORMARecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // Pre-calculating similarity:
         int completeModelCount = 0;
 

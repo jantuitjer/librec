@@ -38,6 +38,8 @@ public class RecommenderContext extends AbstractContext {
 
     protected Map<String, RecommenderSimilarity> similarities;
 
+
+
     public RecommenderContext(Configuration conf) {
         this.conf = conf;
     }
@@ -86,5 +88,11 @@ public class RecommenderContext extends AbstractContext {
         }
         this.similarities.put(similarityKey, similarity);
     }
+    //change from original
+    public void resetSimilarities(){
+        if (similarities != null)
+            similarities.clear();
+    }
+
 
 }

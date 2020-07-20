@@ -146,7 +146,7 @@ public class USGRecommender extends AbstractRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         LOG.info("start buliding socialmatrix" + new Date());
         try {
             buildSocialMatrix(socialPath);

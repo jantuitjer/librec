@@ -61,7 +61,7 @@ public class UserKNNRecommender extends MatrixRecommender {
      * @see net.librec.recommender.AbstractRecommender#trainModel()
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         userMeans = new VectorBasedDenseVector(numUsers);
         userList = new ArrayList<>(numUsers);
         for (int userIndex = 0; userIndex < numUsers; userIndex++) {

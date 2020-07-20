@@ -59,7 +59,7 @@ public class SVDPlusPlusRecommender extends BiasedMFRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iterationStep = 1; iterationStep <= numIterations; iterationStep++) {
             loss = 0D;
             for (int userIndex = 0; userIndex < numUsers; userIndex++) {

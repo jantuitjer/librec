@@ -117,7 +117,7 @@ public class CDAERecommender extends MatrixRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .seed(6)
                 .iterations(1)

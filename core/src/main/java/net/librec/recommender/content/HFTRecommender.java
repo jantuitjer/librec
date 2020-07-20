@@ -256,7 +256,7 @@ public class HFTRecommender extends TensorRecommender {
      * is big.
      */
     @Override
-    protected void trainModel() {
+    public void trainModel() {
         for (int iter = 1; iter <= conf.getDouble("rec.iterator.maximum"); iter++) {
             // SGD training
             for (int sgditer = 1; sgditer <= 5; sgditer++) {

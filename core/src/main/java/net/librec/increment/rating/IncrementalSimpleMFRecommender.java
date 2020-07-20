@@ -46,7 +46,7 @@ public class IncrementalSimpleMFRecommender extends IncrementalMFRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
         initModel();
 

@@ -106,7 +106,7 @@ public class BNPPFRecommeder extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
 
         computeExpectations();
 

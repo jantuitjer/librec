@@ -45,7 +45,7 @@ public class RankPMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         DenseMatrix userIdentityMatrix = BuildEyeMatrix(numFactors).times(regUser);
         DenseMatrix itemIdentityMatrix = BuildEyeMatrix(numFactors).times(regItem);
 

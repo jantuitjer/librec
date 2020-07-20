@@ -37,7 +37,7 @@ import net.librec.recommender.MatrixFactorizationRecommender;
 @ModelData({"isRating", "biasedMF", "userFactors", "itemFactors"})
 public class MFALSRecommender extends MatrixFactorizationRecommender {
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         DenseMatrix identify = BuildEyeMatrix(numFactors);
         for (int iter = 1; iter <= numIterations; iter++) {
             // fix item matrix M, solve user matrix U

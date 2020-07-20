@@ -25,6 +25,7 @@ import net.librec.util.Lists;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -68,7 +69,7 @@ public class ItemKNNRecommender extends MatrixRecommender {
      * @see net.librec.recommender.AbstractRecommender#trainModel()
      */
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         itemMeans = new VectorBasedDenseVector(numItems);
         double globalMean = trainMatrix.mean();
         itemList = new ArrayList<>();
@@ -136,6 +137,7 @@ public class ItemKNNRecommender extends MatrixRecommender {
     /**
      * Create itemSimilarityList.
      */
+    //TODO:change from original --> fix why not working
     public void createItemSimilarityList() {
         itemSimilarityList = new ArrayList[numItems];
         SequentialAccessSparseMatrix simMatrix = similarityMatrix.toSparseMatrix();
@@ -150,4 +152,5 @@ public class ItemKNNRecommender extends MatrixRecommender {
 
         });
     }
+
 }

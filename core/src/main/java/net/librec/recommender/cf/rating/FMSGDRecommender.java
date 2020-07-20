@@ -48,7 +48,7 @@ public class FMSGDRecommender extends FactorizationMachineRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         if (!isRanking) {
             buildRatingModel();
         }

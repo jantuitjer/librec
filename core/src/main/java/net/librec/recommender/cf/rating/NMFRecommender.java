@@ -63,7 +63,7 @@ public class NMFRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         for (int iter = 0; iter <= numIterations; ++iter) {
             // update userFactors by fixing itemFactors
             for (int userIdx = 0; userIdx < numUsers; userIdx++) {

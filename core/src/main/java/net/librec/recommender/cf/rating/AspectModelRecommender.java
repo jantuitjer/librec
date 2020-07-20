@@ -132,7 +132,7 @@ public class AspectModelRecommender extends MatrixProbabilisticGraphicalRecommen
 
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         super.trainModel();
     }
 

@@ -73,7 +73,7 @@ public class DLambdaFMRecommender extends FactorizationMachineRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         DenseVector grad = new VectorBasedDenseVector(p);
         DenseVector grad_visited = new VectorBasedDenseVector(p);
         SequentialSparseVector x_i;

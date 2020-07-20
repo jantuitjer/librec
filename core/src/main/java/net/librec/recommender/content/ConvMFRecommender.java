@@ -155,7 +155,7 @@ public class ConvMFRecommender extends TensorRecommender {
     }
 
     @Override
-    protected void trainModel() throws LibrecException {
+    public void trainModel() throws LibrecException {
         // build a identity matrix
         DenseMatrix identify = new DenseMatrix(numFactors, numFactors);
         identify.init(0.0);
