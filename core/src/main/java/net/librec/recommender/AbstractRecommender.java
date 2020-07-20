@@ -132,7 +132,7 @@ public abstract class AbstractRecommender implements Recommender {
      *
      * @throws LibrecException if error occurs during training model
      */
-    protected abstract void trainModel() throws LibrecException;
+    public abstract void trainModel() throws LibrecException;
 
     /**
      * recommend
@@ -271,5 +271,11 @@ public abstract class AbstractRecommender implements Recommender {
             conf.setInt("train.current.progress", currentPoint);
             progressBar.showBarByPoint(conf.getInt("train.current.progress"));
         }
+    }
+
+    //change from original
+    public List<RecommendedItem> getRecommendedList() throws LibrecException {
+        List<RecommendedItem> recommendList = this.getRecommendedList(this.recommendRating(this.getDataModel().getTestDataSet()));
+        return recommendList;
     }
 }
