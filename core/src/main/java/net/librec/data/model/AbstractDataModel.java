@@ -259,4 +259,9 @@ public abstract class AbstractDataModel extends Configured implements DataModel 
     public BiMap<String, Integer> getItemMappingData(){
         return DataFrame.getInnerMapping("item");
     }
+
+    //change form original
+    public DataConvertor getDataConvertor(){
+        return dataConvertor;
+    }
 }
