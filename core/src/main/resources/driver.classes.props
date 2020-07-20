@@ -113,6 +113,9 @@ autorec=net.librec.recommender.nn.rating.AutoRecRecommender
 cdae=net.librec.recommender.nn.ranking.CDAERecommender
 rankgeofm=net.librec.recommender.poi.RankGeoFMRecommender
 usg=net.librec.recommender.poi.USGRecommender
+#hybrid recommender classes
+#added by Jan Tuitjer
+weightedHybrid=net.librec.recommender.hybrid.WeightedHybridRecommender
 #Evaluator(-eval)
 auc=net.librec.eval.ranking.AUCEvaluator
 ap=net.librec.eval.ranking.AveragePrecisionEvaluator
