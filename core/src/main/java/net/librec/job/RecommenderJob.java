@@ -170,8 +170,6 @@ public class RecommenderJob {
                     RecommenderSimilarity similarity = ReflectionUtil.newInstance(getSimilarityClass(), conf);
                     conf.set("rec.recommender.similarity.key", similarityKeys[i]);
                     similarity.buildSimilarityMatrix(dataModel);
-                    System.out.println("similarity.getSimilarityMatrix().toSparseMatrix().rowSize() = " + similarity.getSimilarityMatrix().toSparseMatrix().rowSize());
-                    System.out.println("similarity.getSimilarityMatrix().toSparseMatrix().columnSize() = " + similarity.getSimilarityMatrix().toSparseMatrix().columnSize());
                     if (i == 0) {
                         context.setSimilarity(similarity);
                     }
