@@ -10,22 +10,18 @@ import net.librec.data.splitter.LOOCVDataSplitter;
 import net.librec.eval.EvalContext;
 import net.librec.eval.Measure;
 import net.librec.eval.RecommenderEvaluator;
-import net.librec.eval.rating.MAEEvaluator;
-import net.librec.math.structure.DataSet;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.Recommender;
 import net.librec.recommender.RecommenderContext;
 import net.librec.recommender.hybrid.AbstractHybridRecommender;
+import net.librec.recommender.hybrid.WeightedHybridRecommender;
 import net.librec.similarity.RecommenderSimilarity;
 import net.librec.util.DriverClassUtil;
 import net.librec.util.ReflectionUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Jan Tuitjer
@@ -46,8 +42,8 @@ public class HybridRecommenderJob extends RecommenderJob{
     }
 
     private void initalizeComponents() throws LibrecException, IOException, ClassNotFoundException {
-        initializeDataModels();
         initHybridRecommender();
+        initializeDataModels();
         initHybridContext();
     }
 
@@ -132,7 +128,20 @@ public class HybridRecommenderJob extends RecommenderJob{
     }
 
     private void printCVAverageResult(){
-
+        DataSplitter splitter = dataModels.get(0).getDataSplitter();
+        if (splitter != null && (splitter instanceof KCVDataSplitter || splitter instanceof LOOCVDataSplitter)) {
+            LOG.info("Average Evaluation Result of Cross Validation:");
+            for (Map.Entry<String, List<Double>> entry : cvEvalResults.entrySet()) {
+                String evalName = entry.getKey();
+                List<Double> evalList = entry.getValue();
+                double sum = 0.0;
+                for (double value : evalList) {
+                    sum += value;
+                }
+                double avgEvalResult = sum / evalList.size();
+                LOG.info("Evaluator value:" + evalName + " is " + avgEvalResult);
+            }
+        }
     }
 
     private void trainHybridRecommender() throws LibrecException {
@@ -147,6 +156,17 @@ public class HybridRecommenderJob extends RecommenderJob{
             usedRecommenders.add(rec);
         }
         hybridRecommender.setRecommenders(usedRecommenders);
+        if(hybridRecommender instanceof WeightedHybridRecommender){
+            if (null != hybridConfig.get("rec.hybrid.weights")){
+                String[] weights = hybridConfig.get("rec.hybrid.weights").split(":");
+                double[] realWeights = new double[weights.length];
+                for (int i = 0; i < weights.length ; i++) {
+                    realWeights[i] = Double.parseDouble(weights[i]);
+                }
+                assert(realWeights.length == hybridRecommender.getRecommenders().size());
+                ((WeightedHybridRecommender)hybridRecommender).setWeights(realWeights);
+            }
+        }
     }
 
     @Override
