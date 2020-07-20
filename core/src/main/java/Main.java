@@ -6,6 +6,7 @@ import net.librec.data.model.TextDataModel;
 import net.librec.eval.RecommenderEvaluator;
 import net.librec.eval.rating.MAEEvaluator;
 import net.librec.job.HybridRecommenderJob;
+import net.librec.job.RecommenderJob;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.RecommenderContext;
@@ -19,9 +20,7 @@ import org.apache.commons.cli.MissingArgumentException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Jan Tuitjer
@@ -38,11 +37,29 @@ public class Main {
 //            mae_sum+= hybridRun();
 //        }
 //        System.out.println("mae_sum/RUNS = " + mae_sum/RUNS);
+        System.out.println("Starting HybridRecommender:");
         hybridJobExecution("conf/hybridconfig.properties");
+        System.out.println("Starting solo ItemKNN:");
+        jobExecution("conf/hybridConfigs/itemknn-test.properties");
+        System.out.println("Starting single UserKNN:");
+        jobExecution("conf/hybridConfigs/userknn-test.properties");
+    }
+
+    private static void jobExecution(String _path) throws LibrecException, IOException, ClassNotFoundException {
+        Configuration conf = new Configuration();
+        config.ConfigurationParser.parse(_path, conf);
+        RecommenderJob job = new RecommenderJob(conf);
+        job.runJob();
+
+    }
+
+    private static void hybridJobExecution(String _pathToHybridConfiguration) throws IOException, MissingArgumentException, LibrecException, ClassNotFoundException {
+        net.librec.conf.HybridConfiguration hybridConf = new HybridConfiguration(_pathToHybridConfiguration);
+        HybridRecommenderJob hrj = new HybridRecommenderJob(hybridConf);
+        hrj.runJob();
     }
 
     private static double hybridRun() throws FileNotFoundException, LibrecException {
-
         Configuration confUser = new Configuration();
         Configuration confItem = new Configuration();
         config.ConfigurationParser.parse(FILE_PATH_USER, confUser);
@@ -106,11 +123,5 @@ public class Main {
         rec.train(context);
         rec.recommendRank();
         rec.getRecommendedList();
-    }
-
-    private static void hybridJobExecution(String _pathToHybridConfiguration) throws IOException, MissingArgumentException, LibrecException, ClassNotFoundException {
-        net.librec.conf.HybridConfiguration hybridConf = new HybridConfiguration(_pathToHybridConfiguration);
-        HybridRecommenderJob hrj = new HybridRecommenderJob(hybridConf);
-        hrj.runJob();
     }
 }
