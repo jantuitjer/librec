@@ -187,7 +187,8 @@ public class RecommenderJob {
      * @throws ClassNotFoundException
      * @throws IOException
      */
-    private List<RecommendedItem> filterResult(List<RecommendedItem> recommendedList) throws ClassNotFoundException, IOException {
+    //change from original access modifier private -> package private
+    List<RecommendedItem> filterResult(List<RecommendedItem> recommendedList) throws ClassNotFoundException, IOException {
         if (getFilterClass() != null) {
             RecommendedFilter filter = ReflectionUtil.newInstance(getFilterClass(), null);
             recommendedList = filter.filter(recommendedList);
