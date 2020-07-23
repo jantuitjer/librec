@@ -16,6 +16,7 @@ import net.librec.recommender.Recommender;
 import net.librec.recommender.RecommenderContext;
 import net.librec.recommender.hybrid.AbstractHybridRecommender;
 import net.librec.recommender.hybrid.WeightedHybridRecommender;
+import net.librec.recommender.item.RecommendedItem;
 import net.librec.similarity.RecommenderSimilarity;
 import net.librec.util.DriverClassUtil;
 import net.librec.util.ReflectionUtil;
@@ -63,6 +64,15 @@ public class HybridRecommenderJob extends RecommenderJob{
             evaluateHybrid(hybridRecommender, hybridContext);
         }
         printCVAverageResult();
+        boolean isRanking = hybridConfig.getBoolean("rec.recommender.isranking");
+        List<RecommendedItem> recommendedList = null;
+        if (isRanking){
+            recommendedList = hybridRecommender.getRecommendedList(hybridRecommender.recommendRank());
+        } else {
+            recommendedList = hybridRecommender.getRecommendedList(hybridRecommender.recommendRating(hybridRecommender.getCommonTestDataSet()));
+        }
+        recommendedList = filterResult(recommendedList);
+        saveResult(recommendedList);
     }
 
     private void evaluateHybrid(AbstractHybridRecommender hybridRecommender, HybridContext hybridContext) throws LibrecException, IOException, ClassNotFoundException {
