@@ -1,0 +1,86 @@
+Starting single ItemKNN:
+20/07/25 10:51:28 INFO TextDataConvertor: Dataset: [data/movielens-2k/ratings_encoded.txt]
+20/07/25 10:51:28 INFO TextDataConvertor: DataSet: ...ta\movielens-2k\ratings_encoded.txt is finished
+20/07/25 10:51:29 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/07/25 10:51:29 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/07/25 10:51:29 INFO TextDataModel: Transform data to Convertor successfully!
+20/07/25 10:51:30 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/07/25 10:51:54 INFO ItemKNNRecommender: Job Setup completed.
+20/07/25 10:53:16 INFO ItemKNNRecommender: Job Train completed.
+20/07/25 10:53:16 INFO RecommenderJob: Evaluator value:MAE is 0.8096451284296886
+20/07/25 10:53:16 INFO RecommenderJob: Evaluator value:RMSE is 1.0560221567198824
+20/07/25 10:53:16 INFO RecommenderJob: Evaluator value:MSE is 1.115182795483312
+20/07/25 10:53:16 INFO RecommenderJob: Evaluator value:MPE is 0.9949041608228144
+20/07/25 10:53:30 INFO ItemKNNRecommender: Job Setup completed.
+20/07/25 10:54:21 INFO ItemKNNRecommender: Job Train completed.
+20/07/25 10:54:21 INFO RecommenderJob: Evaluator value:MAE is 0.811090989731298
+20/07/25 10:54:21 INFO RecommenderJob: Evaluator value:RMSE is 1.056733078025814
+20/07/25 10:54:21 INFO RecommenderJob: Evaluator value:MSE is 1.1166847981939112
+20/07/25 10:54:21 INFO RecommenderJob: Evaluator value:MPE is 0.9947230014025246
+20/07/25 10:54:40 INFO ItemKNNRecommender: Job Setup completed.
+20/07/25 10:55:33 INFO ItemKNNRecommender: Job Train completed.
+20/07/25 10:55:33 INFO RecommenderJob: Evaluator value:MAE is 0.8113371847239165
+20/07/25 10:55:33 INFO RecommenderJob: Evaluator value:RMSE is 1.0553453836452562
+20/07/25 10:55:33 INFO RecommenderJob: Evaluator value:MSE is 1.1137538787813528
+20/07/25 10:55:33 INFO RecommenderJob: Evaluator value:MPE is 0.9951787937049655
+20/07/25 10:55:52 INFO ItemKNNRecommender: Job Setup completed.
+20/07/25 10:56:35 INFO ItemKNNRecommender: Job Train completed.
+20/07/25 10:56:35 INFO RecommenderJob: Evaluator value:MAE is 0.8124018293137648
+20/07/25 10:56:35 INFO RecommenderJob: Evaluator value:RMSE is 1.0601005310634548
+20/07/25 10:56:35 INFO RecommenderJob: Evaluator value:MSE is 1.123813135961019
+20/07/25 10:56:35 INFO RecommenderJob: Evaluator value:MPE is 0.9950210378681626
+20/07/25 10:56:54 INFO ItemKNNRecommender: Job Setup completed.
+20/07/25 10:57:40 INFO ItemKNNRecommender: Job Train completed.
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MAE is 0.8118824790559334
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:RMSE is 1.0575608065946969
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MSE is 1.118434859645226
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MPE is 0.9950151648852553
+20/07/25 10:57:41 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MAE is 0.8112715222509201
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MPE is 0.9949684317367445
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:RMSE is 1.0571523912098209
+20/07/25 10:57:41 INFO RecommenderJob: Evaluator value:MSE is 1.1175738936129642
+20/07/25 10:57:41 INFO RecommenderJob: Result path is results/movielens-2k/ratings_encoded.txt-itemknn-output/itemknn
+Starting solo UserKNN:
+20/07/25 10:57:41 INFO TextDataConvertor: Dataset: [data/movielens-2k/ratings_encoded.txt]
+20/07/25 10:57:41 INFO TextDataConvertor: DataSet: ...ta\movielens-2k\ratings_encoded.txt is finished
+20/07/25 10:57:41 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/07/25 10:57:41 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/07/25 10:57:41 INFO TextDataModel: Transform data to Convertor successfully!
+20/07/25 10:57:43 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/07/25 10:57:46 INFO UserKNNRecommender: Job Setup completed.
+20/07/25 10:57:48 INFO UserKNNRecommender: Job Train completed.
+20/07/25 10:57:48 INFO RecommenderJob: Evaluator value:MAE is 0.7248023850089566
+20/07/25 10:57:48 INFO RecommenderJob: Evaluator value:RMSE is 0.9645862862596258
+20/07/25 10:57:48 INFO RecommenderJob: Evaluator value:MSE is 0.9304267036401369
+20/07/25 10:57:48 INFO RecommenderJob: Evaluator value:MPE is 0.9887914913510987
+20/07/25 10:57:52 INFO UserKNNRecommender: Job Setup completed.
+20/07/25 10:57:54 INFO UserKNNRecommender: Job Train completed.
+20/07/25 10:57:54 INFO RecommenderJob: Evaluator value:MAE is 0.723086894172552
+20/07/25 10:57:54 INFO RecommenderJob: Evaluator value:RMSE is 0.962290054138816
+20/07/25 10:57:54 INFO RecommenderJob: Evaluator value:MSE is 0.9260021482944855
+20/07/25 10:57:54 INFO RecommenderJob: Evaluator value:MPE is 0.9880551659654044
+20/07/25 10:57:58 INFO UserKNNRecommender: Job Setup completed.
+20/07/25 10:57:59 INFO UserKNNRecommender: Job Train completed.
+20/07/25 10:58:00 INFO RecommenderJob: Evaluator value:MAE is 0.7234996948312581
+20/07/25 10:58:00 INFO RecommenderJob: Evaluator value:RMSE is 0.9619833415842255
+20/07/25 10:58:00 INFO RecommenderJob: Evaluator value:MSE is 0.9254119494855526
+20/07/25 10:58:00 INFO RecommenderJob: Evaluator value:MPE is 0.9886219531437187
+20/07/25 10:58:03 INFO UserKNNRecommender: Job Setup completed.
+20/07/25 10:58:05 INFO UserKNNRecommender: Job Train completed.
+20/07/25 10:58:05 INFO RecommenderJob: Evaluator value:MAE is 0.7265207612197523
+20/07/25 10:58:05 INFO RecommenderJob: Evaluator value:RMSE is 0.9663466543534998
+20/07/25 10:58:05 INFO RecommenderJob: Evaluator value:MSE is 0.9338258563802023
+20/07/25 10:58:05 INFO RecommenderJob: Evaluator value:MPE is 0.9886161757830763
+20/07/25 10:58:08 INFO UserKNNRecommender: Job Setup completed.
+20/07/25 10:58:10 INFO UserKNNRecommender: Job Train completed.
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MAE is 0.7233617030070323
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:RMSE is 0.9624957073471639
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MSE is 0.9263979866617175
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MPE is 0.9880317206154782
+20/07/25 10:58:10 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MAE is 0.7242542876479103
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MPE is 0.9884233013717552
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:RMSE is 0.9635404087366661
+20/07/25 10:58:10 INFO RecommenderJob: Evaluator value:MSE is 0.928412928892419
+20/07/25 10:58:10 INFO RecommenderJob: Result path is results/movielens-2k/ratings_encoded.txt-userknn-output/userknn
