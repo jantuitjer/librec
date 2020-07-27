@@ -26,8 +26,8 @@ import java.util.ArrayList;
  * @author Jan Tuitjer
  */
 public class Main {
-    static final String FILE_PATH_USER = "conf/hybridConfigs/userknn-test.properties";
-    static final String FILE_PATH_ITEM = "conf/hybridConfigs/itemknn-test.properties";
+    static final String FILE_PATH_USER = "conf/hybridConfigs/1.userknn-test.properties";
+    static final String FILE_PATH_ITEM = "conf/hybridConfigs/2.itemknn-test.properties";
     private static HybridConfiguration HybridConfiguration;
 
     public static void main(String[] args) throws LibrecException, IOException, ClassNotFoundException, MissingArgumentException {
@@ -39,10 +39,10 @@ public class Main {
 //        System.out.println("mae_sum/RUNS = " + mae_sum/RUNS);
         System.out.println("Starting HybridRecommender:");
         hybridJobExecution("conf/hybridconfig.properties");
-        System.out.println("Starting solo ItemKNN:");
-        jobExecution("conf/hybridConfigs/itemknn-test.properties");
         System.out.println("Starting single UserKNN:");
-        jobExecution("conf/hybridConfigs/userknn-test.properties");
+        jobExecution(FILE_PATH_USER);
+        System.out.println("Starting solo ItemKNN:");
+        jobExecution(FILE_PATH_ITEM);
     }
 
     private static void jobExecution(String _path) throws LibrecException, IOException, ClassNotFoundException {
