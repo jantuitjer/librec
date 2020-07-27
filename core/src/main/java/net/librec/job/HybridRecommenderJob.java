@@ -10,6 +10,7 @@ import net.librec.data.splitter.LOOCVDataSplitter;
 import net.librec.eval.EvalContext;
 import net.librec.eval.Measure;
 import net.librec.eval.RecommenderEvaluator;
+import net.librec.math.algorithm.Randoms;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.Recommender;
@@ -19,6 +20,7 @@ import net.librec.recommender.hybrid.WeightedHybridRecommender;
 import net.librec.recommender.item.RecommendedItem;
 import net.librec.similarity.RecommenderSimilarity;
 import net.librec.util.DriverClassUtil;
+import net.librec.util.JobUtil;
 import net.librec.util.ReflectionUtil;
 
 import java.io.IOException;
@@ -43,6 +45,11 @@ public class HybridRecommenderJob extends RecommenderJob{
     }
 
     private void initalizeComponents() throws LibrecException, IOException, ClassNotFoundException {
+        Long seed = hybridConfig.getLong("rec.random.seed");
+        if (seed != null) {
+            Randoms.seed(seed);
+        }
+        //setJobId(JobUtil.generateNewJobId());
         initHybridRecommender();
         initializeDataModels();
         initHybridContext();
@@ -191,11 +198,48 @@ public class HybridRecommenderJob extends RecommenderJob{
         if (null == dataModels) {
             dataModels = new ArrayList<>();
             for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
+                if(hybridConfig.getBoolean("data.model.sync")) {
+                    Long seed = hybridConfig.getLong("rec.random.seed", 42l);
+                    if (seed != null) {
+                        Randoms.seed(seed);
+                    }
+                }
                 DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(i), hybridConfig.getConfigs().get(i));
                 data.buildDataModel();
                 dataModels.add(data);
             }
         }
+    }
+//    private void initializeDataModels() throws ClassNotFoundException, IOException, LibrecException {
+//        if (null == dataModels) {
+//            dataModels = new ArrayList<>();
+//            if (hybridConfig.getBoolean("data.model.sync")) {
+//                for (int i = 0; i < hybridConfig.getConfigs().size();i++) {
+//                    Configuration curConf = hybridConfig.getConfigs().get(i);
+//                    String curDataFormat = curConf.get("data.model.format");
+//                    DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(i), curConf);
+//                    dataModels.add(data);
+//                }
+//                syncDataModels();
+//                for (DataModel dat : dataModels){
+//                    dat.buildDataModel();
+//                }
+//            } else {
+//                for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
+//                    Long seed = hybridConfig.getLong("rec.random.seed");
+//                    if (seed != null) {
+//                        Randoms.seed(seed);
+//                    }
+//                    DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(i), hybridConfig.getConfigs().get(i));
+//                    data.buildDataModel();
+//                    dataModels.add(data);
+//                }
+//            }
+//        }
+//    }
+
+    private void syncDataModels() {
+
     }
 
     public Class<? extends DataModel> getDataModelClass(int _index) throws ClassNotFoundException, IOException {
