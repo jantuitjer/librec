@@ -44,6 +44,7 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
         }
     }
 
+    //TODO: remove contain check if hybrid Config contains sync flag
     private ArrayList<RecommendedItem> handleRecommendedItemsWithWeights(AbstractRecommender _recommender, ArrayList<RecommendedItem> _commonElements) throws LibrecException {
         ArrayList<RecommendedItem> toRemove = new ArrayList<>();
         int recommenderIndex = recommenders.indexOf(_recommender);
@@ -66,10 +67,11 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
                 }
             }
             _commonElements.removeAll(toRemove);
+            System.out.println("toRemove = " + toRemove.size());
         }
         return _commonElements;
     }
-
+    //TODO: remove contain check if hybrid Config contains sync flag
     private ArrayList<RecommendedItem> handleRecommendedItemsSameWeights(AbstractRecommender _recommender, ArrayList<RecommendedItem> _commonElements) throws LibrecException {
         ArrayList<RecommendedItem> toRemove = new ArrayList<>();
         if (_recommender == recommenders.get(0)) {
