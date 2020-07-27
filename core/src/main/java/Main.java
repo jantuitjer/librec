@@ -37,12 +37,27 @@ public class Main {
 //            mae_sum+= hybridRun();
 //        }
 //        System.out.println("mae_sum/RUNS = " + mae_sum/RUNS);
+        testy();
         System.out.println("Starting HybridRecommender:");
         hybridJobExecution("conf/hybridconfig.properties");
         System.out.println("Starting single UserKNN:");
         jobExecution(FILE_PATH_USER);
         System.out.println("Starting solo ItemKNN:");
         jobExecution(FILE_PATH_ITEM);
+    }
+
+    private static void testy() throws FileNotFoundException, LibrecException {
+        Configuration conf = new Configuration();
+        config.ConfigurationParser.parse(FILE_PATH_USER, conf);
+        Configuration conf1 = new Configuration();
+        config.ConfigurationParser.parse(FILE_PATH_ITEM, conf1);
+        DataModel d1 = new TextDataModel(conf);
+        d1.buildDataModel();
+        DataModel d2 = new TextDataModel(conf1);
+        d2.buildDataModel();
+        System.out.println("d1.getTestDataSet().size() = " + d1.getTestDataSet().size());
+        System.out.println("d2.getTestDataSet().size() = " + d2.getTestDataSet().size());
+        System.exit(1);
     }
 
     private static void jobExecution(String _path) throws LibrecException, IOException, ClassNotFoundException {
