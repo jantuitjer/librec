@@ -2,17 +2,21 @@ import net.librec.common.LibrecException;
 import net.librec.conf.Configuration;
 import net.librec.conf.HybridConfiguration;
 import net.librec.data.DataModel;
+import net.librec.data.model.AbstractDataModel;
 import net.librec.data.model.TextDataModel;
 import net.librec.eval.RecommenderEvaluator;
 import net.librec.eval.rating.MAEEvaluator;
 import net.librec.job.HybridRecommenderJob;
 import net.librec.job.RecommenderJob;
+import net.librec.math.structure.SequentialAccessSparseMatrix;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.RecommenderContext;
 import net.librec.recommender.cf.ItemKNNRecommender;
 import net.librec.recommender.cf.UserKNNRecommender;
 import net.librec.recommender.hybrid.WeightedHybridRecommender;
+import net.librec.recommender.item.RecommendedItem;
+import net.librec.recommender.item.RecommendedList;
 import net.librec.similarity.CosineSimilarity;
 import net.librec.similarity.PCCSimilarity;
 import net.librec.similarity.RecommenderSimilarity;
@@ -37,26 +41,80 @@ public class Main {
 //            mae_sum+= hybridRun();
 //        }
 //        System.out.println("mae_sum/RUNS = " + mae_sum/RUNS);
-        testy();
+//        testy();
+//        testx();
         System.out.println("Starting HybridRecommender:");
         hybridJobExecution("conf/hybridconfig.properties");
-        System.out.println("Starting single UserKNN:");
-        jobExecution(FILE_PATH_USER);
-        System.out.println("Starting solo ItemKNN:");
-        jobExecution(FILE_PATH_ITEM);
+//        System.out.println("Starting single UserKNN:");
+//        jobExecution(FILE_PATH_USER);
+//        System.out.println("Starting solo ItemKNN:");
+//        jobExecution(FILE_PATH_ITEM);
+    }
+
+    private static void testx() throws IOException, LibrecException, ClassNotFoundException {
+        Configuration conf1 = new Configuration();
+        config.ConfigurationParser.parse(FILE_PATH_USER, conf1);
+        RecommenderJob job1 = new RecommenderJob(conf1);
+        job1.runJob();
+        Configuration conf2 = new Configuration();
+        config.ConfigurationParser.parse(FILE_PATH_USER, conf2);
+        RecommenderJob job2 = new RecommenderJob(conf2);
+        job2.runJob();
+        AbstractRecommender r1 = (AbstractRecommender) job1.getRecommender();
+        AbstractRecommender r2 = (AbstractRecommender) job2.getRecommender();
+        ArrayList<RecommendedItem> rl1 = (ArrayList<RecommendedItem>) r1.getRecommendedList();
+        ArrayList<RecommendedItem> rl2 = (ArrayList<RecommendedItem>) r2.getRecommendedList();
+        System.out.println(r1.getRecommendedList().size());
+        System.out.println(r2.getRecommendedList().size());
+        int same = 0;
+        for(int i =0; i< rl1.size();i++){
+            if(!rl1.get(i).equals(rl2.get(i))){
+                System.out.println(i + " unequal");
+                System.out.println("rl1.get(i) = " + rl1.get(i));
+                System.out.println("rl2.get(i) = " + rl2.get(i));
+            }else{
+                same++;
+            }
+        }
+        System.out.println("same = " + same);
+        System.exit(555);
     }
 
     private static void testy() throws FileNotFoundException, LibrecException {
-        Configuration conf = new Configuration();
-        config.ConfigurationParser.parse(FILE_PATH_USER, conf);
         Configuration conf1 = new Configuration();
-        config.ConfigurationParser.parse(FILE_PATH_ITEM, conf1);
-        DataModel d1 = new TextDataModel(conf);
+        config.ConfigurationParser.parse(FILE_PATH_USER, conf1);
+        Configuration conf2 = new Configuration();
+        config.ConfigurationParser.parse(FILE_PATH_ITEM, conf2);
+        AbstractDataModel d1 = new TextDataModel(conf1);
         d1.buildDataModel();
-        DataModel d2 = new TextDataModel(conf1);
+        AbstractDataModel d2 = new TextDataModel(conf2);
         d2.buildDataModel();
-        System.out.println("d1.getTestDataSet().size() = " + d1.getTestDataSet().size());
-        System.out.println("d2.getTestDataSet().size() = " + d2.getTestDataSet().size());
+        d1.hasNextFold();
+        d1.nextFold();
+        d2.hasNextFold();
+        d2.nextFold();
+        RecommenderSimilarity s1 = new CosineSimilarity();
+        RecommenderSimilarity s2 = new CosineSimilarity();
+        s1.buildSimilarityMatrix(d1);
+        s2.buildSimilarityMatrix(d2);
+        AbstractRecommender r1 = new UserKNNRecommender();
+        AbstractRecommender r2 = new ItemKNNRecommender();
+        RecommenderContext c1 = new RecommenderContext(conf1, d1, s1);
+        RecommenderContext c2 = new RecommenderContext(conf2, d2, s2);
+        r1.train(c1);
+//        r2.train(c2);
+        ArrayList<RecommendedItem> rl1 = (ArrayList<RecommendedItem>) r1.getRecommendedList();
+//        ArrayList<RecommendedItem> rl2 = (ArrayList<RecommendedItem>) r2.getRecommendedList();
+        System.out.println("r1.getDataModel().getTestDataSet().size() = " + r1.getDataModel().getTestDataSet().size());
+//        System.out.println("r2.getDataModel().getTestDataSet().size() = " + r2.getDataModel().getTestDataSet().size());
+        System.out.println("rl1.size() = " + rl1.size());
+//        System.out.println("rl2.size() = " + rl2.size());
+
+        if(d1.getTestDataSet().size() == d2.getTestDataSet().size()) {
+            for (int i = 0; i < d1.getTestDataSet().size(); i++){
+                   d1.getDataConvertor().getPreferenceMatrix();
+            }
+        }
         System.exit(1);
     }
 
