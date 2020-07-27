@@ -136,11 +136,16 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
 
     @Override
     public RecommendedList recommendRating(DataSet predictDataSet) throws LibrecException {
-        //TESTSING
         SequentialAccessSparseMatrix commonTestMatrix = initCommonTestSetAndMatrix();
         commonTestMatrix.reshape();
         recommendedItemList.sort();
         commonTestDataSet = commonTestMatrix;
+        //todo: remove prints
+        System.out.println("AbstractHybridRecommender.recommendRating");
+        System.out.println("commonTestDataSet = " + commonTestDataSet.size());
+        for (AbstractRecommender rec : recommenders){
+            System.out.println(rec.getClass().getSimpleName() + ": Test Data size: " +rec.getDataModel().getTestDataSet().size());
+        }
         return recommendedItemList;
     }
 
@@ -178,8 +183,8 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         recommendedItemList.sort();
 //        System.out.println("commonTestMatrix.size() = " + commonTestMatrix.size());
 //        System.out.println("recommendedItems = " + recommendedItemList.size());
-        if(_eval instanceof MAEEvaluator)
-            result = ((MAEEvaluator) _eval).evaluate(commonTestMatrix, recommendedItemList);
+       // if(_eval instanceof MAEEvaluator)
+        //    result = ((MAEEvaluator) _eval).evaluate(commonTestMatrix, recommendedItemList);
 //        else if (_eval instanceof RMSEEvaluator)
 //            result = ((RMSEEvaluator) _eval).evaluate(commonTestMatrix, recommendedItems);
 //        else if (_eval instanceof PrecisionEvaluator)
