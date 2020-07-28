@@ -42,42 +42,24 @@ public class Main {
 //        }
 //        System.out.println("mae_sum/RUNS = " + mae_sum/RUNS);
 //        testy();
-//        testx();
-        System.out.println("Starting HybridRecommender:");
-        hybridJobExecution("conf/hybridconfig.properties");
+        if (args.length == 1) {
+            run(args[0]);
+        } else {
+            System.out.println("Starting HybridRecommender:");
+            hybridJobExecution("conf/hybridconfig.properties");
 //        System.out.println("Starting single UserKNN:");
 //        jobExecution(FILE_PATH_USER);
 //        System.out.println("Starting solo ItemKNN:");
 //        jobExecution(FILE_PATH_ITEM);
+        }
     }
 
-    private static void testx() throws IOException, LibrecException, ClassNotFoundException {
-        Configuration conf1 = new Configuration();
-        config.ConfigurationParser.parse(FILE_PATH_USER, conf1);
-        RecommenderJob job1 = new RecommenderJob(conf1);
-        job1.runJob();
-        Configuration conf2 = new Configuration();
-        config.ConfigurationParser.parse(FILE_PATH_USER, conf2);
-        RecommenderJob job2 = new RecommenderJob(conf2);
-        job2.runJob();
-        AbstractRecommender r1 = (AbstractRecommender) job1.getRecommender();
-        AbstractRecommender r2 = (AbstractRecommender) job2.getRecommender();
-        ArrayList<RecommendedItem> rl1 = (ArrayList<RecommendedItem>) r1.getRecommendedList();
-        ArrayList<RecommendedItem> rl2 = (ArrayList<RecommendedItem>) r2.getRecommendedList();
-        System.out.println(r1.getRecommendedList().size());
-        System.out.println(r2.getRecommendedList().size());
-        int same = 0;
-        for(int i =0; i< rl1.size();i++){
-            if(!rl1.get(i).equals(rl2.get(i))){
-                System.out.println(i + " unequal");
-                System.out.println("rl1.get(i) = " + rl1.get(i));
-                System.out.println("rl2.get(i) = " + rl2.get(i));
-            }else{
-                same++;
-            }
+    private static void run(String configFile) throws MissingArgumentException, ClassNotFoundException, LibrecException, IOException {
+        if (configFile.contains("hybrid")) {
+            hybridJobExecution(configFile);
+        } else {
+            jobExecution(configFile);
         }
-        System.out.println("same = " + same);
-        System.exit(555);
     }
 
     private static void testy() throws FileNotFoundException, LibrecException {
@@ -110,9 +92,9 @@ public class Main {
         System.out.println("rl1.size() = " + rl1.size());
 //        System.out.println("rl2.size() = " + rl2.size());
 
-        if(d1.getTestDataSet().size() == d2.getTestDataSet().size()) {
-            for (int i = 0; i < d1.getTestDataSet().size(); i++){
-                   d1.getDataConvertor().getPreferenceMatrix();
+        if (d1.getTestDataSet().size() == d2.getTestDataSet().size()) {
+            for (int i = 0; i < d1.getTestDataSet().size(); i++) {
+                d1.getDataConvertor().getPreferenceMatrix();
             }
         }
         System.exit(1);
@@ -171,11 +153,11 @@ public class Main {
                 add(itemRec);
             }
         };
-        HybridContext hybridContext = new HybridContext(confs,models,sims);
+        HybridContext hybridContext = new HybridContext(confs, models, sims);
         WeightedHybridRecommender whr = new WeightedHybridRecommender(recommdenders, hybridContext);
         whr.trainModel();
         RecommenderEvaluator eval = new MAEEvaluator();
-        double mae =  whr.evaluate(eval);
+        double mae = whr.evaluate(eval);
         System.out.println("mae = " + mae);
         return mae;
     }
