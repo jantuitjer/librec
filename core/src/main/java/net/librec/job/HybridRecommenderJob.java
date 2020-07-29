@@ -20,11 +20,13 @@ import net.librec.recommender.hybrid.WeightedHybridRecommender;
 import net.librec.recommender.item.RecommendedItem;
 import net.librec.similarity.RecommenderSimilarity;
 import net.librec.util.DriverClassUtil;
-import net.librec.util.JobUtil;
 import net.librec.util.ReflectionUtil;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jan Tuitjer
@@ -83,11 +85,6 @@ public class HybridRecommenderJob extends RecommenderJob{
     }
 
     private void evaluateHybrid(AbstractHybridRecommender hybridRecommender, HybridContext hybridContext) throws LibrecException, IOException, ClassNotFoundException {
-//        RecommenderEvaluator eval = new MAEEvaluator();
-//        double mae = hybridRecommender.evaluate(eval);
-//        System.out.println(mae);
-        // create eval context
-        // todo: check data model requierments
         EvalContext evalContext = new EvalContext(hybridConfig, hybridRecommender, hybridRecommender.getCommonTestDataSet());
         evaluatedMap = new HashMap<>();
         boolean isRanking = hybridConfig.getBoolean("rec.recommender.isranking");
@@ -140,8 +137,6 @@ public class HybridRecommenderJob extends RecommenderJob{
                 cvEvalResults.put(_evalName, newList);
             }
         }
-
-
     }
 
     private void printCVAverageResult(){
