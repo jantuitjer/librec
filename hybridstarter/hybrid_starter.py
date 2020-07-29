@@ -21,7 +21,7 @@ for run_config in runs:
     if '/' in conf_name:
         conf_name = conf_name.split('/')[-1]
     output_header = 'Results of ' + run_config
-    process = subprocess.run('java -jar {} {}'.format(HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    process = subprocess.run('java -jar {} {} -Xmx8192m'.format(HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output = process.stderr.decode()
     print(output)
     output_file = open('results/' + conf_name + '.dat', 'w+')
