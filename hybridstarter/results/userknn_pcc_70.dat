@@ -1,0 +1,43 @@
+Results of starter_configs/userknn_pcc_70.properties
+20/07/29 12:04:32 INFO TextDataConvertor: Dataset: [../data/movielens-2k]
+20/07/29 12:04:35 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/07/29 12:04:35 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/07/29 12:04:35 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/07/29 12:04:35 INFO TextDataModel: Transform data to Convertor successfully!
+20/07/29 12:04:38 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/07/29 12:04:44 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 12:04:49 INFO UserKNNRecommender: Job Train completed.
+20/07/29 12:04:50 INFO RecommenderJob: Evaluator value:MSE is 0.8954697222988113
+20/07/29 12:04:50 INFO RecommenderJob: Evaluator value:MAE is 0.7060140644683148
+20/07/29 12:04:50 INFO RecommenderJob: Evaluator value:MPE is 0.9891538101916784
+20/07/29 12:04:50 INFO RecommenderJob: Evaluator value:RMSE is 0.9462926198057403
+20/07/29 12:04:57 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 12:05:00 INFO UserKNNRecommender: Job Train completed.
+20/07/29 12:05:00 INFO RecommenderJob: Evaluator value:MSE is 0.9010292491749743
+20/07/29 12:05:00 INFO RecommenderJob: Evaluator value:MAE is 0.7083853174552434
+20/07/29 12:05:00 INFO RecommenderJob: Evaluator value:MPE is 0.9886804581580177
+20/07/29 12:05:00 INFO RecommenderJob: Evaluator value:RMSE is 0.9492256049933411
+20/07/29 12:05:05 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 12:05:08 INFO UserKNNRecommender: Job Train completed.
+20/07/29 12:05:09 INFO RecommenderJob: Evaluator value:MSE is 0.891981612765683
+20/07/29 12:05:09 INFO RecommenderJob: Evaluator value:MAE is 0.7037099307691197
+20/07/29 12:05:09 INFO RecommenderJob: Evaluator value:MPE is 0.9888206452819382
+20/07/29 12:05:09 INFO RecommenderJob: Evaluator value:RMSE is 0.9444477819158045
+20/07/29 12:05:14 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 12:05:18 INFO UserKNNRecommender: Job Train completed.
+20/07/29 12:05:19 INFO RecommenderJob: Evaluator value:MSE is 0.901177769159807
+20/07/29 12:05:19 INFO RecommenderJob: Evaluator value:MAE is 0.7063342122535889
+20/07/29 12:05:19 INFO RecommenderJob: Evaluator value:MPE is 0.9887505843852268
+20/07/29 12:05:19 INFO RecommenderJob: Evaluator value:RMSE is 0.9493038339540228
+20/07/29 12:05:24 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 12:05:27 INFO UserKNNRecommender: Job Train completed.
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MSE is 0.8921546993044762
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MAE is 0.7030591721165326
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MPE is 0.9887329869856649
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:RMSE is 0.9445394111970533
+20/07/29 12:05:27 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MAE is 0.7055005394125599
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MPE is 0.9888276970005052
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:RMSE is 0.9467618503731924
+20/07/29 12:05:27 INFO RecommenderJob: Evaluator value:MSE is 0.8963626105407503
+20/07/29 12:05:28 INFO RecommenderJob: Result path is results/movielens-2k-userknn-output/userknn
