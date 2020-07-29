@@ -46,6 +46,12 @@ public class HybridRecommenderJob extends RecommenderJob{
         initalizeComponents();
     }
 
+    /**
+     * initializes all components necessary for the execution of the hybrid job
+     * @throws LibrecException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void initalizeComponents() throws LibrecException, IOException, ClassNotFoundException {
         Long seed = hybridConfig.getLong("rec.random.seed");
         if (seed != null) {
@@ -57,12 +63,21 @@ public class HybridRecommenderJob extends RecommenderJob{
         initHybridContext();
     }
 
+    /**
+     * creates the HybridContext object
+     */
     private void initHybridContext() {
         hybridContext = new HybridContext(hybridConfig.getConfigs(), dataModels);
         hybridRecommender.setHybridContext(hybridContext);
         contexts = new ArrayList<>(hybridConfig.getConfigs().size());
     }
 
+    /**
+     * Executes the hybrid job - execution steps similar to normal RecommenderJob
+     * @throws LibrecException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void runJob() throws LibrecException, IOException, ClassNotFoundException {
         assert(sameFolds());
         cvEvalResults = new HashMap<>();
@@ -156,10 +171,20 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
+    /**
+     * trains each contained recommender
+     * @throws LibrecException
+     */
     private void trainHybridRecommender() throws LibrecException {
         hybridRecommender.trainModel();
     }
 
+    /**
+     * initializes the hybrid recommender object and all used recommender objects
+     * has to be modified if a new type of hybrid recommender is used
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void initHybridRecommender() throws IOException, ClassNotFoundException {
         hybridRecommender = (AbstractHybridRecommender) ReflectionUtil.newInstance((Class<Recommender>) getRecommenderClass(), hybridConfig);
         ArrayList<AbstractRecommender> usedRecommenders = new ArrayList<>();
@@ -168,6 +193,7 @@ public class HybridRecommenderJob extends RecommenderJob{
             usedRecommenders.add(rec);
         }
         hybridRecommender.setRecommenders(usedRecommenders);
+        //extend for other hybrid recommender implementations
         if(hybridRecommender instanceof WeightedHybridRecommender){
             if (null != hybridConfig.get("rec.hybrid.weights")){
                 String[] weights = hybridConfig.get("rec.hybrid.weights").split(":");
@@ -181,14 +207,39 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
+    /**
+     * loads the hybrid recommender object of the class stated within the hybrid config
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @Override
     public Class<? extends Recommender> getRecommenderClass() throws ClassNotFoundException, IOException {
         return (Class<? extends Recommender>) DriverClassUtil.getClass(hybridConfig.get("rec.hybrid.class"));
     }
+
+    /**
+     * loads the recommender object of the class stated with in the given configuration file
+     * @param _c configuration to use
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     private Class<? extends Recommender> getRecommenderClass(Configuration _c) throws ClassNotFoundException, IOException {
         return (Class<? extends Recommender>) DriverClassUtil.getClass(_c.get("rec.recommender.class"));
     }
 
+    /**
+     * loads the data into the data models
+     * if the hybrid configuration has the flag 'data.model.sync' set
+     * each data model will have the same entries in its train and test set
+     * if the hybrid configuration has a value for 'rec.random.seed' set
+     * this seed will be used to split the data into the train and test set
+     *
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * @throws LibrecException
+     */
     private void initializeDataModels() throws ClassNotFoundException, IOException, LibrecException {
         if (null == dataModels) {
             dataModels = new ArrayList<>();
@@ -205,38 +256,14 @@ public class HybridRecommenderJob extends RecommenderJob{
             }
         }
     }
-//    private void initializeDataModels() throws ClassNotFoundException, IOException, LibrecException {
-//        if (null == dataModels) {
-//            dataModels = new ArrayList<>();
-//            if (hybridConfig.getBoolean("data.model.sync")) {
-//                for (int i = 0; i < hybridConfig.getConfigs().size();i++) {
-//                    Configuration curConf = hybridConfig.getConfigs().get(i);
-//                    String curDataFormat = curConf.get("data.model.format");
-//                    DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(i), curConf);
-//                    dataModels.add(data);
-//                }
-//                syncDataModels();
-//                for (DataModel dat : dataModels){
-//                    dat.buildDataModel();
-//                }
-//            } else {
-//                for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
-//                    Long seed = hybridConfig.getLong("rec.random.seed");
-//                    if (seed != null) {
-//                        Randoms.seed(seed);
-//                    }
-//                    DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(i), hybridConfig.getConfigs().get(i));
-//                    data.buildDataModel();
-//                    dataModels.add(data);
-//                }
-//            }
-//        }
-//    }
 
-    private void syncDataModels() {
-
-    }
-
+    /**
+     * loads the DataModel object with the type stated in the selected config file
+     * @param _index
+     * @return
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public Class<? extends DataModel> getDataModelClass(int _index) throws ClassNotFoundException, IOException {
         return (Class<? extends DataModel>) DriverClassUtil.getClass(hybridConfig.getConfigs().get(_index).get("data.model.format"));
     }
@@ -249,6 +276,10 @@ public class HybridRecommenderJob extends RecommenderJob{
         return folds;
     }
 
+    /**
+     * creates the next similarities for all recommenders
+     * and updates the hybrid context with these similarities
+     */
     private void nextSimilarities() {
         contexts= hybridContext.getContexts();
         ArrayList<RecommenderSimilarity> similarities = new ArrayList<>();
@@ -260,6 +291,11 @@ public class HybridRecommenderJob extends RecommenderJob{
         hybridContext.setSimilarityList(similarities);
     }
 
+    /**
+     * loads the RecommenderSimilarity stated within the config file
+     * @param _conf
+     * @return
+     */
     public Class<? extends RecommenderSimilarity> getSimilarityClass(Configuration _conf) {
         try {
             return (Class<? extends RecommenderSimilarity>) DriverClassUtil.getClass(_conf.get("rec.similarity.class"));
@@ -268,6 +304,10 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
+    /**
+     * Generates the similarity matrices for the given data model for each recommender
+     * @param context
+     */
     private void generateSimilarity(RecommenderContext context) {
         context.resetSimilarities();
         int index = contexts.indexOf(context);
@@ -288,6 +328,12 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
+    /**
+     * sets all data models to the next fold in kcv mode
+     * if kcv mode is not used this step does nothing
+     * refer to AbstractDataModel.nextFold() implementation
+     * @throws LibrecException
+     */
     private void nextDataModel() throws LibrecException {
         for(DataModel model : dataModels){
             model.nextFold();
@@ -295,6 +341,9 @@ public class HybridRecommenderJob extends RecommenderJob{
         hybridContext.setDataModelList(dataModels);
     }
 
+    /**
+     * @return true if all data models have the same amount of folds
+     */
     private boolean sameFolds() {
         int[] numFolds = new int[hybridConfig.getConfigs().size()];
         for (int i = 0; i < numFolds.length; i++) {
