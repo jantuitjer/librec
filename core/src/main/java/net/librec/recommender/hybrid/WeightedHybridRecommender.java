@@ -9,6 +9,10 @@ import net.librec.recommender.item.RecommendedItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @Author Jan Tuitjer
+ *
+ */
 
 public class WeightedHybridRecommender extends AbstractHybridRecommender {
     protected double[] weights;
@@ -20,6 +24,13 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
         super(_recommenders, _hybridContext);
     }
 
+    /**
+     * Constructor ensures that each recommender in _recommenders has it's own weight
+     * the sum of all weights in _weights must be equal to 1
+     * @param _recommenders
+     * @param _hybridContext
+     * @param _weights
+     */
     public WeightedHybridRecommender(ArrayList<AbstractRecommender> _recommenders, HybridContext _hybridContext, double[] _weights) {
         super(_recommenders, _hybridContext);
         if (_weights.length != _recommenders.size()) {
@@ -97,6 +108,7 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
             }
         }
         _commonElements.removeAll(toRemove);
+        System.out.println("toRemove = " + toRemove.size());
         return _commonElements;
     }
 
