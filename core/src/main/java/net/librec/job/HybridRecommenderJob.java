@@ -257,6 +257,40 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
+    private void initializeDataModelsConcurrently() throws ClassNotFoundException, IOException, LibrecException, InterruptedException {
+        if (null == dataModels) {
+            dataModels = new ArrayList<>();
+            if (hybridConfig.getBoolean("data.model.sync")) {
+                Long seed = hybridConfig.getLong("rec.random.seed", 42l);
+                if (seed != null) {
+                    Randoms.seed(seed);
+                }
+            }
+            ArrayList<Thread> dataModelThreads = new ArrayList<>();
+            for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
+                final int counter = i;
+                DataModel data = ReflectionUtil.newInstance((Class<DataModel>) this.getDataModelClass(counter), hybridConfig.getConfigs().get(counter));
+                dataModelThreads.add(new Thread(() -> {
+                    try {
+                        System.out.println("start building datamodel " + data);
+                        assert data != null;
+                        data.buildDataModel();
+                        System.out.println("thrtead finished data model building");
+                    } catch (LibrecException e) {
+                        e.printStackTrace();
+                    }
+                }));
+                dataModels.add(data);
+            }
+            for (Thread t : dataModelThreads) {
+                t.start();
+            }
+            for (Thread t : dataModelThreads) {
+                t.join();
+            }
+        }
+    }
+
     /**
      * loads the DataModel object with the type stated in the selected config file
      * @param _index
