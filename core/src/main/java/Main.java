@@ -1,30 +1,11 @@
 import net.librec.common.LibrecException;
 import net.librec.conf.Configuration;
 import net.librec.conf.HybridConfiguration;
-import net.librec.data.DataModel;
-import net.librec.data.model.AbstractDataModel;
-import net.librec.data.model.TextDataModel;
-import net.librec.eval.RecommenderEvaluator;
-import net.librec.eval.rating.MAEEvaluator;
 import net.librec.job.HybridRecommenderJob;
 import net.librec.job.RecommenderJob;
-import net.librec.math.structure.SequentialAccessSparseMatrix;
-import net.librec.recommender.AbstractRecommender;
-import net.librec.recommender.HybridContext;
-import net.librec.recommender.RecommenderContext;
-import net.librec.recommender.cf.ItemKNNRecommender;
-import net.librec.recommender.cf.UserKNNRecommender;
-import net.librec.recommender.hybrid.WeightedHybridRecommender;
-import net.librec.recommender.item.RecommendedItem;
-import net.librec.recommender.item.RecommendedList;
-import net.librec.similarity.CosineSimilarity;
-import net.librec.similarity.PCCSimilarity;
-import net.librec.similarity.RecommenderSimilarity;
 import org.apache.commons.cli.MissingArgumentException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author Jan Tuitjer
@@ -32,8 +13,6 @@ import java.util.ArrayList;
 public class Main {
     static final String FILE_PATH_USER = "conf/hybridConfigs/1.userknn-test.properties";
     static final String FILE_PATH_ITEM = "conf/hybridConfigs/2.itemknn-test.properties";
-    private static HybridConfiguration HybridConfiguration;
-
     public static void main(String[] args) throws LibrecException, IOException, ClassNotFoundException, MissingArgumentException {
         if (args.length == 1) {
             run(args[0]);
