@@ -1,0 +1,32 @@
+Results of starter_configs/userknn_cos_70.properties
+20/07/29 11:59:10 INFO TextDataConvertor: Dataset: [../data/movielens-2k]
+20/07/29 11:59:12 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/07/29 11:59:12 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/07/29 11:59:12 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/07/29 11:59:12 INFO TextDataModel: Transform data to Convertor successfully!
+20/07/29 11:59:16 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/07/29 11:59:22 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 11:59:26 INFO UserKNNRecommender: Job Train completed.
+20/07/29 11:59:27 INFO RecommenderJob: Evaluator value:MSE is 0.8759742902390499
+20/07/29 11:59:27 INFO RecommenderJob: Evaluator value:MAE is 0.6951367968705904
+20/07/29 11:59:27 INFO RecommenderJob: Evaluator value:MPE is 0.9892239364188873
+20/07/29 11:59:27 INFO RecommenderJob: Evaluator value:RMSE is 0.9359349818438512
+20/07/29 11:59:34 INFO UserKNNRecommender: Job Setup completed.
+20/07/29 11:59:37 INFO UserKNNRecommender: Job Train completed.
+20/07/29 11:59:38 INFO RecommenderJob: Evaluator value:MSE is 0.8815472809763393
+20/07/29 11:59:38 INFO RecommenderJob: Evaluator value:MAE is 0.6967192718800908
+20/07/29 11:59:38 INFO RecommenderJob: Evaluator value:MPE is 0.9887798036465638
+20/07/29 11:59:38 INFO RecommenderJob: Evaluator value:RMSE is 0.9389074933007721
+20/07/29 11:59:43 INFO UserKNNRecommender: Job Setup completed.
+Exception in thread "main" java.lang.NullPointerException
+	at com.google.common.collect.StandardTable$CellIterator.next(StandardTable.java:241)
+	at com.google.common.collect.StandardTable$CellIterator.next(StandardTable.java:225)
+	at net.librec.math.structure.SymmMatrix.toSparseMatrix(SymmMatrix.java:158)
+	at net.librec.recommender.cf.UserKNNRecommender.createUserSimilarityList(UserKNNRecommender.java:130)
+	at net.librec.recommender.cf.UserKNNRecommender.trainModel(UserKNNRecommender.java:75)
+	at net.librec.recommender.AbstractRecommender.train(AbstractRecommender.java:147)
+	at net.librec.job.RecommenderJob.executeRecommenderJob(RecommenderJob.java:130)
+	at net.librec.job.RecommenderJob.runJob(RecommenderJob.java:89)
+	at Main.jobExecution(Main.java:44)
+	at Main.run(Main.java:36)
+	at Main.main(Main.java:21)
