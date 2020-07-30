@@ -11,39 +11,37 @@
 
 
 # definition of hasRated property
-jt:hasRated	a rdf:Property.
-jt:hasRated rdfs:subPropertyOf foaf:topic_interest.
-jt:hasRated rdfs:domain foaf:Person.
-jt:hasRated rdfs:range dbo:Film.
+jt:hasRated	a rdf:Property;
+	rdfs:subPropertyOf foaf:topic_interest;
+	rdfs:domain foaf:Person;
+	rdfs:range dbo:Film.
 
 #definition of ratedBy property which is inverse of hasRated
-jt:ratedBy a rdf:Property.
-jt:ratedBy owl:inverseOf :hasRated.
+jt:ratedBy a rdf:Property;
+	owl:inverseOf :hasRated.
 
 #definition of total rating literal
-jt:totalRatings a rdfs:Literal.
-jt:totalRatings rdfs:range xsd:nonNegativeInteger.
+jt:totalRatings a rdfs:Literal;
+	rdfs:range xsd:nonNegativeInteger.
 
 #definition of number of ratings property 
-jt:numberOfRatings a rdf:Property.
-jt:numberOfRatings rdfs:domain dbo:Film.
-jt:numberOfRatings rdfs:range jt:totalRatings.
+jt:numberOfRatings a rdf:Property;
+	rdfs:domain dbo:Film;
+	rdfs:range jt:totalRatings.
 
 #definition of avg rating literal
-jt:avgOfRatings a rdfs:Literal.
-jt:avgOfRatings rdfs:range xsd:double.
+jt:avgOfRatings a rdfs:Literal;
+	rdfs:range xsd:double.
 
 #definition of avg of ratings property 
-jt:avgRating a rdf:Property.
-jt:avgRating rdfs:domain dbo:Film.
-jt:avgRating rdfs:range jt:avgOfRatings.
+jt:avgRating a rdf:Property;
+	rdfs:domain dbo:Film;
+	rdfs:range jt:avgOfRatings.
 
 #
-jt:favoriteGenre a rdf:property.
-jt:favoriteGenre rdfs:domain foaf:Person.
-jt:favoriteGenre rdfs:range dbo:Genre.
-
-
+jt:favoriteGenre a rdf:property;
+	rdfs:domain foaf:Person;
+	rdfs:range dbo:Genre.
 
 #defintion of inferred knowledge
 jt:PopularFilm rdfs:SubClassOf dbo:Film.
