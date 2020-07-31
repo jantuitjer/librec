@@ -6,9 +6,9 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
 @prefix schema: <https://schema.org/place> .
-@prefix jr: <http://schema.example.org/> .
+@prefix jt: <http://schema.example.org/> .
 @prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
-
+@prefix ex:   <http://example.org/>.
 
 # definition of hasRated property
 jt:hasRated	a rdf:Property;
@@ -38,10 +38,16 @@ jt:avgRating a rdf:Property;
 	rdfs:domain dbo:Film;
 	rdfs:range jt:avgOfRatings.
 
-#
-jt:favoriteGenre a rdf:property;
+#defintion property favoriteGenre
+jt:favoriteGenre a rdf:Property;
 	rdfs:domain foaf:Person;
 	rdfs:range dbo:Genre.
+	
+#defintion property of genre
+jt:ofGenre a rdf:Property;
+	rdfs:domain dbo:Film;
+	rdfs:range dbo:Genre.
+
 
 #defintion of inferred knowledge
 jt:PopularFilm rdfs:SubClassOf dbo:Film.
