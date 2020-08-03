@@ -348,7 +348,7 @@ public class TrustSVDRecommender extends SocialRecommender {
     }
 
     @Override
-    protected double predict(int userIdx, int itemIdx, boolean bounded) throws LibrecException {
+    public double predict(int userIdx, int itemIdx, boolean bounded) throws LibrecException {
         double predictRating = predict(userIdx, itemIdx);
 
         return predictRating;

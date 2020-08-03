@@ -47,7 +47,7 @@ public abstract class SocialRecommender extends MatrixFactorizationRecommender {
     }
 
     @Override
-    protected double predict(int userIdx, int itemIdx, boolean bounded) throws LibrecException {
+    public double predict(int userIdx, int itemIdx, boolean bounded) throws LibrecException {
         double predictRating = predict(userIdx, itemIdx);
 
         if (bounded)

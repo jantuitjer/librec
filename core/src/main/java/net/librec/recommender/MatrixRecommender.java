@@ -268,7 +268,8 @@ public abstract class MatrixRecommender extends AbstractRecommender {
      * @return predictive rating for user userIdx on item itemIdx with bound
      * @throws LibrecException if error occurs during predicting
      */
-    protected double predict(int userIdx, int itemIdx, boolean bound) throws LibrecException {
+	 //change from original
+    public double predict(int userIdx, int itemIdx, boolean bound) throws LibrecException {
         double predictRating = predict(userIdx, itemIdx);
 
         if (bound) {
