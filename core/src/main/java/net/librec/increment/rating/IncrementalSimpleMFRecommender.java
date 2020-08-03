@@ -255,7 +255,7 @@ public class IncrementalSimpleMFRecommender extends IncrementalMFRecommender {
      * @param bound   whether there is a bound
      * @return
      */
-    protected double predict(int userId, int itemId, boolean bound){
+    public double predict(int userId, int itemId, boolean bound){
 
         double score = this.globalBias;
 
