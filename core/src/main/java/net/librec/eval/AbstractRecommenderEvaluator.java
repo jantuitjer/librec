@@ -139,6 +139,12 @@ public abstract class AbstractRecommenderEvaluator implements RecommenderEvaluat
         while(groundTruthIter.hasNext() && recommendedEntryIter.hasNext()){
             ContextKeyValueEntry groundEntry = (ContextKeyValueEntry) groundTruthIter.next();
             ContextKeyValueEntry recommendedEntry = (ContextKeyValueEntry) recommendedEntryIter.next();
+            if (groundEntry.getContextIdx() != recommendedEntry.getContextIdx()
+                    && groundEntry.getKey() != recommendedEntry.getKey()
+                        && groundEntry.getKeyIdx() != recommendedEntry.getKeyIdx()) {
+                System.out.println("groundEntry = " + groundEntry);
+                System.out.println("recommendedEntry = " + recommendedEntry);
+            }
         }
     }
 }
