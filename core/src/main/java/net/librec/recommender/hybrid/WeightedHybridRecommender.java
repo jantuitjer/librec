@@ -1,6 +1,7 @@
 package net.librec.recommender.hybrid;
 
 import net.librec.common.LibrecException;
+import net.librec.conf.HybridConfiguration;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.item.GenericRecommendedItem;
@@ -20,8 +21,8 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
         super();
     }
 
-    public WeightedHybridRecommender(ArrayList<AbstractRecommender> _recommenders, HybridContext _hybridContext) {
-        super(_recommenders, _hybridContext);
+    public WeightedHybridRecommender(ArrayList<AbstractRecommender> _recommenders, HybridContext _hybridContext, HybridConfiguration _hybridConfig) {
+        super(_recommenders, _hybridContext, _hybridConfig);
     }
 
     /**
@@ -31,8 +32,8 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
      * @param _hybridContext
      * @param _weights
      */
-    public WeightedHybridRecommender(ArrayList<AbstractRecommender> _recommenders, HybridContext _hybridContext, double[] _weights) {
-        super(_recommenders, _hybridContext);
+    public WeightedHybridRecommender(ArrayList<AbstractRecommender> _recommenders, HybridContext _hybridContext, HybridConfiguration _hybridConfig, double[] _weights) {
+        super(_recommenders, _hybridContext, _hybridConfig);
         if (_weights.length != _recommenders.size()) {
             throw new IllegalArgumentException(getClass().getSimpleName() + " :Each given recommender must have it's own weight!");
         }
@@ -52,6 +53,15 @@ public class WeightedHybridRecommender extends AbstractHybridRecommender {
             return handleRecommendedItemsSameWeights(_recommender, _commonElements);
         } else {
             return handleRecommendedItemsWithWeights(_recommender, _commonElements);
+        }
+    }
+
+    @Override
+    protected double handleSingleRecommendedItem(int i, double value) {
+        if(null == weights)
+            return value / recommenders.size();
+        else{
+            return value * weights[i];
         }
     }
 
