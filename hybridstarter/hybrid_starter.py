@@ -4,7 +4,7 @@ import subprocess
 import os
 import sys
 import json
-
+from datetime import date
 RUN_CONFIG_FILE = 'run_parameters.txt'
 HYBRID_JAR = 'hybrid_librec.jar'
 STARTING_CONFIG_FILE = 'current_config.properties'
@@ -20,11 +20,12 @@ for run_config in runs:
     print('starting', conf_name)
     if '/' in conf_name:
         conf_name = conf_name.split('/')[-1]
-    output_header = 'Results of ' + run_config
-    process = subprocess.run('java -jar {} {} -Xmx8192m'.format(HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    now = date.today()
+    output_header = 'Results of ' + run_config + str(now)
+    process = subprocess.run('java -Xmx16394m -jar {} {}'.format(HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output = process.stderr.decode()
     print(output)
-    output_file = open('results/' + conf_name + '.dat', 'w+')
+    output_file = open('results/' + conf_name +'-' + str(now) +  '.dat', 'w+')
     output_file.write(output_header)
     output_file.writelines(output)
     output_file.close()
