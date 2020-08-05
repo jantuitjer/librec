@@ -318,8 +318,7 @@ public class HybridRecommenderJob extends RecommenderJob{
         //calculates similarities if the hybrid context does not already contain similarities
         //or the hybrid configuration file states that the similarities must always be recalculated
         //this is the case if "rec.calcSimilarities.once" is set to 'false'
-        //todo: check correctness of if statement
-        if(hybridContext.getSimilarityList()==null || !hybridConfig.getBoolean("rec.calcSimilarities.once", false)){
+        if(hybridContext.getSimilarityList().size()==0 || !hybridConfig.getBoolean("rec.calcSimilarities.once", false)){
             System.out.println("HybridRecommenderJob.nextSimilarities");
             contexts= hybridContext.getContexts();
             ArrayList<RecommenderSimilarity> similarities = new ArrayList<>();
