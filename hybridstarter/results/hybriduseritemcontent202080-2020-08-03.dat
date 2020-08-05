@@ -1,0 +1,9 @@
+Results of starter_configs/hybriduseritemcontent202080.properties
+2020-08-03Exception in thread "main" java.lang.IllegalArgumentException: WeightedHybridRecommender :The combined weights must have a value of 1.0. Given: null
+	at net.librec.recommender.hybrid.WeightedHybridRecommender.setWeights(WeightedHybridRecommender.java:138)
+	at net.librec.job.HybridRecommenderJob.initHybridRecommender(HybridRecommenderJob.java:221)
+	at net.librec.job.HybridRecommenderJob.initalizeComponents(HybridRecommenderJob.java:63)
+	at net.librec.job.HybridRecommenderJob.<init>(HybridRecommenderJob.java:48)
+	at Main.hybridJobExecution(Main.java:47)
+	at Main.run(Main.java:31)
+	at Main.main(Main.java:18)

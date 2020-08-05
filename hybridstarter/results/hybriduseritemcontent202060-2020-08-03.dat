@@ -1,0 +1,37 @@
+Results of starter_configs/hybriduseritemcontent202060.properties
+2020-08-0320/08/03 13:47:05 INFO ArffDataModel: Transform data to Convertor successfully!
+20/08/03 13:47:05 INFO ArffDataConvertor: Dataset: [../data/movielens-2k-arff]
+20/08/03 13:47:10 INFO ArffDataModel: Split data to train Set and test Set successfully!
+20/08/03 13:47:10 INFO TextDataConvertor: Dataset: [../data/movielens-2k]
+20/08/03 13:47:11 INFO TextDataConvertor: DataSet: ...movielens-2k/ratings-timestamps.txt is finished
+20/08/03 13:47:11 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/03 13:47:11 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/03 13:47:11 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/03 13:47:14 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/03 13:47:14 INFO TextDataConvertor: Dataset: [../data/movielens-2k]
+20/08/03 13:47:15 INFO TextDataConvertor: DataSet: ...movielens-2k/ratings-timestamps.txt is finished
+20/08/03 13:47:15 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/03 13:47:15 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/03 13:47:15 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/03 13:47:17 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/03 15:33:18 INFO HFTRecommender: number of users : 2113
+20/08/03 15:33:18 INFO HFTRecommender: number of Items : 10109
+20/08/03 15:33:18 INFO HFTRecommender: number of words : 4220
+20/08/03 15:33:22 INFO HFTRecommender: Job Setup completed.
+20/08/03 16:05:56 INFO HFTRecommender:  iter:1, loss:2.1047563366221064E8
+20/08/03 16:05:56 INFO HFTRecommender:  iter:1, sampling
+20/08/03 16:05:57 INFO HFTRecommender:  iter:1, sample finished
+20/08/03 16:05:57 INFO HFTRecommender: Job Train completed.
+20/08/03 16:05:57 INFO ItemKNNRecommender: Job Setup completed.
+20/08/03 16:06:19 INFO ItemKNNRecommender: Job Train completed.
+20/08/03 16:06:19 INFO UserKNNRecommender: Job Setup completed.
+20/08/03 16:06:21 INFO UserKNNRecommender: Job Train completed.
+Exception in thread "main" java.lang.ClassCastException: class net.librec.math.structure.SparseTensor cannot be cast to class net.librec.math.structure.SequentialAccessSparseMatrix (net.librec.math.structure.SparseTensor and net.librec.math.structure.SequentialAccessSparseMatrix are in unnamed module of loader 'app')
+	at net.librec.recommender.MatrixRecommender.recommendRating(MatrixRecommender.java:211)
+	at net.librec.recommender.hybrid.AbstractHybridRecommender.recommendRating(AbstractHybridRecommender.java:166)
+	at net.librec.eval.EvalContext.<init>(EvalContext.java:52)
+	at net.librec.job.HybridRecommenderJob.evaluateHybrid(HybridRecommenderJob.java:118)
+	at net.librec.job.HybridRecommenderJob.runJob(HybridRecommenderJob.java:103)
+	at Main.hybridJobExecution(Main.java:48)
+	at Main.run(Main.java:31)
+	at Main.main(Main.java:18)
