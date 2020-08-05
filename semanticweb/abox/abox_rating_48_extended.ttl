@@ -1,0 +1,888 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbc: <http://dbpedia.org/resource/Category:> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
+@prefix schema: <https://schema.org/place> .
+@prefix jt: <http://schema.example.org/> .
+@prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
+@prefix ex:   <http://example.org/>.
+
+ex:r_1547_1	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1;
+	jt:withRating	4.0;
+	jt:atTime	1134325470000.
+
+ex:r_1547_50	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_50;
+	jt:withRating	4.5;
+	jt:atTime	1134325394000.
+
+ex:r_1547_110	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_110;
+	jt:withRating	4.5;
+	jt:atTime	1135837177000.
+
+ex:r_1547_150	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_150;
+	jt:withRating	3.5;
+	jt:atTime	1164928020000.
+
+ex:r_1547_208	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_208;
+	jt:withRating	5.0;
+	jt:atTime	1154362416000.
+
+ex:r_1547_260	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_260;
+	jt:withRating	4.5;
+	jt:atTime	1134325417000.
+
+ex:r_1547_266	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_266;
+	jt:withRating	3.0;
+	jt:atTime	1154362119000.
+
+ex:r_1547_296	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_296;
+	jt:withRating	4.5;
+	jt:atTime	1134326087000.
+
+ex:r_1547_317	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_317;
+	jt:withRating	0.5;
+	jt:atTime	1134325728000.
+
+ex:r_1547_318	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_318;
+	jt:withRating	4.0;
+	jt:atTime	1164928004000.
+
+ex:r_1547_356	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_356;
+	jt:withRating	4.5;
+	jt:atTime	1134326092000.
+
+ex:r_1547_435	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_435;
+	jt:withRating	1.0;
+	jt:atTime	1134325093000.
+
+ex:r_1547_480	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_480;
+	jt:withRating	4.5;
+	jt:atTime	1134325945000.
+
+ex:r_1547_520	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_520;
+	jt:withRating	3.0;
+	jt:atTime	1154362433000.
+
+ex:r_1547_527	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_527;
+	jt:withRating	5.0;
+	jt:atTime	1145809788000.
+
+ex:r_1547_541	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_541;
+	jt:withRating	4.0;
+	jt:atTime	1225723051000.
+
+ex:r_1547_543	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_543;
+	jt:withRating	3.0;
+	jt:atTime	1134325154000.
+
+ex:r_1547_546	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_546;
+	jt:withRating	1.5;
+	jt:atTime	1134325854000.
+
+ex:r_1547_592	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_592;
+	jt:withRating	4.0;
+	jt:atTime	1164928011000.
+
+ex:r_1547_593	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_593;
+	jt:withRating	4.5;
+	jt:atTime	1134326090000.
+
+ex:r_1547_595	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_595;
+	jt:withRating	5.0;
+	jt:atTime	1134325898000.
+
+ex:r_1547_608	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_608;
+	jt:withRating	4.0;
+	jt:atTime	1225722617000.
+
+ex:r_1547_653	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_653;
+	jt:withRating	3.5;
+	jt:atTime	1134325075000.
+
+ex:r_1547_720	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_720;
+	jt:withRating	5.0;
+	jt:atTime	1154361891000.
+
+ex:r_1547_745	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_745;
+	jt:withRating	5.0;
+	jt:atTime	1145809786000.
+
+ex:r_1547_750	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_750;
+	jt:withRating	4.0;
+	jt:atTime	1134325573000.
+
+ex:r_1547_780	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_780;
+	jt:withRating	3.5;
+	jt:atTime	1134326117000.
+
+ex:r_1547_858	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_858;
+	jt:withRating	5.0;
+	jt:atTime	1134325468000.
+
+ex:r_1547_903	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_903;
+	jt:withRating	4.5;
+	jt:atTime	1145809876000.
+
+ex:r_1547_904	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_904;
+	jt:withRating	5.0;
+	jt:atTime	1134325129000.
+
+ex:r_1547_908	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_908;
+	jt:withRating	5.0;
+	jt:atTime	1134325111000.
+
+ex:r_1547_919	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_919;
+	jt:withRating	3.0;
+	jt:atTime	1134325717000.
+
+ex:r_1547_920	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_920;
+	jt:withRating	5.0;
+	jt:atTime	1154361965000.
+
+ex:r_1547_953	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_953;
+	jt:withRating	4.0;
+	jt:atTime	1225723040000.
+
+ex:r_1547_1027	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1027;
+	jt:withRating	5.0;
+	jt:atTime	1154362443000.
+
+ex:r_1547_1035	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1035;
+	jt:withRating	4.0;
+	jt:atTime	1154362072000.
+
+ex:r_1547_1073	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1073;
+	jt:withRating	4.5;
+	jt:atTime	1145809745000.
+
+ex:r_1547_1086	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1086;
+	jt:withRating	5.0;
+	jt:atTime	1134325822000.
+
+ex:r_1547_1136	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1136;
+	jt:withRating	4.5;
+	jt:atTime	1134325551000.
+
+ex:r_1547_1148	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1148;
+	jt:withRating	5.0;
+	jt:atTime	1145809814000.
+
+ex:r_1547_1196	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1196;
+	jt:withRating	5.0;
+	jt:atTime	1134325348000.
+
+ex:r_1547_1197	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1197;
+	jt:withRating	3.5;
+	jt:atTime	1134325454000.
+
+ex:r_1547_1198	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1198;
+	jt:withRating	5.0;
+	jt:atTime	1134325352000.
+
+ex:r_1547_1201	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1201;
+	jt:withRating	4.0;
+	jt:atTime	1134325585000.
+
+ex:r_1547_1206	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1206;
+	jt:withRating	3.5;
+	jt:atTime	1225723073000.
+
+ex:r_1547_1210	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1210;
+	jt:withRating	4.0;
+	jt:atTime	1225723064000.
+
+ex:r_1547_1221	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1221;
+	jt:withRating	4.5;
+	jt:atTime	1134325508000.
+
+ex:r_1547_1223	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1223;
+	jt:withRating	5.0;
+	jt:atTime	1154361894000.
+
+ex:r_1547_1225	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1225;
+	jt:withRating	5.0;
+	jt:atTime	1135837072000.
+
+ex:r_1547_1262	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1262;
+	jt:withRating	3.5;
+	jt:atTime	1134325405000.
+
+ex:r_1547_1270	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1270;
+	jt:withRating	4.0;
+	jt:atTime	1164927971000.
+
+ex:r_1547_1272	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1272;
+	jt:withRating	5.0;
+	jt:atTime	1134325556000.
+
+ex:r_1547_1278	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1278;
+	jt:withRating	4.5;
+	jt:atTime	1134325131000.
+
+ex:r_1547_1291	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1291;
+	jt:withRating	5.0;
+	jt:atTime	1211545034000.
+
+ex:r_1547_1307	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1307;
+	jt:withRating	3.0;
+	jt:atTime	1154362265000.
+
+ex:r_1547_1356	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1356;
+	jt:withRating	5.0;
+	jt:atTime	1169232746000.
+
+ex:r_1547_1374	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1374;
+	jt:withRating	5.0;
+	jt:atTime	1134325082000.
+
+ex:r_1547_1485	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1485;
+	jt:withRating	3.5;
+	jt:atTime	1134325109000.
+
+ex:r_1547_1517	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1517;
+	jt:withRating	4.0;
+	jt:atTime	1134325703000.
+
+ex:r_1547_1544	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1544;
+	jt:withRating	3.0;
+	jt:atTime	1134325950000.
+
+ex:r_1547_1617	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1617;
+	jt:withRating	4.0;
+	jt:atTime	1225722631000.
+
+ex:r_1547_1676	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1676;
+	jt:withRating	1.5;
+	jt:atTime	1134325685000.
+
+ex:r_1547_1704	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1704;
+	jt:withRating	4.0;
+	jt:atTime	1134325687000.
+
+ex:r_1547_1732	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_1732;
+	jt:withRating	4.0;
+	jt:atTime	1134325120000.
+
+ex:r_1547_2011	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2011;
+	jt:withRating	4.0;
+	jt:atTime	1134325096000.
+
+ex:r_1547_2023	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2023;
+	jt:withRating	4.0;
+	jt:atTime	1134325677000.
+
+ex:r_1547_2028	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2028;
+	jt:withRating	5.0;
+	jt:atTime	1135836856000.
+
+ex:r_1547_2054	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2054;
+	jt:withRating	2.0;
+	jt:atTime	1134325660000.
+
+ex:r_1547_2082	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2082;
+	jt:withRating	2.0;
+	jt:atTime	1134325807000.
+
+ex:r_1547_2115	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2115;
+	jt:withRating	4.0;
+	jt:atTime	1211545029000.
+
+ex:r_1547_2502	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2502;
+	jt:withRating	4.0;
+	jt:atTime	1134325125000.
+
+ex:r_1547_2571	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2571;
+	jt:withRating	5.0;
+	jt:atTime	1135836831000.
+
+ex:r_1547_2572	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2572;
+	jt:withRating	1.0;
+	jt:atTime	1154362046000.
+
+ex:r_1547_2628	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2628;
+	jt:withRating	1.0;
+	jt:atTime	1134325928000.
+
+ex:r_1547_2671	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2671;
+	jt:withRating	3.0;
+	jt:atTime	1154362197000.
+
+ex:r_1547_2728	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2728;
+	jt:withRating	4.5;
+	jt:atTime	1135836978000.
+
+ex:r_1547_2762	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2762;
+	jt:withRating	4.0;
+	jt:atTime	1135836840000.
+
+ex:r_1547_2804	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2804;
+	jt:withRating	4.0;
+	jt:atTime	1134325485000.
+
+ex:r_1547_2858	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2858;
+	jt:withRating	5.0;
+	jt:atTime	1135837024000.
+
+ex:r_1547_2918	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2918;
+	jt:withRating	3.0;
+	jt:atTime	1134325690000.
+
+ex:r_1547_2944	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2944;
+	jt:withRating	4.0;
+	jt:atTime	1135836871000.
+
+ex:r_1547_2959	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2959;
+	jt:withRating	4.0;
+	jt:atTime	1135836899000.
+
+ex:r_1547_2987	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_2987;
+	jt:withRating	4.5;
+	jt:atTime	1134325669000.
+
+ex:r_1547_3032	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3032;
+	jt:withRating	5.0;
+	jt:atTime	1225721320000.
+
+ex:r_1547_3034	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3034;
+	jt:withRating	5.0;
+	jt:atTime	1154362430000.
+
+ex:r_1547_3082	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3082;
+	jt:withRating	4.0;
+	jt:atTime	1134325765000.
+
+ex:r_1547_3258	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3258;
+	jt:withRating	2.5;
+	jt:atTime	1134325774000.
+
+ex:r_1547_3421	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3421;
+	jt:withRating	2.5;
+	jt:atTime	1135837041000.
+
+ex:r_1547_3578	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3578;
+	jt:withRating	5.0;
+	jt:atTime	1135837036000.
+
+ex:r_1547_3897	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_3897;
+	jt:withRating	3.5;
+	jt:atTime	1134325102000.
+
+ex:r_1547_4019	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4019;
+	jt:withRating	4.0;
+	jt:atTime	1134325742000.
+
+ex:r_1547_4034	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4034;
+	jt:withRating	4.5;
+	jt:atTime	1134325143000.
+
+ex:r_1547_4306	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4306;
+	jt:withRating	4.0;
+	jt:atTime	1135836972000.
+
+ex:r_1547_4638	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4638;
+	jt:withRating	1.0;
+	jt:atTime	1134325749000.
+
+ex:r_1547_4855	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4855;
+	jt:withRating	3.5;
+	jt:atTime	1135837048000.
+
+ex:r_1547_4878	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4878;
+	jt:withRating	4.5;
+	jt:atTime	1225723069000.
+
+ex:r_1547_4886	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4886;
+	jt:withRating	4.5;
+	jt:atTime	1134325140000.
+
+ex:r_1547_4896	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4896;
+	jt:withRating	2.0;
+	jt:atTime	1154362379000.
+
+ex:r_1547_4973	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4973;
+	jt:withRating	5.0;
+	jt:atTime	1135836916000.
+
+ex:r_1547_4993	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4993;
+	jt:withRating	4.5;
+	jt:atTime	1134325391000.
+
+ex:r_1547_4995	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_4995;
+	jt:withRating	4.5;
+	jt:atTime	1134325672000.
+
+ex:r_1547_5816	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_5816;
+	jt:withRating	1.5;
+	jt:atTime	1154362381000.
+
+ex:r_1547_5952	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_5952;
+	jt:withRating	5.0;
+	jt:atTime	1134325079000.
+
+ex:r_1547_5991	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_5991;
+	jt:withRating	1.5;
+	jt:atTime	1154362102000.
+
+ex:r_1547_6333	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_6333;
+	jt:withRating	4.5;
+	jt:atTime	1135836889000.
+
+ex:r_1547_6539	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_6539;
+	jt:withRating	4.5;
+	jt:atTime	1134325674000.
+
+ex:r_1547_6874	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_6874;
+	jt:withRating	4.5;
+	jt:atTime	1134325696000.
+
+ex:r_1547_7143	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_7143;
+	jt:withRating	4.5;
+	jt:atTime	1134325735000.
+
+ex:r_1547_7153	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_7153;
+	jt:withRating	5.0;
+	jt:atTime	1134325350000.
+
+ex:r_1547_7361	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_7361;
+	jt:withRating	4.0;
+	jt:atTime	1134325473000.
+
+ex:r_1547_7438	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_7438;
+	jt:withRating	4.0;
+	jt:atTime	1145809726000.
+
+ex:r_1547_7451	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_7451;
+	jt:withRating	1.0;
+	jt:atTime	1154361984000.
+
+ex:r_1547_8368	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_8368;
+	jt:withRating	5.0;
+	jt:atTime	1134325698000.
+
+ex:r_1547_8376	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_8376;
+	jt:withRating	3.5;
+	jt:atTime	1134325873000.
+
+ex:r_1547_8636	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_8636;
+	jt:withRating	2.0;
+	jt:atTime	1135836928000.
+
+ex:r_1547_8961	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_8961;
+	jt:withRating	5.0;
+	jt:atTime	1145809776000.
+
+ex:r_1547_27876	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_27876;
+	jt:withRating	0.5;
+	jt:atTime	1134325909000.
+
+ex:r_1547_32587	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_32587;
+	jt:withRating	3.5;
+	jt:atTime	1135837003000.
+
+ex:r_1547_33004	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_33004;
+	jt:withRating	3.5;
+	jt:atTime	1154362392000.
+
+ex:r_1547_33794	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_33794;
+	jt:withRating	4.5;
+	jt:atTime	1134325374000.
+
+ex:r_1547_34048	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_34048;
+	jt:withRating	2.5;
+	jt:atTime	1134325866000.
+
+ex:r_1547_37729	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_37729;
+	jt:withRating	3.0;
+	jt:atTime	1154362330000.
+
+ex:r_1547_37733	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_37733;
+	jt:withRating	2.0;
+	jt:atTime	1154361824000.
+
+ex:r_1547_40583	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_40583;
+	jt:withRating	0.5;
+	jt:atTime	1135836953000.
+
+ex:r_1547_40815	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_40815;
+	jt:withRating	4.0;
+	jt:atTime	1134325360000.
+
+ex:r_1547_41566	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_41566;
+	jt:withRating	2.5;
+	jt:atTime	1211545063000.
+
+ex:r_1547_42002	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_42002;
+	jt:withRating	4.0;
+	jt:atTime	1145809883000.
+
+ex:r_1547_44195	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_44195;
+	jt:withRating	4.5;
+	jt:atTime	1164927873000.
+
+ex:r_1547_44199	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_44199;
+	jt:withRating	2.0;
+	jt:atTime	1162706966000.
+
+ex:r_1547_46530	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_46530;
+	jt:withRating	4.0;
+	jt:atTime	1154361838000.
+
+ex:r_1547_46578	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_46578;
+	jt:withRating	4.0;
+	jt:atTime	1162707024000.
+
+ex:r_1547_46723	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_46723;
+	jt:withRating	4.0;
+	jt:atTime	1164927900000.
+
+ex:r_1547_48304	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_48304;
+	jt:withRating	2.0;
+	jt:atTime	1168139957000.
+
+ex:r_1547_48385	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_48385;
+	jt:withRating	4.5;
+	jt:atTime	1164927930000.
+
+ex:r_1547_48516	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_48516;
+	jt:withRating	4.5;
+	jt:atTime	1225722451000.
+
+ex:r_1547_48774	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_48774;
+	jt:withRating	4.0;
+	jt:atTime	1225723092000.
+
+ex:r_1547_48780	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_48780;
+	jt:withRating	4.5;
+	jt:atTime	1162706937000.
+
+ex:r_1547_50804	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_50804;
+	jt:withRating	1.5;
+	jt:atTime	1171673722000.
+
+ex:r_1547_55820	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_55820;
+	jt:withRating	4.5;
+	jt:atTime	1211544975000.
+
+ex:r_1547_56367	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_56367;
+	jt:withRating	5.0;
+	jt:atTime	1211544962000.
+
+ex:r_1547_56782	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_56782;
+	jt:withRating	4.0;
+	jt:atTime	1211544928000.
+
+ex:r_1547_56788	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_56788;
+	jt:withRating	4.5;
+	jt:atTime	1211544951000.
+
+ex:r_1547_58351	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_58351;
+	jt:withRating	4.5;
+	jt:atTime	1211544990000.
+
+ex:r_1547_58559	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_58559;
+	jt:withRating	5.0;
+	jt:atTime	1225722021000.
+
+ex:r_1547_59315	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_59315;
+	jt:withRating	4.0;
+	jt:atTime	1211544906000.
+
+ex:r_1547_60069	a	jt:UserFilmRating;
+	jt:wasGivenBy	ex:u_1547;
+	jt:hasRated	ex:m_60069;
+	jt:withRating	3.5;
+	jt:atTime	1225722446000.
+

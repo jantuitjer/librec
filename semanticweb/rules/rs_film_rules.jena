@@ -1,0 +1,20 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbc: <http://dbpedia.org/resource/Category:> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
+@prefix schema: <https://schema.org/place> .
+@prefix jt: <http://schema.example.org/> .
+@prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
+
+
+[film_rule1: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) greaterThan(?av, 4.0) greaterThan(?nr, 1000) -> (?m rdf:type 'PopularFilm')]
+
+[film_rule2: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) lessThan(?av, 2.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:UnpopularFilm)]
+
+[film_rule3: (?m rdf:type dbo:Film) (?m schema:datePublished ?y) lessThan(?y, 2000) (?m jt:avgRating ?av) greaterThan(?av, 3.5) -> (?m jt:movieTrait 'classic')]
+
+[film_rule4: (?m rdf:type dbo:Film) (?m jt:avgRating ?ar) greaterThan(?ar, 4.0) (?m jt:numberOfRatings ?nr) lessThan(?nr, 100) -> (?m jt:movieTrait 'hidden gem')]
+

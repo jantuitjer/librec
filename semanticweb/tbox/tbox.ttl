@@ -10,15 +10,32 @@
 @prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
 @prefix ex:   <http://example.org/>.
 
+
+# definition of UserFilmRating class
+jt:UserFilmRating owl:equivalentClass [
+    owl:onProperty jt:hasRatedMovie ;
+    owl:onProperty jt:withRating ;
+    owl:onProperty jt:atTime ;
+].
+
+# definition of withRating property
+jt:withRating	a rdf:Property;
+	rdfs:domain jt:UserFilmRating;
+	rdfs:range xsd:double.
+	
+# definition of atTime property
+jt:atTime	a rdf:Property;
+	rdfs:domain jt:UserFilmRating.
+
+# definition of hasRatedMovie property
+jt:hasRatedMovie a rdf:Property.
+
 # definition of hasRated property
-jt:hasRated	a rdf:Property;
-	rdfs:subPropertyOf foaf:topic_interest;
-	rdfs:domain foaf:Person;
-	rdfs:range dbo:Film.
+jt:hasRated	a rdf:Property.
 
 #definition of ratedBy property which is inverse of hasRated
 jt:ratedBy a rdf:Property;
-	owl:inverseOf :hasRated.
+	owl:inverseOf jt:hasRated.
 
 #definition of total rating literal
 jt:totalRatings a rdfs:Literal;
