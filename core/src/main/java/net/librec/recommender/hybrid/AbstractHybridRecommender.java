@@ -4,20 +4,13 @@ import net.librec.common.LibrecException;
 import net.librec.conf.HybridConfiguration;
 import net.librec.data.model.AbstractDataModel;
 import net.librec.data.structure.AbstractBaseDataEntry;
-import net.librec.data.structure.BaseDataList;
-import net.librec.data.structure.BaseRatingDataEntry;
 import net.librec.data.structure.LibrecDataList;
-import net.librec.eval.RecommenderEvaluator;
-import net.librec.eval.rating.MAEEvaluator;
 import net.librec.math.structure.DataSet;
 import net.librec.math.structure.SequentialAccessSparseMatrix;
 import net.librec.math.structure.SequentialSparseVector;
 import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
-import net.librec.recommender.MatrixRecommender;
-import net.librec.recommender.TensorRecommender;
 import net.librec.recommender.item.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -158,17 +151,14 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             commonTestDataSet = commonTestMatrix;
             recommendedItemList.sort();
         } else {
-            if (null == commonTestDataSet) {
-                commonTestDataSet = recommenders.get(0).getDataModel().getTestDataSet();
-            }
             ArrayList<RecommendedList> recommendations = new ArrayList<>();
             for (AbstractRecommender rec : recommenders) {
-                recommendations.add(rec.recommendRating(predictDataSet));
+                recommendations.add(rec.recommendRating(rec.getDataModel().getTestDataSet()));
             }
 //            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
             recommendedItemList = recommendations.get(0);
             ArrayList<Iterator<ContextKeyValueEntry>> iterators = new ArrayList<>(recommendations.size());
-            for (RecommendedList listy : recommendations){
+            for (RecommendedList listy : recommendations) {
                 iterators.add(listy.iterator());
             }
             combineRecommendedLists(iterators);
@@ -180,11 +170,11 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         int prevUser = -1;
         Map<Integer, List<KeyValue<Integer, Double>>> entryMap = new HashMap<>();
         List<KeyValue<Integer, Double>> itemValueList = new ArrayList<>();
-        prevUser =-1;
-        while(iterators.get(0).hasNext()){
+        prevUser = -1;
+        while (iterators.get(0).hasNext()) {
             double currentPrediction = 0.0;
-            int user =-1;
-            int item =-1;
+            int user = -1;
+            int item = -1;
             for (int i = 0; i < iterators.size(); i++) {
                 ContextKeyValueEntry ckve = iterators.get(i).next();
                 user = ckve.getContextIdx();
@@ -214,30 +204,43 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
 
     @Override
     public RecommendedList recommendRating(LibrecDataList<AbstractBaseDataEntry> dataList) throws LibrecException {
-        throw new NotImplementedException();
+        ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
+        for (AbstractRecommender rec : recommenders) {
+            recommendationLists.add(rec.recommendRating(dataList));
+        }
+        return recommendationLists.get(0);
     }
 
     @Override
     public RecommendedList recommendRank() throws LibrecException {
-        throw new NotImplementedException();
-
+        if (getSyncMode()) {
+            recommendedItemList= recommendRating(recommenders.get(0).getDataModel().getTestDataSet());
+            recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
+            return recommendedItemList;
+        }else {
+            ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
+            for (AbstractRecommender rec : recommenders) {
+                recommendationLists.add(rec.recommendRank());
+            }
+//            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
+            recommendedItemList = recommendationLists.get(0);
+            ArrayList<Iterator<ContextKeyValueEntry>> iterators = new ArrayList<>(recommendationLists.size());
+            for (RecommendedList listy : recommendationLists) {
+                iterators.add(listy.iterator());
+            }
+            combineRecommendedLists(iterators);
+            recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
+            return  recommendedItemList;
+        }
     }
 
     @Override
     public RecommendedList recommendRank(LibrecDataList<AbstractBaseDataEntry> dataList) throws LibrecException {
-        throw new NotImplementedException();
-    }
-
-    public RecommendedList recommendRating() throws LibrecException {
-        RecommendedList recList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
+        ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
         for (AbstractRecommender rec : recommenders) {
-            Iterator it = rec.recommendRating(rec.getDataModel().getTestDataSet()).iterator();
-            while (it.hasNext()) {
-                ContextKeyValueEntry entry = (ContextKeyValueEntry) it.next();
-                recList.add(entry.getContextIdx(), entry.getKeyIdx(), entry.getValue());
-            }
+            recommendationLists.add(rec.recommendRank(dataList));
         }
-        return recList;
+        return recommendationLists.get(0);
     }
 
     public ArrayList<AbstractRecommender> getRecommenders() {
@@ -256,15 +259,30 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         if (!hybridConf.getBoolean("data.model.sync", false)) {
             initCommonTestSetAndMatrix();
         } else {
-            if (null == commonTestDataSet) {
-                commonTestDataSet = recommenders.get(0).getDataModel().getTestDataSet();
-            }
+//            initCommomTestSet();
+            commonTestDataSet = recommenders.get(0).getDataModel().getTestDataSet();
         }
         return commonTestDataSet;
     }
 
+    public void initCommomTestSet() {
+        SequentialAccessSparseMatrix preferenceMatrix = ((AbstractDataModel) recommenders.get(0).getDataModel()).getDataConvertor().getPreferenceMatrix();
+        SequentialAccessSparseMatrix commonTestMatrix = initEmptyTestMatrixEntries(preferenceMatrix);
+        SequentialAccessSparseMatrix tmp = (SequentialAccessSparseMatrix) recommenders.get(0).getDataModel().getTestDataSet();
+        for (int i = 0; i < tmp.rowSize(); i++) {
+            for (int j = 0; j < tmp.columnSize(); j++) {
+                commonTestMatrix.set(i, j, tmp.get(i, j));
+            }
+        }
+        commonTestDataSet = commonTestMatrix;
+    }
+
     public void setHybridConfiguration(HybridConfiguration hybridConfig) {
         this.hybridConf = hybridConfig;
+    }
+
+    private boolean getSyncMode() {
+        return hybridConf.getBoolean("data.model.sync", false);
     }
 
     protected abstract double handleSingleRecommendedItem(int i, double value);

@@ -23,18 +23,15 @@ import net.librec.util.DriverClassUtil;
 import net.librec.util.ReflectionUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Jan Tuitjer
  */
-public class HybridRecommenderJob extends RecommenderJob{
+public class HybridRecommenderJob extends RecommenderJob {
     private HybridConfiguration hybridConfig;
     private HybridContext hybridContext;
-
+    private long seed_to_use = 0L;
     private ArrayList<DataModel> dataModels;
     private ArrayList<RecommenderContext> contexts;
     private AbstractHybridRecommender hybridRecommender;
@@ -48,6 +45,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * initializes all components necessary for the execution of the hybrid job
+     *
      * @throws LibrecException
      * @throws IOException
      * @throws ClassNotFoundException
@@ -74,14 +72,15 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * Executes the hybrid job - execution steps similar to normal RecommenderJob
+     *
      * @throws LibrecException
      * @throws IOException
      * @throws ClassNotFoundException
      */
     public void runJob() throws LibrecException, IOException, ClassNotFoundException {
-        assert(sameFolds());
+        assert (sameFolds());
         cvEvalResults = new HashMap<>();
-        while(haveNextFolds()){
+        while (haveNextFolds()) {
             nextDataModel();
             nextSimilarities();
             trainHybridRecommender();
@@ -90,7 +89,7 @@ public class HybridRecommenderJob extends RecommenderJob{
         printCVAverageResult();
         boolean isRanking = hybridConfig.getBoolean("rec.recommender.isranking");
         List<RecommendedItem> recommendedList = null;
-        if (isRanking){
+        if (isRanking) {
             recommendedList = hybridRecommender.getRecommendedList(hybridRecommender.recommendRank());
         } else {
             recommendedList = hybridRecommender.getRecommendedList(hybridRecommender.recommendRating(hybridRecommender.getCommonTestDataSet()));
@@ -141,7 +140,7 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
-    private void collectCVResults(String _evalName, double _value){
+    private void collectCVResults(String _evalName, double _value) {
         DataSplitter splitter = dataModels.get(0).getDataSplitter();
         if (splitter != null && (splitter instanceof KCVDataSplitter || splitter instanceof LOOCVDataSplitter)) {
             if (cvEvalResults.containsKey(_evalName)) {
@@ -154,7 +153,7 @@ public class HybridRecommenderJob extends RecommenderJob{
         }
     }
 
-    private void printCVAverageResult(){
+    private void printCVAverageResult() {
         DataSplitter splitter = dataModels.get(0).getDataSplitter();
         if (splitter != null && (splitter instanceof KCVDataSplitter || splitter instanceof LOOCVDataSplitter)) {
             LOG.info("Average Evaluation Result of Cross Validation:");
@@ -173,6 +172,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * trains each contained recommender
+     *
      * @throws LibrecException
      */
     private void trainHybridRecommender() throws LibrecException {
@@ -182,33 +182,36 @@ public class HybridRecommenderJob extends RecommenderJob{
     /**
      * initializes the hybrid recommender object and all used recommender objects
      * has to be modified if a new type of hybrid recommender is used
+     *
      * @throws IOException
      * @throws ClassNotFoundException
      */
     private void initHybridRecommender() throws IOException, ClassNotFoundException {
         hybridRecommender = (AbstractHybridRecommender) ReflectionUtil.newInstance((Class<Recommender>) getRecommenderClass(), hybridConfig);
+        hybridRecommender.setHybridConfiguration(hybridConfig);
         ArrayList<AbstractRecommender> usedRecommenders = new ArrayList<>();
-        for(Configuration c : hybridConfig.getConfigs()){
+        for (Configuration c : hybridConfig.getConfigs()) {
             AbstractRecommender rec = ReflectionUtil.newInstance((Class<AbstractRecommender>) getRecommenderClass(c));
             usedRecommenders.add(rec);
         }
         hybridRecommender.setRecommenders(usedRecommenders);
         //extend for other hybrid recommender implementations
-        if(hybridRecommender instanceof WeightedHybridRecommender){
-            if (null != hybridConfig.get("rec.hybrid.weights")){
+        if (hybridRecommender instanceof WeightedHybridRecommender) {
+            if (null != hybridConfig.get("rec.hybrid.weights")) {
                 String[] weights = hybridConfig.get("rec.hybrid.weights").split(":");
                 double[] realWeights = new double[weights.length];
-                for (int i = 0; i < weights.length ; i++) {
+                for (int i = 0; i < weights.length; i++) {
                     realWeights[i] = Double.parseDouble(weights[i]);
                 }
-                assert(realWeights.length == hybridRecommender.getRecommenders().size());
-                ((WeightedHybridRecommender)hybridRecommender).setWeights(realWeights);
+                assert (realWeights.length == hybridRecommender.getRecommenders().size());
+                ((WeightedHybridRecommender) hybridRecommender).setWeights(realWeights);
             }
         }
     }
 
     /**
      * loads the hybrid recommender object of the class stated within the hybrid config
+     *
      * @return
      * @throws ClassNotFoundException
      * @throws IOException
@@ -220,6 +223,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * loads the recommender object of the class stated with in the given configuration file
+     *
      * @param _c configuration to use
      * @return
      * @throws ClassNotFoundException
@@ -244,8 +248,12 @@ public class HybridRecommenderJob extends RecommenderJob{
         if (null == dataModels) {
             dataModels = new ArrayList<>();
             for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
-                if(hybridConfig.getBoolean("data.model.sync")) {
-                    Long seed = hybridConfig.getLong("rec.random.seed", 42l);
+                if (hybridConfig.getBoolean("data.model.sync")) {
+                    if(seed_to_use == 0L){
+                        Random r = new Random();
+                        seed_to_use = r.nextLong();
+                    }
+                    Long seed = hybridConfig.getLong("rec.random.seed", seed_to_use);
                     if (seed != null) {
                         Randoms.seed(seed);
                     }
@@ -293,6 +301,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * loads the DataModel object with the type stated in the selected config file
+     *
      * @param _index
      * @return
      * @throws ClassNotFoundException
@@ -304,7 +313,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     private boolean haveNextFolds() {
         boolean folds = true;
-        for (DataModel model: dataModels){
+        for (DataModel model : dataModels) {
             folds &= model.hasNextFold();
         }
         return folds;
@@ -318,9 +327,9 @@ public class HybridRecommenderJob extends RecommenderJob{
         //calculates similarities if the hybrid context does not already contain similarities
         //or the hybrid configuration file states that the similarities must always be recalculated
         //this is the case if "rec.calcSimilarities.once" is set to 'false'
-        if(hybridContext.getSimilarityList().size()==0 || !hybridConfig.getBoolean("rec.calcSimilarities.once", false)){
+        if (hybridContext.getSimilarityList().size() == 0 || !hybridConfig.getBoolean("rec.calcSimilarities.once", false)) {
             System.out.println("HybridRecommenderJob.nextSimilarities");
-            contexts= hybridContext.getContexts();
+            contexts = hybridContext.getContexts();
             ArrayList<RecommenderSimilarity> similarities = new ArrayList<>();
             for (int i = 0; i < contexts.size(); i++) {
                 contexts.get(i).setDataModel(dataModels.get(i));
@@ -333,6 +342,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * loads the RecommenderSimilarity stated within the config file
+     *
      * @param _conf
      * @return
      */
@@ -346,6 +356,7 @@ public class HybridRecommenderJob extends RecommenderJob{
 
     /**
      * Generates the similarity matrices for the given data model for each recommender
+     *
      * @param context
      */
     private void generateSimilarity(RecommenderContext context) {
@@ -359,7 +370,7 @@ public class HybridRecommenderJob extends RecommenderJob{
                     RecommenderSimilarity similarity = ReflectionUtil.newInstance(getSimilarityClass(conf), conf);
                     conf.set("rec.recommender.similarity.key", similarityKeys[i]);
                     similarity.buildSimilarityMatrix(dataModels.get(index));
-                  if (i == 0) {
+                    if (i == 0) {
                         context.setSimilarity(similarity);
                     }
                     context.addSimilarities(similarityKeys[i], similarity);
@@ -372,10 +383,11 @@ public class HybridRecommenderJob extends RecommenderJob{
      * sets all data models to the next fold in kcv mode
      * if kcv mode is not used this step does nothing
      * refer to AbstractDataModel.nextFold() implementation
+     *
      * @throws LibrecException
      */
     private void nextDataModel() throws LibrecException {
-        for(DataModel model : dataModels){
+        for (DataModel model : dataModels) {
             model.nextFold();
         }
         hybridContext.setDataModelList(dataModels);
@@ -392,10 +404,10 @@ public class HybridRecommenderJob extends RecommenderJob{
         boolean check;
         int len = numFolds.length;
         int a = 0;
-        while(a < len && numFolds[a]==numFolds[0]) {
+        while (a < len && numFolds[a] == numFolds[0]) {
             a++;
         }
-        check=(a==len);
+        check = (a == len);
         return check;
     }
 }
