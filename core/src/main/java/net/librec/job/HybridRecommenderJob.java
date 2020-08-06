@@ -109,7 +109,7 @@ public class HybridRecommenderJob extends RecommenderJob {
                 throw new IndexOutOfBoundsException("rec.recommender.ranking.topn should be more than 0!");
             }
         }
-        List<Measure.MeasureValue> measureValueList = Measure.getMeasureEnumList(isRanking, topN);
+        List<Measure.MeasureValue> measureValueList = Measure.getMeasureEnumListHybrid(isRanking, topN);
         if (measureValueList != null) {
             for (Measure.MeasureValue measureValue : measureValueList) {
                 RecommenderEvaluator evaluator = ReflectionUtil

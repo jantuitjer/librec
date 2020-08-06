@@ -92,6 +92,32 @@ public enum Measure {
         }
         return rankingEnumList;
     }
+    //change from original
+    public static List<MeasureValue> getMeasureEnumListHybrid(boolean isRanking, int topN) {
+        if (isRanking) {
+            return getRankingEnumListHybrid(topN);
+        } else {
+            return getRatingEnumList();
+        }
+    }
+    
+    private static List<MeasureValue> getRankingEnumListHybrid(int topN) {
+        List<MeasureValue> rankingEnumList = new ArrayList<>(10);
+        if (topN <= 0) {
+            rankingEnumList.add(new MeasureValue(PRECISION, 5));
+            rankingEnumList.add(new MeasureValue(PRECISION, 10));
+            rankingEnumList.add(new MeasureValue(RECALL, 5));
+            rankingEnumList.add(new MeasureValue(RECALL, 10));
+            rankingEnumList.add(new MeasureValue(Novelty, 10));
+            rankingEnumList.add(new MeasureValue(Entropy, 10));
+        } else {
+            rankingEnumList.add(new MeasureValue(PRECISION, topN));
+            rankingEnumList.add(new MeasureValue(RECALL, topN));
+//            rankingEnumList.add(new MeasureValue(Novelty, topN));
+            rankingEnumList.add(new MeasureValue(Entropy, topN));
+        }
+        return rankingEnumList;
+    }
 
     /**
      * Get rating default enum list.
