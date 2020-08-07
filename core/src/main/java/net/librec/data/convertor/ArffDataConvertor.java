@@ -262,6 +262,8 @@ public class ArffDataConvertor extends AbstractDataConvertor {
                         dataLine.add(subString.toString());
                         // raise error if inconsistent with attribute define
                         if (dataLine.size() != attrTypes.size()) {
+                            System.out.println(dataLine);
+                            System.out.println(attrTypes);
                             throw new IOException("Read data error, inconsistent attribute number!");
                         }
 
