@@ -1,0 +1,17 @@
+PREFIX db: <http://dbpedia.org/>
+prefix dbo:   <http://dbpedia.org/ontology/>
+prefix schema: <https://schema.org/place>
+prefix ex:    <http://example.org/>
+prefix dbc:   <http://dbpedia.org/resource/Category:>
+prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix owl:   <http://www.w3.org/2002/07/owl#>
+prefix xsd:   <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes>
+prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/>
+prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+prefix jt:    <http://schema.example.org/>
+prefix foaf:  <http://xmlns.com/foaf/0.1/>
+
+SELECT ?movie ?genre ?trait
+WHERE {
+  ?movie a 'PopularFilm'.
+}
