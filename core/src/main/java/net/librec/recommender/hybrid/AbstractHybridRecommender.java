@@ -1,5 +1,6 @@
 package net.librec.recommender.hybrid;
 
+import it.unimi.dsi.fastutil.Hash;
 import net.librec.common.LibrecException;
 import net.librec.conf.HybridConfiguration;
 import net.librec.data.model.AbstractDataModel;
@@ -12,6 +13,7 @@ import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.item.*;
 
+import java.security.Key;
 import java.util.*;
 
 /**
@@ -202,13 +204,60 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         }
     }
 
-    @Override
-    public RecommendedList recommendRating(LibrecDataList<AbstractBaseDataEntry> dataList) throws LibrecException {
-        ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
-        for (AbstractRecommender rec : recommenders) {
-            recommendationLists.add(rec.recommendRating(dataList));
+    protected void combineRecommendedListsRanking(ArrayList<Iterator<ContextKeyValueEntry>> iterators){
+        int prevUser = -1;
+        //iteratorIndex, user, item, value
+        Map<Integer, Map<Integer, List<KeyValue<Integer, Double>>>> entryMap = new HashMap<>();
+        while (iterators.get(0).hasNext()) {
+            int[] users = new int[iterators.size()];
+            int[] items = new int[iterators.size()];
+            double[] values = new double[iterators.size()];
+            for (int i = 0; i < iterators.size(); i++) {
+                ContextKeyValueEntry ckve = iterators.get(i).next();
+                users[i] = ckve.getContextIdx(); //users should always be the same
+                items[i] = ckve.getKey(); //item
+                values[i] = ckve.getValue();
+            }
+            if (users[0] != users[1]) {
+                System.err.println("ERROR: Not the same users in evaluation!");
+                System.exit(-9 - 9 - 9 - 9);
+            }
+            if (prevUser == users[0]){
+                for (int iteratorIndex = 0; iteratorIndex < iterators.size(); iteratorIndex++) {
+                    entryMap.get(iteratorIndex).get(users[iteratorIndex]).add(new KeyValue<>(items[iteratorIndex], values[iteratorIndex]));
+                }
+            }else{
+                for (int iteratorIndex = 0; iteratorIndex < iterators.size(); iteratorIndex++) {
+                    if (prevUser == -1){
+                        Map<Integer,List<KeyValue<Integer, Double>>> itemsValueMap = new HashMap<>();
+                        entryMap.put(iteratorIndex, itemsValueMap);
+                    }
+                    List<KeyValue<Integer, Double>> tmpList = new ArrayList<>();
+                    tmpList.add(new KeyValue<>(items[iteratorIndex], values[iteratorIndex]));
+                    entryMap.get(iteratorIndex).put(users[iteratorIndex], tmpList);
+                }
+                prevUser = users[0];
+            }
         }
-        return recommendationLists.get(0);
+        for(Integer user_index : entryMap.get(0).keySet()){
+            Map<Integer, Double> item_values = new HashMap<>();
+            for (int i = 0; i < iterators.size(); i++) {
+                List<KeyValue<Integer, Double>> list =  entryMap.get(i).get(user_index);
+                for (KeyValue<Integer, Double> item : list) {
+                    if(item_values.containsKey(item.getKey())){
+                        double val = item_values.get(item.getKey()) + handleSingleRecommendedItem(i, item.getValue());
+                        item_values.put(item.getKey(), val);
+                    }else{
+                        item_values.put(item.getKey(), handleSingleRecommendedItem(i, item.getValue()));
+                    }
+                }
+            }
+            List<KeyValue<Integer, Double>> result_list = new ArrayList<>();
+            for (Integer item : item_values.keySet()) {
+                result_list.add(new KeyValue<>(item, item_values.get(item)));
+            }
+            recommendedItemList.setList(user_index, result_list);
+        }
     }
 
     @Override
@@ -218,7 +267,8 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         }else {
             ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
             for (AbstractRecommender rec : recommenders) {
-                recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
+//                recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
+                recommendationLists.add(rec.recommendRank());
             }
 //            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
             recommendedItemList = recommendationLists.get(0);
@@ -226,10 +276,19 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             for (RecommendedList listy : recommendationLists) {
                 iterators.add(listy.iterator());
             }
-            combineRecommendedLists(iterators);
+            combineRecommendedListsRanking(iterators);
             recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
             return  recommendedItemList;
         }
+    }
+
+    @Override
+    public RecommendedList recommendRating(LibrecDataList<AbstractBaseDataEntry> dataList) throws LibrecException {
+        ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
+        for (AbstractRecommender rec : recommenders) {
+            recommendationLists.add(rec.recommendRating(dataList));
+        }
+        return recommendationLists.get(0);
     }
 
     @Override
