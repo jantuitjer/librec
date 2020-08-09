@@ -214,13 +214,11 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
     @Override
     public RecommendedList recommendRank() throws LibrecException {
         if (!getSyncMode()) {
-            recommendedItemList= recommendRating(recommenders.get(0).getDataModel().getTestDataSet());
-            recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
-            return recommendedItemList;
+            throw new UnsupportedOperationException("Ranking of unsynchronized data sets is not implemented yet");
         }else {
             ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
             for (AbstractRecommender rec : recommenders) {
-                recommendationLists.add(rec.recommendRank());
+                recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
             }
 //            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
             recommendedItemList = recommendationLists.get(0);
