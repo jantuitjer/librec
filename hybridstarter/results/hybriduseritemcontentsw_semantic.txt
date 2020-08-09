@@ -1,0 +1,103 @@
+Starting HybridRecommender:
+ranking: false
+20/08/08 17:54:20 INFO TextDataConvertor: Dataset: [data/movielens-2k/ratings-timestamps.txt]
+20/08/08 17:54:21 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/08/08 17:54:21 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/08 17:54:21 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/08 17:54:21 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/08 17:54:23 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/08 17:54:23 INFO TextDataConvertor: Dataset: [data/movielens-2k/ratings-timestamps.txt]
+20/08/08 17:54:24 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/08/08 17:54:24 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/08 17:54:24 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/08 17:54:24 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/08 17:54:27 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/08 17:54:27 INFO ArffDataModel: Transform data to Convertor successfully!
+20/08/08 17:54:27 INFO ArffDataConvertor: Dataset: [data/movielens-2k-arff-extended/records_test.arff]
+20/08/08 17:54:31 INFO ArffDataModel: Split data to train Set and test Set successfully!
+HybridRecommenderJob.nextSimilarities
+20/08/08 19:11:58 INFO UserKNNRecommender: Job Setup completed.
+20/08/08 19:12:01 INFO UserKNNRecommender: Job Train completed.
+20/08/08 19:12:01 INFO ItemKNNRecommender: Job Setup completed.
+20/08/08 19:12:27 INFO ItemKNNRecommender: Job Train completed.
+20/08/08 19:12:28 INFO HFTRecommender: number of users : 2113
+20/08/08 19:12:28 INFO HFTRecommender: number of Items : 10109
+20/08/08 19:12:28 INFO HFTRecommender: number of words : 5357
+20/08/08 19:12:31 INFO HFTRecommender: Job Setup completed.
+20/08/08 20:09:55 INFO HFTRecommender:  iter:1, loss:4.098013667361828E8
+20/08/08 20:09:55 INFO HFTRecommender:  iter:1, sampling
+20/08/08 20:09:57 INFO HFTRecommender:  iter:1, sample finished
+20/08/08 20:09:57 INFO HFTRecommender: Job Train completed.
+20/08/08 20:09:58 INFO RecommenderJob: Evaluator value:MAE is 0.6572286956233673
+20/08/08 20:09:58 INFO RecommenderJob: Evaluator value:MSE is 0.7598133621383347
+20/08/08 20:09:58 INFO RecommenderJob: Evaluator value:MPE is 0.9897498831229546
+20/08/08 20:09:58 INFO RecommenderJob: Evaluator value:RMSE is 0.8716727379804503
+20/08/08 21:34:15 INFO UserKNNRecommender: Job Setup completed.
+20/08/08 21:34:17 INFO UserKNNRecommender: Job Train completed.
+20/08/08 21:34:17 INFO ItemKNNRecommender: Job Setup completed.
+20/08/08 21:34:39 INFO ItemKNNRecommender: Job Train completed.
+20/08/08 21:34:41 INFO HFTRecommender: number of users : 2113
+20/08/08 21:34:41 INFO HFTRecommender: number of Items : 10109
+20/08/08 21:34:41 INFO HFTRecommender: number of words : 5357
+20/08/08 21:34:45 INFO HFTRecommender: Job Setup completed.
+20/08/08 22:32:34 INFO HFTRecommender:  iter:1, loss:4.0991103461897296E8
+20/08/08 22:32:34 INFO HFTRecommender:  iter:1, sampling
+20/08/08 22:32:36 INFO HFTRecommender:  iter:1, sample finished
+20/08/08 22:32:36 INFO HFTRecommender: Job Train completed.
+20/08/08 22:32:37 INFO RecommenderJob: Evaluator value:MAE is 0.6415268775040778
+20/08/08 22:32:37 INFO RecommenderJob: Evaluator value:MSE is 0.7312865181569571
+20/08/08 22:32:37 INFO RecommenderJob: Evaluator value:MPE is 0.9893817204301075
+20/08/08 22:32:37 INFO RecommenderJob: Evaluator value:RMSE is 0.8551529209193857
+20/08/08 23:48:25 INFO UserKNNRecommender: Job Setup completed.
+20/08/08 23:48:26 INFO UserKNNRecommender: Job Train completed.
+20/08/08 23:48:26 INFO ItemKNNRecommender: Job Setup completed.
+20/08/08 23:48:46 INFO ItemKNNRecommender: Job Train completed.
+20/08/08 23:48:47 INFO HFTRecommender: number of users : 2113
+20/08/08 23:48:47 INFO HFTRecommender: number of Items : 10109
+20/08/08 23:48:47 INFO HFTRecommender: number of words : 5357
+20/08/08 23:48:51 INFO HFTRecommender: Job Setup completed.
+20/08/09 00:42:54 INFO HFTRecommender:  iter:1, loss:4.0989457576617354E8
+20/08/09 00:42:54 INFO HFTRecommender:  iter:1, sampling
+20/08/09 00:42:56 INFO HFTRecommender:  iter:1, sample finished
+20/08/09 00:42:56 INFO HFTRecommender: Job Train completed.
+20/08/09 00:42:56 INFO RecommenderJob: Evaluator value:MAE is 0.6379628551884253
+20/08/09 00:42:56 INFO RecommenderJob: Evaluator value:MSE is 0.7247040729123
+20/08/09 00:42:56 INFO RecommenderJob: Evaluator value:MPE is 0.9887563625313378
+20/08/09 00:42:56 INFO RecommenderJob: Evaluator value:RMSE is 0.8512955261906995
+20/08/09 01:59:01 INFO UserKNNRecommender: Job Setup completed.
+20/08/09 01:59:03 INFO UserKNNRecommender: Job Train completed.
+20/08/09 01:59:03 INFO ItemKNNRecommender: Job Setup completed.
+20/08/09 01:59:23 INFO ItemKNNRecommender: Job Train completed.
+20/08/09 01:59:24 INFO HFTRecommender: number of users : 2113
+20/08/09 01:59:24 INFO HFTRecommender: number of Items : 10109
+20/08/09 01:59:24 INFO HFTRecommender: number of words : 5357
+20/08/09 01:59:27 INFO HFTRecommender: Job Setup completed.
+20/08/09 02:54:29 INFO HFTRecommender:  iter:1, loss:4.098872253521849E8
+20/08/09 02:54:29 INFO HFTRecommender:  iter:1, sampling
+20/08/09 02:54:30 INFO HFTRecommender:  iter:1, sample finished
+20/08/09 02:54:30 INFO HFTRecommender: Job Train completed.
+20/08/09 02:54:31 INFO RecommenderJob: Evaluator value:MAE is 0.6429957268076765
+20/08/09 02:54:31 INFO RecommenderJob: Evaluator value:MSE is 0.7376109790781238
+20/08/09 02:54:31 INFO RecommenderJob: Evaluator value:MPE is 0.9895511921458625
+20/08/09 02:54:31 INFO RecommenderJob: Evaluator value:RMSE is 0.8588428139526603
+20/08/09 04:10:05 INFO UserKNNRecommender: Job Setup completed.
+20/08/09 04:10:07 INFO UserKNNRecommender: Job Train completed.
+20/08/09 04:10:07 INFO ItemKNNRecommender: Job Setup completed.
+20/08/09 04:10:24 INFO ItemKNNRecommender: Job Train completed.
+20/08/09 04:10:25 INFO HFTRecommender: number of users : 2113
+20/08/09 04:10:25 INFO HFTRecommender: number of Items : 10109
+20/08/09 04:10:25 INFO HFTRecommender: number of words : 5357
+20/08/09 04:10:28 INFO HFTRecommender: Job Setup completed.
+20/08/09 05:05:34 INFO HFTRecommender:  iter:1, loss:4.0984424377225953E8
+20/08/09 05:05:34 INFO HFTRecommender:  iter:1, sampling
+20/08/09 05:05:36 INFO HFTRecommender:  iter:1, sample finished
+20/08/09 05:05:36 INFO HFTRecommender: Job Train completed.
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MAE is 0.6388221286787127
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MSE is 0.7253050733483168
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MPE is 0.9898608570643821
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:RMSE is 0.8516484446931826
+20/08/09 05:05:37 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MAE is 0.6437072567604519
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MPE is 0.989460003058929
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:RMSE is 0.8577224887472756
+20/08/09 05:05:37 INFO RecommenderJob: Evaluator value:MSE is 0.7357440011268065
