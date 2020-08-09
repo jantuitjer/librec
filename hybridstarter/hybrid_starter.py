@@ -6,7 +6,7 @@ import sys
 import json
 from datetime import date
 RUN_CONFIG_FILE = 'run_parameters.txt'
-HYBRID_JAR = 'hybrid_librec_1st.jar'
+HYBRID_JAR = 'hybrid_librec.jar'
 STARTING_CONFIG_FILE = 'current_config.properties'
 #JAVA_PATH = 'C:\Program Files (x86)\Common Files\Oracle\Java\javapath'
 runs = list()
@@ -17,11 +17,11 @@ with open(RUN_CONFIG_FILE) as conf:
             runs.append(line)
 for run_config in runs:
     conf_name = run_config.split('.')[-2]
-    print('starting', conf_name)
+    print('starting {} with {}'.format(HYBRID_JAR, conf_name))
     if '/' in conf_name:
         conf_name = conf_name.split('/')[-1]
     now = date.today()
-    output_header = 'Results of ' + run_config + str(now)
+    output_header = 'Results of ' + HYBRID_JAR + " for " + run_config + str(now)
     process = subprocess.run('java -Xmx30720m -jar {} {}'.format(HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output = process.stderr.decode()
     print(output)
