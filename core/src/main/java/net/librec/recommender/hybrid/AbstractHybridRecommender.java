@@ -144,7 +144,7 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
       }*/
     @Override
     public RecommendedList recommendRating(DataSet predictDataSet) throws LibrecException {
-        if (!hybridConf.getBoolean("data.model.sync", false)) {
+        if (!getSyncMode()) {
             //default way
             SequentialAccessSparseMatrix commonTestMatrix = initCommonTestSetAndMatrix();
             commonTestMatrix.reshape();
@@ -213,7 +213,7 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
 
     @Override
     public RecommendedList recommendRank() throws LibrecException {
-        if (getSyncMode()) {
+        if (!getSyncMode()) {
             recommendedItemList= recommendRating(recommenders.get(0).getDataModel().getTestDataSet());
             recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
             return recommendedItemList;
