@@ -1,0 +1,77 @@
+Results of hybrid_librec_ranking.jar for starter_configs/ranking_configs/hybriduseritem6535.properties
+2020-08-10ranking: true
+20/08/10 14:02:41 INFO TextDataConvertor: Dataset: [../data/movielens-2k/ratings-timestamps.txt]
+20/08/10 14:02:42 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/08/10 14:02:42 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/10 14:02:42 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/10 14:02:42 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/10 14:02:45 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/10 14:02:45 INFO TextDataConvertor: Dataset: [../data/movielens-2k/ratings-timestamps.txt]
+20/08/10 14:02:45 INFO TextDataConvertor: DataSet: ...movielens-2k\ratings-timestamps.txt is finished
+20/08/10 14:02:46 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/10 14:02:46 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/10 14:02:46 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/10 14:02:47 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/10 14:03:10 INFO UserKNNRecommender: Job Setup completed.
+20/08/10 14:03:12 INFO UserKNNRecommender: Job Train completed.
+20/08/10 14:03:12 INFO ItemKNNRecommender: Job Setup completed.
+20/08/10 14:03:38 INFO ItemKNNRecommender: Job Train completed.
+20/08/10 14:03:38 INFO UserKNNRecommender: begin recommend
+20/08/10 14:03:41 INFO UserKNNRecommender: end recommend
+20/08/10 14:03:41 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:03:46 INFO ItemKNNRecommender: end recommend
+20/08/10 14:03:46 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3287742546142938
+20/08/10 14:03:46 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.04942700062090512
+20/08/10 14:03:46 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.97229078227016
+20/08/10 14:03:47 INFO UserKNNRecommender: Job Setup completed.
+20/08/10 14:03:49 INFO UserKNNRecommender: Job Train completed.
+20/08/10 14:03:49 INFO ItemKNNRecommender: Job Setup completed.
+20/08/10 14:04:05 INFO ItemKNNRecommender: Job Train completed.
+20/08/10 14:04:05 INFO UserKNNRecommender: begin recommend
+20/08/10 14:04:07 INFO UserKNNRecommender: end recommend
+20/08/10 14:04:07 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:04:13 INFO ItemKNNRecommender: end recommend
+20/08/10 14:04:13 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3266224538133598
+20/08/10 14:04:13 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.04812420777005585
+20/08/10 14:04:13 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.16582767798984
+20/08/10 14:04:14 INFO UserKNNRecommender: Job Setup completed.
+20/08/10 14:04:15 INFO UserKNNRecommender: Job Train completed.
+20/08/10 14:04:15 INFO ItemKNNRecommender: Job Setup completed.
+20/08/10 14:04:33 INFO ItemKNNRecommender: Job Train completed.
+20/08/10 14:04:33 INFO UserKNNRecommender: begin recommend
+20/08/10 14:04:35 INFO UserKNNRecommender: end recommend
+20/08/10 14:04:35 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:04:41 INFO ItemKNNRecommender: end recommend
+20/08/10 14:04:41 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3402935606060622
+20/08/10 14:04:41 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.05129347039931913
+20/08/10 14:04:41 INFO RecommenderJob: Evaluator value:Entropy top 10 is 35.40088012904209
+20/08/10 14:04:41 INFO UserKNNRecommender: Job Setup completed.
+20/08/10 14:04:43 INFO UserKNNRecommender: Job Train completed.
+20/08/10 14:04:43 INFO ItemKNNRecommender: Job Setup completed.
+20/08/10 14:05:00 INFO ItemKNNRecommender: Job Train completed.
+20/08/10 14:05:00 INFO UserKNNRecommender: begin recommend
+20/08/10 14:05:02 INFO UserKNNRecommender: end recommend
+20/08/10 14:05:02 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:05:16 INFO ItemKNNRecommender: end recommend
+20/08/10 14:05:16 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3398958826313316
+20/08/10 14:05:16 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.04932442590032927
+20/08/10 14:05:16 INFO RecommenderJob: Evaluator value:Entropy top 10 is 35.945568769633596
+20/08/10 14:05:17 INFO UserKNNRecommender: Job Setup completed.
+20/08/10 14:05:19 INFO UserKNNRecommender: Job Train completed.
+20/08/10 14:05:19 INFO ItemKNNRecommender: Job Setup completed.
+20/08/10 14:05:35 INFO ItemKNNRecommender: Job Train completed.
+20/08/10 14:05:35 INFO UserKNNRecommender: begin recommend
+20/08/10 14:05:38 INFO UserKNNRecommender: end recommend
+20/08/10 14:05:38 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:05:44 INFO ItemKNNRecommender: end recommend
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3376715570279239
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.049584896653986694
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.69454774117435
+20/08/10 14:05:44 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.23582302002201
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.049550800268919205
+20/08/10 14:05:44 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.33465154173859424
+20/08/10 14:05:44 INFO UserKNNRecommender: begin recommend
+20/08/10 14:05:46 INFO UserKNNRecommender: end recommend
+20/08/10 14:05:46 INFO ItemKNNRecommender: begin recommend
+20/08/10 14:05:52 INFO ItemKNNRecommender: end recommend
