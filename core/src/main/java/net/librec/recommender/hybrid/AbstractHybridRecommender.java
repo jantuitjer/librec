@@ -218,7 +218,7 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
                 users[i] = ckve.getContextIdx(); //users should always be the same
                 items[i] = ckve.getKey(); //items can differ due to score
                 values[i] = ckve.getValue();
-                if (Double.compare(values[i], maxValues[i]) < 0){
+                if (Double.compare(values[i], maxValues[i]) > 0){
                     maxValues[i] = values[i];
                 }
             }
