@@ -208,6 +208,7 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         int prevUser = -1;
         //iteratorIndex, user, item, value
         Map<Integer, Map<Integer, List<KeyValue<Integer, Double>>>> entryMap = new HashMap<>();
+        double[] maxValues = new double[iterators.size()];
         while (iterators.get(0).hasNext()) {
             int[] users = new int[iterators.size()];
             int[] items = new int[iterators.size()];
@@ -215,12 +216,15 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             for (int i = 0; i < iterators.size(); i++) {
                 ContextKeyValueEntry ckve = iterators.get(i).next();
                 users[i] = ckve.getContextIdx(); //users should always be the same
-                items[i] = ckve.getKey(); //item
+                items[i] = ckve.getKey(); //items can differ due to score
                 values[i] = ckve.getValue();
+                if (Double.compare(values[i], maxValues[i]) > 0){
+                    maxValues[i] = values[i];
+                }
             }
             if (users[0] != users[1]) {
                 System.err.println("ERROR: Not the same users in evaluation!");
-                System.exit(-9 - 9 - 9 - 9);
+                System.exit(-9);
             }
             if (prevUser == users[0]){
                 for (int iteratorIndex = 0; iteratorIndex < iterators.size(); iteratorIndex++) {
@@ -229,8 +233,8 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             }else{
                 for (int iteratorIndex = 0; iteratorIndex < iterators.size(); iteratorIndex++) {
                     if (prevUser == -1){
-                        Map<Integer,List<KeyValue<Integer, Double>>> itemsValueMap = new HashMap<>();
-                        entryMap.put(iteratorIndex, itemsValueMap);
+                        Map<Integer,List<KeyValue<Integer, Double>>> userItemsValueMap = new HashMap<>();
+                        entryMap.put(iteratorIndex, userItemsValueMap);
                     }
                     List<KeyValue<Integer, Double>> tmpList = new ArrayList<>();
                     tmpList.add(new KeyValue<>(items[iteratorIndex], values[iteratorIndex]));
@@ -239,16 +243,22 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
                 prevUser = users[0];
             }
         }
+        System.out.println("entryMap.size() = " + entryMap.size());
+        System.out.println("entryMap.get(0) = " + entryMap.get(0));
+        System.out.println("entryMap = " + entryMap.get(0).size());
         for(Integer user_index : entryMap.get(0).keySet()){
             Map<Integer, Double> item_values = new HashMap<>();
             for (int i = 0; i < iterators.size(); i++) {
                 List<KeyValue<Integer, Double>> list =  entryMap.get(i).get(user_index);
                 for (KeyValue<Integer, Double> item : list) {
+                    double normalized_value = handleSingleRecommendedItem(i, item.getValue()) / maxValues[i];
                     if(item_values.containsKey(item.getKey())){
-                        double val = item_values.get(item.getKey()) + handleSingleRecommendedItem(i, item.getValue());
+//                        double val = item_values.get(item.getKey()) + handleSingleRecommendedItem(i, item.getValue());
+                        double val = item_values.get(item.getKey()) + normalized_value;
                         item_values.put(item.getKey(), val);
                     }else{
-                        item_values.put(item.getKey(), handleSingleRecommendedItem(i, item.getValue()));
+//                        item_values.put(item.getKey(), handleSingleRecommendedItem(i, item.getValue()));
+                        item_values.put(item.getKey(), normalized_value);
                     }
                 }
             }
