@@ -14,8 +14,9 @@ year_dict = dict()
 trait_dict = dict()
 favorite_movie_dict = dict()
 movie_trait_dict= dict()
-
+trait_encoding_dict = dict()
 test_favorite_dict = dict()
+favorite_movie_encoding_dict = dict()
 
 
 if not(os.path.isdir("out_ttl")):   #check if 'out dir exists
@@ -178,39 +179,7 @@ def get_arff_header():
 
 
 def dump_arff_file():
-    f = open('records_test.arff','w')
-    f.write(get_arff_header())
-    output_line_format = '{user}, {movie}, {rating}, {review}\n'
-    for userId in user_rating_dict:
-        user_record = user_rating_dict.get(userId)
-        favorite_movie = favorite_movie_dict.get(user_favorite_dict.get(userId).get('favorite_movie'))
-        favorite_genre = genre_dict.get(user_favorite_dict.get(userId).get('favorite_genre'))
-        for rated_movieId in user_record:
-            rating = user_record.get(rated_movieId)
-            movie_info  = movie_dict.get(rated_movieId)
-            year = year_dict.get(movie_info.get('year'))
-            director = director_dict.get(movie_info.get('director'))
-            country = country_dict.get(movie_info.get('country'))
-            genre_list = []
-            movie_trait_list = []
-            for genre in movie_info.get('genres'):
-                genre_list.append(genre_dict.get(genre))
-            traits = movie_info.get('traits')
-            if traits is not None:
-                for trait in movie_info.get('traits'):
-                    movie_trait_list.append(movie_trait_dict.get(trait))
-            info_list = [year, director, country]
-            info_list.extend(genre_list)
-            info_list.extend(movie_trait_list)
-            info_list.extend([favorite_movie, favorite_genre])
-            review_line = ''
-            for elem in info_list:
-                review_line += str(elem)+':'
-            f.write(output_line_format.format(user=userId, movie= rated_movieId, rating=rating, review= review_line))
-            
-            
-def dump_arff_file_new():
-    f = open('records_test.arff','w')
+    f = open('records_working_new.arff','w')
     f.write(get_arff_header())
     output_line_format = '{user}, {movie}, {rating}, {review}\n'
     dicts = [year_dict, country_dict, director_dict, genre_dict, favorite_movie_dict, movie_trait_dict]
@@ -245,20 +214,43 @@ def dump_arff_file_new():
                     genre_dict[genre_entry] = genre
                 record_list.append(genre)
             fav_genre = genre_dict.get(test_favorite_dict.get(userId).get('favorite_genre'))
+            
+            traits = movie_info.get('traits')
+            if traits is not None:
+                for trait_entry in traits:
+                    trait = trait_encoding_dict.get(trait_entry)
+                    if trait is None:
+                        trait = inc_counter()
+                        trait_encoding_dict[trait_entry] = trait
+                record_list.append(trait)
+            
             if fav_genre is None:
                 fav_genre = inc_counter()
                 genre_dict[test_favorite_dict.get(userId).get('favorite_genre')] = fav_genre
             record_list.append(fav_genre)
-            fav_movie = genre_dict.get(test_favorite_dict.get(userId).get('favorite_movie'))
+            fav_movie = favorite_movie_encoding_dict.get(test_favorite_dict.get(userId).get('favorite_movie'))
             if fav_movie is None:
                 fav_movie = inc_counter()
-                genre_dict[test_favorite_dict.get(userId).get('favorite_movie')] = fav_genre
+                favorite_movie_encoding_dict[test_favorite_dict.get(userId).get('favorite_movie')] = fav_movie
             record_list.append(fav_movie)
             record_line = ''
             for entry in record_list:
                 record_line += str(entry)+':'
             f.write(output_line_format.format(user=userId, movie=rated_movieId, rating=rating, review=record_line))
             
+
+def dump_encoding():
+    f = open('encoding_table.txt', 'w')
+    f.write('encoded, decoded, type\n')
+    dicts = [year_dict, director_dict, country_dict, genre_dict, trait_encoding_dict, favorite_movie_encoding_dict]
+    dict_names = ['year', 'director', 'country', 'genre','movie_trait', 'favorite_movie']
+    entry_line = '{encoded}, {decoded}, {type}\n'
+    for i in range(len(dicts)):
+        for key in dicts[i]:
+            encoded = dicts[i].get(key)
+            decoded = key
+            f.write(entry_line.format(encoded=encoded, decoded=decoded, type=dict_names[i]))
+
 def main():
     read_ratings_file()
     read_movie_file()
@@ -269,7 +261,8 @@ def main():
     read_movie_trait_file()
     read_movie_popular_file()
     #test()
-    dump_arff_file_new()
+    dump_arff_file()
+    dump_encoding()
     print('extended arff file was written.')
     
 if __name__ == "__main__":
