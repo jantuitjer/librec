@@ -45,6 +45,7 @@ public class Main {
     private static void hybridJobExecution(String _pathToHybridConfiguration) throws IOException, MissingArgumentException, LibrecException, ClassNotFoundException {
         net.librec.conf.HybridConfiguration hybridConf = new HybridConfiguration(_pathToHybridConfiguration);
         System.err.println("ranking: "+hybridConf.get("rec.recommender.isranking"));
+        System.err.println("weights = " + hybridConf.get("rec.hybrid.weights"));
         HybridRecommenderJob hrj = new HybridRecommenderJob(hybridConf);
         hrj.runJob();
     }

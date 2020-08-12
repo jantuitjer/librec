@@ -6,7 +6,7 @@ import sys
 import json
 from datetime import date
 RUN_CONFIG_FILE = 'run_parameters.txt'
-HYBRID_JAR = 'hybrid_librec_1st.jar'
+HYBRID_JAR = 'hybrid_librec.jar'
 STARTING_CONFIG_FILE = 'current_config.properties'
 #JAVA_PATH = 'C:\Program Files (x86)\Common Files\Oracle\Java\javapath'
 runs = list()
