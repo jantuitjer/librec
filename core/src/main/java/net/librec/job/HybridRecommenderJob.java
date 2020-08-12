@@ -8,6 +8,7 @@ import net.librec.data.DataSplitter;
 import net.librec.data.splitter.KCVDataSplitter;
 import net.librec.data.splitter.LOOCVDataSplitter;
 import net.librec.eval.EvalContext;
+import net.librec.eval.HybridEvalContext;
 import net.librec.eval.Measure;
 import net.librec.eval.RecommenderEvaluator;
 import net.librec.math.algorithm.Randoms;
@@ -84,7 +85,7 @@ public class HybridRecommenderJob extends RecommenderJob {
             nextDataModel();
             nextSimilarities();
             trainHybridRecommender();
-            evaluateHybrid(hybridRecommender, hybridContext);
+            evaluateHybrid(hybridRecommender);
         }
         printCVAverageResult();
         boolean isRanking = hybridConfig.getBoolean("rec.recommender.isranking");
@@ -98,8 +99,8 @@ public class HybridRecommenderJob extends RecommenderJob {
         saveResult(recommendedList);
     }
 
-    private void evaluateHybrid(AbstractHybridRecommender hybridRecommender, HybridContext hybridContext) throws LibrecException, IOException, ClassNotFoundException {
-        EvalContext evalContext = new EvalContext(hybridConfig, hybridRecommender, hybridRecommender.getCommonTestDataSet());
+    private void evaluateHybrid(AbstractHybridRecommender hybridRecommender) throws LibrecException {
+        EvalContext evalContext = new HybridEvalContext(hybridConfig, hybridRecommender, hybridRecommender.getCommonTestDataSet());
         evaluatedMap = new HashMap<>();
         boolean isRanking = hybridConfig.getBoolean("rec.recommender.isranking");
         int topN = 10;
@@ -249,7 +250,7 @@ public class HybridRecommenderJob extends RecommenderJob {
             dataModels = new ArrayList<>();
             for (int i = 0; i < hybridConfig.getConfigs().size(); i++) {
                 if (hybridConfig.getBoolean("data.model.sync")) {
-                    if(seed_to_use == 0L){
+                    if (seed_to_use == 0L) {
                         Random r = new Random();
                         seed_to_use = r.nextLong();
                     }
