@@ -10,7 +10,7 @@
 @prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
 
 
-[film_rule1: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) greaterThan(?av, 4.0) greaterThan(?nr, 1000) -> (?m rdf:type 'PopularFilm')]
+[film_rule1: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) greaterThan(?av, 4.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:PopularFilm)]
 
 [film_rule2: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) lessThan(?av, 2.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:UnpopularFilm)]
 
@@ -18,3 +18,20 @@
 
 [film_rule4: (?m rdf:type dbo:Film) (?m jt:avgRating ?ar) greaterThan(?ar, 4.0) (?m jt:numberOfRatings ?nr) lessThan(?nr, 100) -> (?m jt:movieTrait 'hidden gem')]
 
+[film_genre_rule1: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Action) (?m jt:ofGenre ex:g_Comedy) -> (?m jt:ofGenre ex:g_ActionComedy)]
+
+[film_genre_rule2: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Children) (?m jt:ofGenre ex:g_Animation) -> (?m jt:ofGenre ex:g_ChildrenAnimation)]
+
+[film_genre_rule3: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Action) (?m jt:ofGenre ex:g_Thriller) -> (?m jt:ofGenre ex:g_ActionThriller)]
+
+[film_genre_rule4: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Romance) (?m jt:ofGenre ex:g_Comedy) -> (?m jt:ofGenre ex:g_RomCom)]
+
+[film_genre_rule5: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Crime) (?m jt:ofGenre ex:g_Action) -> (?m jt:ofGenre ex:g_PoliceMovie)]
+
+[film_genre_rule6: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Crime) (?m jt:ofGenre ex:g_Thriller) -> (?m jt:ofGenre ex:g_PoliceMovie)]
+
+[film_genre_rule7: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_PoliceMovie) (?m jt:ofGenre ex:g_Film-Noir) -> (?m jt:ofGenre ex:g_Detective)]
+
+[film_genre_rule8: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Fantasy) (?m jt:ofGenre ex:g_Horror) -> (?m jt:ofGenre ex:g_Supernatural)]
+
+[film_genre_rule9: (?m rdf:type dbo:Film) (?m jt:ofGenre ex:g_Sci-Fi) (?m jt:ofGenre ex:g_Adventure) -> (?m jt:ofGenre ex:g_SpaceOpera)]

@@ -16,3 +16,15 @@
 (?u jt:ratedMovie ?prev_r) (?prev_r jt:hasRated ?prev_m) (?prev_r jt:withRating ?prev_s) 
 (?r jt:withRating ?s) le(?prev_s, ?s) (?prev_r jt:atTime ?prev_t) (?r jt:atTime ?t) lessThan(?prev_t, ?t) 
 -> remove(1) (?u jt:favoriteMovie ?m) (?u jt:checkedForFavorite ?m)]
+
+
+
+[test: (?u rdf:type foaf:Person) (?g rdf:type dbo:Genre) noValue(?u jt:interestedInGenre ?g) ->makeInstance(?u jt:interstIn ?i) (?i jt:genreOfInterest ?g) (?i jt:weightOfInterst 0) ]
+
+[test1: (?r rdf:type jt:UserFilmRating) (?r jt:hasRated ?m) 
+		(?m jt:ofGenre ?g) (?r jt:wasGivenBy ?u) (?u jt:interestedInGenre ?i)
+		(?i jt:interestedInGenre ?ig) equal(?g, ?ig) (?i jt:weightOfInterst ?w) ->
+		remove(7) sum(?w,1,?s)(?i jt:weightOfInterst ?s)]
+		
+[test2: (?u rdf:type foaf:Person) (?u jt:interestedInGenre ?g) (?g jt:weightOfInterst ?w) 
+	greaterThan(?w, 10) -> (?u jt:likes ?g)]
