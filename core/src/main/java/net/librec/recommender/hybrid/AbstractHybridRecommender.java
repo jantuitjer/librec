@@ -13,7 +13,6 @@ import net.librec.recommender.AbstractRecommender;
 import net.librec.recommender.HybridContext;
 import net.librec.recommender.item.*;
 
-import java.security.Key;
 import java.util.*;
 
 /**
@@ -243,9 +242,9 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
                 prevUser = users[0];
             }
         }
-        System.out.println("entryMap.size() = " + entryMap.size());
-        System.out.println("entryMap.get(0) = " + entryMap.get(0));
-        System.out.println("entryMap = " + entryMap.get(0).size());
+//        System.out.println("entryMap.size() = " + entryMap.size());
+//        System.out.println("entryMap.get(0) = " + entryMap.get(0));
+//        System.out.println("entryMap = " + entryMap.get(0).size());
         for(Integer user_index : entryMap.get(0).keySet()){
             Map<Integer, Double> item_values = new HashMap<>();
             for (int i = 0; i < iterators.size(); i++) {
@@ -350,6 +349,10 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
 
     private boolean getSyncMode() {
         return hybridConf.getBoolean("data.model.sync", false);
+    }
+
+    public HybridConfiguration getHybridConf(){
+        return hybridConf;
     }
 
     protected abstract double handleSingleRecommendedItem(int i, double value);

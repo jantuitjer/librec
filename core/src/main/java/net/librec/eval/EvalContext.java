@@ -159,5 +159,6 @@ public class EvalContext {
     public void setDebugMode(boolean _mode){
         debugMode = _mode;
     }
+    public Recommender getRecommender(){return recommender;}
 
 }

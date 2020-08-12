@@ -49,6 +49,7 @@ public class HybridConfiguration extends Configuration{
         mandatoryProperties = new ArrayList<>();
         mandatoryProperties.add("rec.hybrid.class");
         mandatoryProperties.add("data.hybrid.configs.path");
+        mandatoryProperties.add("data.model.sync");
     }
 
     public HashMap<String, String> getProperties(){
