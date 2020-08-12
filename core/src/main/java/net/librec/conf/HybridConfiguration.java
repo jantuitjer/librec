@@ -28,11 +28,13 @@ public class HybridConfiguration extends Configuration{
         assert listOfFiles != null;
         for (File file : listOfFiles) {
             if (file.isFile()) {
+                System.out.println("file.getName() = " + file.getName());
                 Configuration conf = new Configuration();
                 config.ConfigurationParser.parse(file, conf);
                 configs.add(conf);
             }
         }
+        System.exit(9);
     }
 
     private void validateProperties() throws MissingArgumentException {
