@@ -39,7 +39,6 @@ public class HybridConfiguration extends Configuration{
             ConfigurationParser.parse(confFile, conf);
             configs.add(conf);
         }
-        System.exit(9);
     }
 
     private void validateProperties() throws MissingArgumentException {
