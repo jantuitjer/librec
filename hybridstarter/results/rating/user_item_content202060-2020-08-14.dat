@@ -1,0 +1,20 @@
+Results of hybrid_librec.jar for starter_configs/rating/user_item_content/user_item_content202060.properties"2020-08-1420/08/14 11:10:59 INFO TextDataConvertor: Dataset: [../data/movielens/ml-100k/ratings.txt]
+20/08/14 11:10:59 INFO TextDataConvertor: DataSet: ...\data\movielens\ml-100k\ratings.txt is finished
+20/08/14 11:11:00 INFO TextDataConvertor: rating Scale: [1.0, 2.0, 3.0, 4.0, 5.0]
+20/08/14 11:11:00 INFO TextDataConvertor: user number: 943,	 item number is: 1682
+20/08/14 11:11:00 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/14 11:11:00 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/14 11:11:00 INFO TextDataModel: Data cardinality of training is 80019
+20/08/14 11:11:00 INFO TextDataModel: Data cardinality of testing is 19981
+Exception in thread "main" java.lang.RuntimeException: java.lang.NullPointerException
+	at net.librec.util.ReflectionUtil.newInstance(ReflectionUtil.java:72)
+	at net.librec.util.ReflectionUtil.newInstance(ReflectionUtil.java:55)
+	at net.librec.job.RecommenderJob.executeRecommenderJob(RecommenderJob.java:123)
+	at net.librec.job.RecommenderJob.runJob(RecommenderJob.java:89)
+	at Main.jobExecution(Main.java:42)
+	at Main.run(Main.java:34)
+	at Main.main(Main.java:18)
+Caused by: java.lang.NullPointerException
+	at java.util.concurrent.ConcurrentHashMap.get(Unknown Source)
+	at net.librec.util.ReflectionUtil.newInstance(ReflectionUtil.java:64)
+	... 6 more
