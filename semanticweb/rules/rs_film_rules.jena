@@ -8,7 +8,7 @@
 @prefix schema: <https://schema.org/place> .
 @prefix jt: <http://schema.example.org/> .
 @prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
-
+@prefix ex:   <http://example.org/>.
 
 [film_rule1: (?m rdf:type dbo:Film) (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) greaterThan(?av, 4.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:PopularFilm)]
 

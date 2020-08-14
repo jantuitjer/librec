@@ -13,29 +13,37 @@
 
 # definition of UserFilmRating class
 jt:UserFilmRating owl:equivalentClass [
-    owl:onProperty jt:hasRatedMovie ;
+    owl:onProperty jt:hasRated ;
     owl:onProperty jt:withRating ;
     owl:onProperty jt:atTime ;
+	owl:onProperty jt:wasGivenBy;
+].
+# definition of UserGenreInterest class
+jt:UserGenreInterest owl:equivalentClass [
+    owl:onProperty jt:interestWeight;
 ].
 
+#definition of wasGivenBy property
+jt:wasGivenBy rdfs:domain jt:UserFilmRating;
+	rdfs:range foaf:Person.
+
+jt:hasGiven owl:inverseOf jt:wasGivenBy.
+
+jt:interestWeight rdfs:domain jt:UserGenreInterest;
+	rdfs:range xsd:integer.
+	
 # definition of withRating property
 jt:withRating	a rdf:Property;
 	rdfs:domain jt:UserFilmRating;
 	rdfs:range xsd:double.
 	
 # definition of atTime property
-jt:atTime	a rdf:Property;
-	rdfs:domain jt:UserFilmRating.
-
-# definition of hasRatedMovie property
-jt:hasRatedMovie a rdf:Property.
+jt:atTime rdfs:domain jt:UserFilmRating;
+	rdfs:range xsd:integer.
 
 # definition of hasRated property
-jt:hasRated	a rdf:Property.
-
-#definition of ratedBy property which is inverse of hasRated
-jt:ratedBy a rdf:Property;
-	owl:inverseOf jt:hasRated.
+jt:hasRated rdfs:domain jt:UserFilmRating;
+	rdfs:range dbo:Film.
 
 #definition of total rating literal
 jt:totalRatings a rdfs:Literal;
@@ -51,20 +59,24 @@ jt:avgOfRatings a rdfs:Literal;
 	rdfs:range xsd:double.
 
 #definition of avg of ratings property 
-jt:avgRating a rdf:Property;
-	rdfs:domain dbo:Film;
+jt:avgRating rdfs:domain dbo:Film;
 	rdfs:range jt:avgOfRatings.
 
 #defintion property favoriteGenre
-jt:favoriteGenre a rdf:Property;
-	rdfs:domain foaf:Person;
+jt:favoriteGenre rdfs:domain foaf:Person;
 	rdfs:range dbo:Genre.
 	
 #defintion property of genre
-jt:ofGenre a rdf:Property;
-	rdfs:domain dbo:Film;
+jt:ofGenre rdfs:domain dbo:Film;
 	rdfs:range dbo:Genre.
 
+#defintion jt:highestRating
+jt:highestRating rdfs:domain foaf:Person;
+	rdfs:range xsd:double.
+	
+#defintion jt:highestRatingTime
+jt:highestRatingTime rdfs:domain foaf:Person;
+	rdfs:range xsd:integer.
 
 #defintion of inferred knowledge
 jt:PopularFilm rdfs:SubClassOf dbo:Film.

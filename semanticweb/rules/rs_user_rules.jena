@@ -1,30 +1,60 @@
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix dbc: <http://dbpedia.org/resource/Category:> . 
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
-@prefix schema: <https://schema.org/place> .
-@prefix jt: <http://schema.example.org/> .
-@prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix dbo:  <http://dbpedia.org/ontology/>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix jt:   <http://schema.example.org/>.
+@prefix xsd:  <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes>.
+@prefix schema: <https://schema.org/place>.
+@prefix ex:   <http://example.org/>.
+
+#favoriteMovie rules
+#[highestRatingInit: (?r jt:wasGivenBy ?u) noValue(?u jt:highestRating)
+#	 noValue(?u jt:checked ?r) (?r jt:withRating ?rating) (?r jt:atTime ?t)
+#	  -> (?u jt:highestRating ?rating) (?u jt:highestRatingTime ?t) (?u jt:checked ?r)]
+
+#[highestRatingUpdate: (?r jt:wasGivenBy ?u) noValue(?u jt:checked ?r) (?u jt:highestRating ?high)
+#	 (?r jt:withRating ?rating) greaterThan(?rating, ?high) (?u jt:highestRatingTime ?time) (?r jt:atTime ?t)
+#	-> remove(2) remove(5) (?u jt:highestRating ?rating) (?u jt:highestRatingTime ?t) (?u jt:checked ?r)]
+
+#[newerEqualRatingInit: (?r jt:wasGivenBy ?u) noValue(?u jt:checked ?r) (?u jt:highestRating ?high) 
+#	(?r jt:withRating ?rating) equal(?rating, ?high) (?u jt:highestRatingTime ?time) 
+#	(?r jt:atTime ?t)greaterThan(?t, ?time)
+#	-> (?u jt:highestRatingTime ?t) remove(5) (?u jt:checked ?r)]
+
+#[initFavMov: (?r jt:wasGivenBy ?u) (?u jt:highestRating ?high) (?u jt:highestRatingTime ?t)
+#	(?r jt:atTime ?time) equal(?time, ?t) (?r jt:withRating ?rating) equal(?rating ?high)(?r jt:hasRated ?m)
+#	-> (?u jt:favoriteMovie ?m)]
 
 
-[user_init_favmov: (?u rdf:type foaf:Person) noValue(?u jt:favoriteMovie) (?r rdf:type jt:UserFilmRating) (?u jt:ratedMovie ?r) (?r jt:hasRated ?m) -> (?u jt:favoriteMovie ?m) (?u jt:checkedForFavorite ?m)]
+#userInterestInGenreRules
+[userInterestedInGenre: (?ugi jt:interestWeight ?w) greaterThan(?w, 20) (?ugi jt:forGenre ?g) 
+	(?ugi jt:ofUser ?u) -> (?u jt:interestedInGenre ?g)]
 
-[user_update_favmov_n:(?u rdf:type foaf:Person) (?u jt:favoriteMovie ?prev_m) (?u jt:ratedMovie ?r) (?r jt:hasRated ?m) noValue(?u jt:checkedForFavorite ?m)
-(?u jt:ratedMovie ?prev_r) (?prev_r jt:hasRated ?prev_m) (?prev_r jt:withRating ?prev_s) 
-(?r jt:withRating ?s) le(?prev_s, ?s) (?prev_r jt:atTime ?prev_t) (?r jt:atTime ?t) lessThan(?prev_t, ?t) 
--> remove(1) (?u jt:favoriteMovie ?m) (?u jt:checkedForFavorite ?m)]
+[createUserGenreInterest: (?u rdf:type foaf:Person) (?g rdf:type dbo:Genre) 
+	append(?u, ?g, ?ugi) noValue(?ugi rdf:type jt:UserGenreInterest) 
+		-> (?ugi rdf:type jt:UserGenreInterest) (?ugi jt:interestWeight 0) (?ugi jt:ofUser ?u) (?ugi jt:forGenre ?g)]
+
+[updateUserGenreInterestWeight: (?r jt:wasGivenBy ?u)  (?r jt:hasRated ?m) (?m jt:ofGenre ?movGen)
+ 	noValue(?r jt:considered ?movGen) append(?u,?movGen,?ugi) (?ugi jt:interestWeight ?w) sum(?w,1,?s) 
+	 	-> remove(5) (?ugi jt:interestWeight ?s) (?r jt:considered ?movGen)]
 
 
+#'recommend_rules'
+[genreInc: (?u jt:interestedInGenre ?g) (?r jt:wasGivenBy ?u) noValue(? jt:modifiedForGenre ?g)
+	(?r jt:withRating ?oldRating) lessThan(?oldRating,5.0) (?r jt:hasRated ?m)
+		(?m jt:ofGenre ?movGen) equal(?movGen, ?g) sum(?oldRating,0.25, ?newRating) 
+			-> remove(3) (?r jt:withRating ?newRating) (?r jt:modifiedForGenre ?g)]
 
-[test: (?u rdf:type foaf:Person) (?g rdf:type dbo:Genre) noValue(?u jt:interestedInGenre ?g) ->makeInstance(?u jt:interstIn ?i) (?i jt:genreOfInterest ?g) (?i jt:weightOfInterst 0) ]
 
-[test1: (?r rdf:type jt:UserFilmRating) (?r jt:hasRated ?m) 
-		(?m jt:ofGenre ?g) (?r jt:wasGivenBy ?u) (?u jt:interestedInGenre ?i)
-		(?i jt:interestedInGenre ?ig) equal(?g, ?ig) (?i jt:weightOfInterst ?w) ->
-		remove(7) sum(?w,1,?s)(?i jt:weightOfInterst ?s)]
-		
-[test2: (?u rdf:type foaf:Person) (?u jt:interestedInGenre ?g) (?g jt:weightOfInterst ?w) 
-	greaterThan(?w, 10) -> (?u jt:likes ?g)]
+[favMovieInit: (?r jt:wasGivenBy ?u) noValue(?u jt:favoriteMovie) noValue(?r jt:consideredFav) 
+	-> print(init, ?r) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
+
+[favMovUpdateHigherRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFav)
+(?r jt:withRating ?rating) (?fav jt:withRating ?favRating) greaterThan(?rating, ?favRating)
+	 	 -> print(updateGT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
+	 	 
+[favMovUpdateNewerRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFav)
+	(?r jt:withRating ?rating) (?fav jt:withRating ?favRating) equal(?rating, ?favRating)
+		(?fav jt:atTime ?favTime) (?r jt:atTime ?time) greaterThan(?time, ?favTime)
+	 		 -> print(updateNT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
