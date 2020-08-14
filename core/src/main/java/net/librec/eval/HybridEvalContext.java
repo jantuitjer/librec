@@ -19,28 +19,23 @@ public class HybridEvalContext extends EvalContext {
 
     public HybridEvalContext(Configuration conf, RecommendedList recommendedList, SequentialAccessSparseMatrix testMatrix, SymmMatrix similarityMatrix, Map<String, RecommenderSimilarity> similarities) {
         super(conf, recommendedList, testMatrix, similarityMatrix, similarities);
-        System.out.println("DAFUQ");
     }
 
     public HybridEvalContext(Configuration conf, RecommendedList recommendedList, SequentialAccessSparseMatrix testMatrix) {
         super(conf, recommendedList, testMatrix);
-        System.out.println("DAFUQ");
     }
 
     public HybridEvalContext(Configuration conf, Recommender recommender, DataSet testDataset) throws LibrecException {
         super(conf, recommender, testDataset);
-        System.out.println("DAFUQ");
         initHybridRecommender(recommender);
     }
 
     public HybridEvalContext(Configuration conf, Recommender recommender, DataSet testDataset, SymmMatrix similarityMatrix, Map<String, RecommenderSimilarity> similarities) throws LibrecException {
         super(conf, recommender, testDataset, similarityMatrix, similarities);
         initHybridRecommender(recommender);
-        System.out.println("DAFUQ");
     }
 
     private void initHybridRecommender(Recommender recommender) {
-        System.out.println("HybridEvalContext.initHybridRecommender");
         if (recommender instanceof AbstractHybridRecommender) {
             hybridRecommender = (AbstractHybridRecommender) recommender;
         } else {
