@@ -1,4 +1,4 @@
-package config;
+package net.librec.conf;
 
 import net.librec.conf.Configuration;
 import net.librec.conf.HybridConfiguration;

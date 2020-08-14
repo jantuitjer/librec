@@ -1,13 +1,12 @@
 package net.librec.conf;
 
 import org.apache.commons.cli.MissingArgumentException;
-import sun.nio.ch.ThreadPool;
+import org.apache.commons.io.comparator.NameFileComparator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ForkJoinPool;
 
 public class HybridConfiguration extends Configuration{
     private ArrayList<Configuration> configs;
@@ -16,23 +15,31 @@ public class HybridConfiguration extends Configuration{
 
     public HybridConfiguration(String _pathToHybridConf) throws FileNotFoundException, MissingArgumentException {
         initDefaults();
-        config.ConfigurationParser.parseHybridConfiguration(_pathToHybridConf, this);
+        ConfigurationParser.parseHybridConfiguration(_pathToHybridConf, this);
         validateProperties();
         initConfigurations();
     }
 
     private void initConfigurations() throws FileNotFoundException {
         final String configPath = properties.get("data.hybrid.configs.path");
+        ArrayList<File> configFiles = new ArrayList<>();
         File folder = new File(configPath);
         File[] listOfFiles = folder.listFiles();
         assert listOfFiles != null;
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                Configuration conf = new Configuration();
-                config.ConfigurationParser.parse(file, conf);
-                configs.add(conf);
+                System.out.println("file = " + file);
+                configFiles.add(file);
             }
         }
+        configFiles.sort(new NameFileComparator());
+        for(File confFile : configFiles) {
+            System.out.println(confFile);
+            Configuration conf = new Configuration();
+            ConfigurationParser.parse(confFile, conf);
+            configs.add(conf);
+        }
+        System.exit(9);
     }
 
     private void validateProperties() throws MissingArgumentException {
