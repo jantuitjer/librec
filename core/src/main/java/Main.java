@@ -1,5 +1,6 @@
 import net.librec.common.LibrecException;
 import net.librec.conf.Configuration;
+import net.librec.conf.ConfigurationParser;
 import net.librec.conf.HybridConfiguration;
 import net.librec.job.HybridRecommenderJob;
 import net.librec.job.RecommenderJob;
@@ -18,7 +19,7 @@ public class Main {
             run(args[0]);
         } else {
             System.out.println("Starting HybridRecommender:");
-            hybridJobExecution("conf/hybridconfig.properties");
+            hybridJobExecution("conf/hybridtopicmfat.properties");
 //        System.out.println("Starting single UserKNN:");
 //        jobExecution(FILE_PATH_USER);
 //        System.out.println("Starting solo ItemKNN:");
@@ -36,14 +37,14 @@ public class Main {
 
     private static void jobExecution(String _path) throws LibrecException, IOException, ClassNotFoundException {
         Configuration conf = new Configuration();
-        config.ConfigurationParser.parse(_path, conf);
+        ConfigurationParser.parse(_path, conf);
         RecommenderJob job = new RecommenderJob(conf);
         job.runJob();
 
     }
 
     private static void hybridJobExecution(String _pathToHybridConfiguration) throws IOException, MissingArgumentException, LibrecException, ClassNotFoundException {
-        net.librec.conf.HybridConfiguration hybridConf = new HybridConfiguration(_pathToHybridConfiguration);
+        HybridConfiguration hybridConf = new HybridConfiguration(_pathToHybridConfiguration);
         System.err.println("ranking: "+hybridConf.get("rec.recommender.isranking"));
         System.err.println("weights = " + hybridConf.get("rec.hybrid.weights"));
         HybridRecommenderJob hrj = new HybridRecommenderJob(hybridConf);

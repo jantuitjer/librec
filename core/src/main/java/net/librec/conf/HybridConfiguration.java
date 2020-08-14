@@ -28,13 +28,13 @@ public class HybridConfiguration extends Configuration{
         assert listOfFiles != null;
         for (File file : listOfFiles) {
             if (file.isFile()) {
-                System.out.println("file = " + file);
                 configFiles.add(file);
             }
         }
+        //needed to achieve the desired order of configurations
+        //in windows and linux systems, which produce different orders by default
         configFiles.sort(new NameFileComparator());
         for(File confFile : configFiles) {
-            System.out.println(confFile);
             Configuration conf = new Configuration();
             ConfigurationParser.parse(confFile, conf);
             configs.add(conf);
