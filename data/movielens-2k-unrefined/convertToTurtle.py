@@ -3,12 +3,38 @@ import sys
 from datetime import datetime
 os.chdir(os.path.dirname(sys.argv[0]))
 
+
+region_dict = {'Afghanistan': 'Central Asia','Kazakhstan' : 'Central Asia',
+'China' : 'East Asia', 'Hong Kong': 'East Asia', 'Japan' : 'East Asia', 'South Korea' : 'East Asia', 'Taiwan': 'East Asia', 
+'Bhutan': 'South Asia','India': 'South Asia',
+'Philippines' : 'South East Asia', 'Singapore' : 'South East Asia', 'Thailand': 'South East Asia', 'Vietnam': 'South East Asia',
+'Occupied Palestinian Territory':'Western Asia', 'Iran':'Western Asia', 'Israel':'Western Asia','Turkey': 'Western Asia',
+'Algeria' :'Africa','Burkina Faso' :'Africa','Botswana' :'Africa','Ivory Coast': 'Africa','Libya':'Africa','Senegal':'Africa', 'South Africa':'Africa', 'Tunisia':'Africa',
+'Denmark':'North Europe', 'Finland':'North Europe', 'Iceland':'North Europe', 'Norway':'North Europe','Sweden':'North Europe',
+'Austria': 'Central Europe', 'Croatia':'Central Europe','Czech Republic':'Central Europe','Czechoslovakia':'Central Europe','East Germany':'Central Europe','Federal Republic of Yugoslavia':'Central Europe'
+,'Germany':'Central Europe','Hungary':'Central Europe','Poland':'Central Europe','Switzerland':'Central Europe','West Germany':'Central Europe','Yugoslavia':'Central Europe'
+,'Russia':'Eastern Europe','Soviet Union':'Eastern Europe',
+'Bulgaria':'South Eastern Europe','Romania':'South Eastern Europe','Bosnia and Herzegovina':'South Eastern Europe','Republic of Macedonia':'South Eastern Europe','Greece':'South Eastern Europe',
+'Belgium':'Western Europe','France':'Western Europe','Ireland':'Western Europe','Netherlands':'Western Europe','UK':'Western Europe'
+,'Italy':'Southern Europe','Portugal':'Southern Europe','Spain':'Southern Europe'
+,'Aruba':'Caribbean','Cuba':'Caribbean','Jamaica':'Caribbean'
+,'Canada':'North America','Mexico':'North America','USA':'North America'
+,'Argentina':'South America','Brazil':'South America','Chile':'South America','Colombia':'South America','Peru':'South America','Venezuela':'South America'
+,'Australia':'Oceania','New Zealand':'Oceania'
+,'\t':'Unknown', '\n':'Unknown', None: 'Unknown', '':'Unknown'}
+
 user_dict = dict()
 movie_dict = dict()
 genre_dict = dict()
 director_dict = dict()
 country_dict = dict()
 rated_movie_dict = dict()
+genre_list = []
+
+
+avg_dir_rating_dict = dict()
+avg_region_rating_dict = dict()
+
 if not(os.path.isdir("out_ttl")):   #check if 'out dir exists
     os.mkdir("out_ttl")
 
@@ -48,12 +74,10 @@ def read_user_rating_file():
 		user, movie, rating, time = line.strip().split('\t')
 		user_entry = user_dict.get(user)
 		rating = float(rating)
-		#print(user, movie, rating)
-		#exit(-9)
 		if user_entry is None:
-			user_dict[user] = {'has_rated' : [movie], 'avgRating' : rating}
+			user_dict[user] = {'has_rated' : {movie: rating}, 'avgRating' : rating, 'director_ratings':{}, 'region_ratings':{}}
 		else:
-			user_entry.get('has_rated').append(movie)
+			user_entry.get('has_rated').update({movie: rating})
 			user_entry['avgRating'] = user_entry.get('avgRating') + rating
 		movie_entry = movie_dict.get(movie)
 		if movie_entry is None:
@@ -62,7 +86,9 @@ def read_user_rating_file():
 			movie_entry.get('was_rated').append(user)
 			movie_entry['avgRating'] = movie_entry.get('avgRating') + rating
 		rated_movie_dict[user+'_'+movie] ={'rating' : rating, 'time': time}
-
+		avg_region_rating_dict[user] = {}
+		
+		
 def read_genre_file():
 	f = open('movie_genres.dat')
 	next(f)
@@ -77,16 +103,21 @@ def read_genre_file():
 				movie['genre'] = [genre]
 			else:
 				movie_dict.get(id).get('genre').append(genre)
+		if genre not in genre_list:
+			genre_list.append(genre)
+
 
 def read_country_file():
 	f = open('movie_countries.dat')
 	next(f)
+	real_country_dict = dict()
 	for line in f:
 		id, country = line.split('\t')
 		country_dict[id] = country.strip()
-		movie_dict.get(id).update({'country':country_dict.get(id)})
-		
-		
+		movie_dict.get(id).update({'country':country_dict.get(id), 'region': region_dict.get(country_dict.get(id))})
+		if real_country_dict.get(country.strip()) is None:
+			real_country_dict[country.strip()] = 1
+
 def read_movie_file():
 	id_pos = 0
 	year_pos = 5
@@ -113,6 +144,7 @@ def read_director_file():
 		if cur_dir is None:
 			director_dict['directorId'] = director
 
+
 def refine_data():
 #user related refinement
 	for user_id in user_dict:
@@ -124,9 +156,13 @@ def refine_data():
 			for currentGenre in mGenres:
 				if rated_dict.get(currentGenre) is None:
 				## maybe add rating into account to estimate favorite rating
-					rated_dict[currentGenre] = 1
+					rated_dict[currentGenre] = (user.get('has_rated').get(mId),1 )
 				else:
-					rated_dict[currentGenre] = rated_dict.get(currentGenre) + 1
+					update_values = rated_dict.get(currentGenre)
+					new_values = (update_values[0] + user.get('has_rated').get(mId),update_values[1] + 1)
+					rated_dict[currentGenre] = new_values
+		for genre in rated_dict:
+			rated_dict[genre] = rated_dict[genre][0] / rated_dict[genre][1]
 		favorite_genre = max(rated_dict, key=rated_dict.get)	#extract genre with most ratings by this user
 		user.update({'favorite_genre': favorite_genre})	
 #movie related refinement
@@ -139,7 +175,55 @@ def refine_data():
 			tmp_avg = movie.get('avgRating')
 			movie['numOfRatings'] = len(movie.get('was_rated'))
 			movie['avgRating'] = movie.get('avgRating') / len(movie.get('was_rated'))
+	avg_director_rating()
+	avg_region_rating()
+	
+def avg_region_rating():
+	for user_id in user_dict:
+		user = user_dict.get(user_id)
+		for movieId in user.get('has_rated'):
+			region = movie_dict.get(movieId).get('region')
+			if avg_region_rating_dict.get(user_id).get(region) is None:
+				avg_region_rating_dict.get(user_id)[region] = (user.get('has_rated').get(movieId),1)
+			else:
+				cur_val = avg_region_rating_dict.get(user_id).get(region)
+				new_val =(cur_val[0] + user.get('has_rated').get(movieId), cur_val[1] +1)
+				avg_region_rating_dict.get(user_id)[region] = new_val
+		for region in avg_region_rating_dict.get(user_id):
+			ratings = avg_region_rating_dict.get(user_id).get(region)
+			avg_region_rating = ratings[0] / ratings[1]
+			avg_region_rating_dict.get(user_id)[region] = avg_region_rating
+			user.get('region_ratings')[region] = avg_region_rating
 
+def avg_director_rating():
+	for user_id in user_dict:
+		user = user_dict.get(user_id)
+		if avg_dir_rating_dict.get(user_id) is None:
+			avg_dir_rating_dict[user_id] = {}
+		for movieId in user.get('has_rated'):
+			director = movie_dict.get(movieId).get('director')
+			if avg_dir_rating_dict.get(user_id).get(director) is None:
+				avg_dir_rating_dict.get(user_id)[director] = (user.get('has_rated').get(movieId),1)
+			else:
+				cur_val = avg_dir_rating_dict.get(user_id).get(director)
+				new_val =(cur_val[0] + user.get('has_rated').get(movieId), cur_val[1] +1)
+				avg_dir_rating_dict.get(user_id)[director] = new_val
+		for director in avg_dir_rating_dict.get(user_id):
+			ratings = avg_dir_rating_dict.get(user_id).get(director)
+			avg_dir_rating = ratings[0] / ratings[1]
+			avg_dir_rating_dict.get(user_id)[director] = avg_dir_rating
+			user.get('director_ratings')[director] = avg_dir_rating
+			# print(director, ratings, user_id, avg_dir_rating)
+		# print(user.get('director_ratings'))
+		# exit(9)
+
+def write_genre_ttl():
+	f = open('genres.ttl', 'w')
+	f.write(get_header())
+	for genre in genre_list: 	
+		f.write(make_ttl_string(['ex:g_{}'.format(genre), 'a', 'dbo:Genre']))
+
+	
 def write_movie_ttl():
 	f = open('out_ttl/movies.ttl', 'w')
 	f.write(get_header())
@@ -173,10 +257,9 @@ def get_movie_ttl(movId:int):
 	mlist.extend(['schema:director', 'ex:d_' + director])
 	mlist.extend(['jt:avgRating', c_movie.get('avgRating')])
 	mlist.extend(['jt:numberOfRatings', c_movie.get('numOfRatings')])
+	mlist.extend(['jt:fromRegion', c_movie.get('region')])
 	for genre in c_movie.get('genre'):
 		mlist.extend(['jt:ofGenre', 'ex:g_'+genre])
-	#for userId in movie.get('was_rated'):
-	#	mlist.extend(['jt:filmedInConuntry', movie.get('country')])
 	return make_ttl_string(mlist)
 	
 	
@@ -205,18 +288,20 @@ def write_ttl_extended():
 	f.write(get_header())
 	rf = None
 	user_movie_rating_dict = dict()
+	user_direcor_rating_dict = dict()
 	for userId in user_dict:
 		user = user_dict.get(userId)
 		list = ['ex:u_' + userId, 'a', 'foaf:Person']
 		list.extend(['jt:favoriteGenre', 'ex:g_{}'.format(user.get('favorite_genre'))])
-		#tmp_ttl = make_ttl_string(list).strip().replace('.', ';')
-		#tmp_ttl += '\n\t'
 		for mId in user.get('has_rated'):
 			list.extend(['jt:ratedMovie', 'ex:r_{}_{}'.format(userId, mId)])
 			rating_obj = rated_movie_dict.get(userId+'_'+mId)
 			user_movie_rating_dict[userId+'_'+mId]={'rating': rating_obj.get('rating'),'time': rating_obj.get('time'),'user':userId, 'movie':mId}
-			#tmp_ttl += make_bracket_ttl(mId, rating_obj.get('rating'), rating_obj.get('time'))
-		#tmp_ttl = tmp_ttl[:-2]+'.\n'
+		for rated_director in user.get('director_ratings'):
+			if user_direcor_rating_dict.get(userId) is None:
+				user_direcor_rating_dict[userId] = {rated_director : user.get('director_ratings').get(rated_director)}
+			else:
+				user_direcor_rating_dict.get(userId)[rated_director] = user.get('director_ratings').get(rated_director)
 		f.write(make_ttl_string(list))
 	for movId in movie_dict:
 		f.write(get_movie_ttl(movId))
@@ -241,7 +326,6 @@ def write_ttl_extended():
 
 	
 def test():
-	#print(os.path.dirname(sys.argv[0]))
 	print('TESTING_TTL')
 	test = ('tdasdsd', 'a', 'letter', 'das', 'ds')
 	print(make_ttl_string(test))
@@ -258,9 +342,9 @@ def main():
 	#test()
 	get_data()
 	refine_data()
+	write_ttl_extended()
+	
 	#write_user_ttl()
 	#write_movie_ttl()
-	write_ttl_extended()
-
 if __name__ == "__main__":
     main()
