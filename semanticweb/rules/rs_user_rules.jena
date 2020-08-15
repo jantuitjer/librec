@@ -43,18 +43,18 @@
 #'recommend_rules'
 [genreInc: (?u jt:interestedInGenre ?g) (?r jt:wasGivenBy ?u) noValue(? jt:modifiedForGenre ?g)
 	(?r jt:withRating ?oldRating) lessThan(?oldRating,5.0) (?r jt:hasRated ?m)
-		(?m jt:ofGenre ?movGen) equal(?movGen, ?g) sum(?oldRating,0.25, ?newRating) 
+		(?m jt:ofGenre ?movGen) equal(?movGen, ?g) sum(?oldRating, 0.25, ?newRating) 
 			-> remove(3) (?r jt:withRating ?newRating) (?r jt:modifiedForGenre ?g)]
 
+#favoritMovie rules
+[favMovieInit: (?r jt:wasGivenBy ?u) noValue(?u jt:favoriteMovie) noValue(?r jt:consideredFavorite) 
+	-> print(init, ?r) (?u jt:favoriteMovie ?r) (?r jt:consideredFavorite 1)]
 
-[favMovieInit: (?r jt:wasGivenBy ?u) noValue(?u jt:favoriteMovie) noValue(?r jt:consideredFav) 
-	-> print(init, ?r) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
-
-[favMovUpdateHigherRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFav)
+[favMovUpdateHigherRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFavorite)
 (?r jt:withRating ?rating) (?fav jt:withRating ?favRating) greaterThan(?rating, ?favRating)
-	 	 -> print(updateGT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
+	 	 -> print(updateGT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFavorite 1)]
 	 	 
-[favMovUpdateNewerRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFav)
+[favMovUpdateNewerRating: (?r jt:wasGivenBy ?u) (?u jt:favoriteMovie ?fav) noValue(?r jt:consideredFavorite)
 	(?r jt:withRating ?rating) (?fav jt:withRating ?favRating) equal(?rating, ?favRating)
 		(?fav jt:atTime ?favTime) (?r jt:atTime ?time) greaterThan(?time, ?favTime)
-	 		 -> print(updateNT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFav 1)]
+	 		 -> print(updateNT, ?r) remove(1) (?u jt:favoriteMovie ?r) (?r jt:consideredFavorite 1)]
