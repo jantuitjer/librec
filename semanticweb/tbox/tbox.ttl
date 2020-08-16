@@ -51,11 +51,6 @@ jt:forGenre rdfs:domain jt:GenreRating;
 
 ## movie related
 #definition of number of ratings property 
-jt:yearOfFilming a rdfs:Literal;
-	rdfs:domain dbo:Film;
-	rdfs:range xsd:nonNegativeInteger.
-
-#definition of number of ratings property 
 jt:numberOfRatings a rdfs:Literal;
 	rdfs:domain dbo:Film;
 	rdfs:range xsd:nonNegativeInteger.
@@ -73,15 +68,6 @@ jt:avgRating a rdfs:Literal;
 #defintion property ofGenre
 jt:ofGenre rdfs:domain dbo:Film;
 	rdfs:range dbo:Genre.
-
-#defintion property shotIn
-jt:shotIn rdfs:domain dbo:Film;
-	rdfs:range schema:Country.
-
-#defintion property directedBy
-jt:shotIn rdfs:domain dbo:Film;
-	rdfs:range foaf:Person.
-
 
 ## location related
 jt:Region a rdfs:Class.
