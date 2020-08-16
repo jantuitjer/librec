@@ -2,81 +2,133 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix dbc: <http://dbpedia.org/resource/Category:> . 
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
 @prefix schema: <https://schema.org/place> .
 @prefix jt: <http://schema.example.org/> .
 @prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
-@prefix ex:   <http://example.org/>.
 
-
+##rating related
 # definition of UserFilmRating class
-jt:UserFilmRating owl:equivalentClass [
+jt:FilmRating owl:equivalentClass [
     owl:onProperty jt:hasRated ;
     owl:onProperty jt:withRating ;
     owl:onProperty jt:atTime ;
 	owl:onProperty jt:wasGivenBy;
 ].
-# definition of UserGenreInterest class
-jt:UserGenreInterest owl:equivalentClass [
-    owl:onProperty jt:interestWeight;
-].
 
 #definition of wasGivenBy property
-jt:wasGivenBy rdfs:domain jt:UserFilmRating;
+jt:wasGivenBy rdfs:domain jt:FilmRating;
 	rdfs:range foaf:Person.
 
-jt:hasGiven owl:inverseOf jt:wasGivenBy.
-
-jt:interestWeight rdfs:domain jt:UserGenreInterest;
-	rdfs:range xsd:integer.
-	
 # definition of withRating property
-jt:withRating	a rdf:Property;
-	rdfs:domain jt:UserFilmRating;
+jt:withRating	rdfs:domain jt:FilmRating;
 	rdfs:range xsd:double.
 	
 # definition of atTime property
-jt:atTime rdfs:domain jt:UserFilmRating;
+jt:atTime rdfs:domain jt:FilmRating;
 	rdfs:range xsd:integer.
 
 # definition of hasRated property
-jt:hasRated rdfs:domain jt:UserFilmRating;
+jt:hasRated rdfs:domain jt:FilmRating;
 	rdfs:range dbo:Film.
 
-#definition of total rating literal
-jt:totalRatings a rdfs:Literal;
+jt:hasGiven owl:inverseOf jt:wasGivenBy.
+
+
+## genre related
+
+# definition of GenreRating class
+jt:GenreRating owl:equivalentClass [
+    owl:onProperty jt:interestWeight;
+	owl:onProperty jt:forGenre;
+].
+jt:avgGenreRating rdfs:domain jt:GenreRating;
+	rdfs:range xsd:double.
+
+jt:forGenre rdfs:domain jt:GenreRating;
+	rdfs:range dbo:Genre.
+
+
+## movie related
+#definition of number of ratings property 
+jt:yearOfFilming a rdfs:Literal;
+	rdfs:domain dbo:Film;
 	rdfs:range xsd:nonNegativeInteger.
 
 #definition of number of ratings property 
-jt:numberOfRatings a rdf:Property;
+jt:numberOfRatings a rdfs:Literal;
 	rdfs:domain dbo:Film;
-	rdfs:range jt:totalRatings.
+	rdfs:range xsd:nonNegativeInteger.
 
-#definition of avg rating literal
-jt:avgOfRatings a rdfs:Literal;
+#definition of movieTrait
+jt:movieTrait a rdfs:Literal;
+	rdfs:domain dbo:Film;
+	rdfs:range xsd:string.
+
+#definition of avgRating 
+jt:avgRating a rdfs:Literal;
+	rdfs:domain dbo:Film;
 	rdfs:range xsd:double.
 
-#definition of avg of ratings property 
-jt:avgRating rdfs:domain dbo:Film;
-	rdfs:range jt:avgOfRatings.
-
-#defintion property favoriteGenre
-jt:favoriteGenre rdfs:domain foaf:Person;
-	rdfs:range dbo:Genre.
-	
-#defintion property of genre
+#defintion property ofGenre
 jt:ofGenre rdfs:domain dbo:Film;
 	rdfs:range dbo:Genre.
 
-#defintion jt:highestRating
-jt:highestRating rdfs:domain foaf:Person;
+#defintion property shotIn
+jt:shotIn rdfs:domain dbo:Film;
+	rdfs:range schema:Country.
+
+#defintion property directedBy
+jt:shotIn rdfs:domain dbo:Film;
+	rdfs:range foaf:Person.
+
+
+## location related
+jt:Region a rdfs:Class.
+jt:partOf rdfs:domain schema:Country;
+	rdfs:range jt:Region.
+jt:containedIn rdfs:domain jt:Region;
+	rdfs:range schema:Continent.
+
+
+## director related
+# definition of DirectorRating class
+jt:DirectorRating owl:equivalentClass [
+    owl:onProperty jt:belongsTo;
+	owl:onProperty jt:avgDirectorRating;
+].
+jt:belongsTo rdfs:domain jt:DirectorRating;
+	rdfs:range foaf:Person.
+
+jt:avgDirectorRating rdfs:domain jt:DirectorRating;
 	rdfs:range xsd:double.
+
+
+## person related
+#defintion property interestedInGenre
+jt:interestedInGenre rdfs:domain foaf:Person;
+	rdfs:range dbo:Genre.
+
+jt:hasGenreRating rdfs:domain foaf:Person;
+	rdfs:range jt:GenreRating.
+
+jt:hasDirectorRating rdfs:domain foaf:Person;
+	rdfs:range jt:DirectorRating.
+
+jt:likesDirector rdfs:domain foaf:Person;
+	rdfs:range foaf:Person.
+
+jt:favoriteMovie rdfs:domain foaf:Person;
+	rdfs:range jt:UserFilmRating.
+
+jt:likesMoviesOfRegion rdfs:domain foaf:Person;
+	rdfs:range jt:Region.
+
+jt:shouldWatch rdfs:domain foaf:Person;
+	rdfs:range dbo:Film.
 	
-#defintion jt:highestRatingTime
-jt:highestRatingTime rdfs:domain foaf:Person;
-	rdfs:range xsd:integer.
+jt:mustWatch rdfs:subPropertyOf jt:shouldWatch.
+
 
 #defintion of inferred knowledge
 jt:PopularFilm rdfs:SubClassOf dbo:Film.
