@@ -4,6 +4,18 @@ from datetime import datetime
 from ttl_util import make_ttl_string, get_header 
 os.chdir(os.path.dirname(sys.argv[0]))
 
+super_region_dict = {
+'CentralAsia': 'Asia',
+'EastAsia' : 'Asia',
+'SouthEastAsia' : 'Asia',
+'WesternAsia' : 'Asia',
+'NorthEurope': 'Europe',
+'CentralEurope': 'Europe',
+'SouthEasternEurope': 'Europe',
+'EasternEurope': 'Europe',
+'WesternEurope': 'Europe',
+'SouthernEurope': 'Europe',
+}
 
 region_dict = {
 'Afghanistan': 'CentralAsia',
@@ -156,17 +168,20 @@ def write_movie_region_ttl():
     for movie_id in movie_info_dict:
         movie = movie_info_dict.get(movie_id)
         list = ['movie:{}'.format(movie_id), 'a', 'dbo:Film']
-        list.extend(['jt:yearOfFilming', movie.get('year')])
+        list.extend(['schema:datePublished', movie.get('year')])
+        list.extend(['schema:countryOfOrigin', 'country:{}'.format(movie.get('country'))])
+        list.extend(['schema:director', 'director:{}'.format(movie.get('director'))])
         if movie.get('amt_ratings') is not None:
             list.extend(['jt:numberOfRatings', movie.get('amt_ratings')])
             list.extend(['jt:avgRating', movie.get('avg_rating')])
-        list.extend(['jt:shotIn', 'country:{}'.format(movie.get('country'))])
         for genre in movie.get('genres'):
             list.extend(['jt:ofGenre', 'genre:{}'.format(genre)])
         f.write(make_ttl_string(list))
     for country in country_dict:
         f.write(make_ttl_string(['country:{}'.format(country),'jt:partOf', 
             'region:{}'.format(region_dict.get(country))]))
+    for subRegion in super_region_dict:
+        f.write(make_ttl_string(['region:{}'.format(subRegion), 'jt:subRegionOf','region:{}'.format(super_region_dict.get(subRegion))]))
     f.close()
 
 def get_data():
