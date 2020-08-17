@@ -1,6 +1,6 @@
 import rdflib
 import rdfextras
-from ttl_util import make_ttl_string, get_header 
+from ttl_util import make_ttl_string, get_header, QUERY_HEADER
 from SPARQLWrapper import SPARQLWrapper, TURTLE, RDF, JSON, DIGEST,BASIC, POST
 
 SPARQL_ENDPOINT_QUERY = 'http://localhost:3030/movielens-2k/query'
@@ -28,7 +28,6 @@ prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/>
 prefix region: <http://region.example.org/>
 prefix user:  <http://user.example.org/> 
 prefix foaf:  <http://xmlns.com/foaf/0.1/> 
-
 {}"""
 #data holding
 user_rating_dict = dict()
@@ -39,31 +38,116 @@ genre_rating_dict = dict()
 director_rating_dict = dict()
 region_rating_dict = dict()
 
+def insert_user_regionrating(endpoint,insert_query):
+	records = ''
+	for userId in region_rating_dict:
+		user = region_rating_dict.get(userId)
+		for region in user:
+			avg_region_rating = user.get(region)
+			regionRatingName = 'rr:{}_{}'.format(userId, region)
+			record = [regionRatingName, 'jt:regionRatingBelongsTo', 'user:{}'.format(userId)]
+			record.extend(['jt:avgRegionRating', avg_region_rating])
+			records += make_ttl_string(record)
+	endpoint.setQuery(insert_query.format(records))
+	endpoint.query()
+
+def insert_user_genrerating(endpoint,insert_query):
+	records = ''
+	for userId in genre_rating_dict:
+		user = genre_rating_dict.get(userId)
+		for genre in user:
+			avg_genre_rating = user.get(genre)
+			genreRatingName = 'gr:{}_{}'.format(userId, genre)
+			record = [genreRatingName, 'jt:genreRatingBelongsTo', 'user:{}'.format(userId)]
+			record.extend(['jt:avgGenreRating', avg_genre_rating])
+			records += make_ttl_string(record)
+	endpoint.setQuery(insert_query.format(records))
+	endpoint.query()
+
+
+def insert_user_directorrating(endpoint, insert_query):
+	
+	for userId in director_rating_dict:
+		records = ''
+		user = director_rating_dict.get(userId)
+		for directorId in user:
+			avg_director_rating = user.get(directorId)
+			directorRatingName = 'dr:{}_{}'.format(userId,directorId)
+			record = [directorRatingName,'jt:directorRatingBelongsTo', 'user:{}'.format(userId)]
+			record.extend(['jt:avgDirectorRating', avg_director_rating])
+			record.extend(['jt:forDirector', 'director:{}'.format(directorId)])
+			records += make_ttl_string(record)
+		endpoint.setQuery(insert_query.format(records))
+		endpoint.query()
+
+
+def insert_user_filmrating(endpoint, insert_query):
+	for userId in user_rating_dict:
+		records = ''
+		user = user_rating_dict.get(userId)
+		for movie in user:
+			rating = float(user.get(movie).get('rating'))
+			time = user.get(movie).get('time')
+			record = ['fr:{}_{}'.format(userId, movie), 'jt:wasGivenBy', 'user:{}'.format(userId)]
+			record.extend(['jt:hasRated', 'movie:{}'.format(movie)])
+			record.extend(['jt:atTime', time])
+			record.extend(['jt:withRating', rating])
+			records += make_ttl_string(record)
+		endpoint.setQuery(insert_query.format(records))
+		endpoint.query()
+
+
+def insert_favorite_genre(endpoint, insert_query):
+	records =''
+	for userId in genre_rating_dict:
+		fav_genre = get_favorite_genre_for_user(userId)
+		record = ['user:{}'.format(userId), 'jt:favoriteGenre', 'genre:{}'.format(fav_genre)]
+		records += make_ttl_string(record)
+	endpoint.setQuery(insert_query.format(records))
+	endpoint.query()
+
+
+def get_favorite_genre_for_user(userId):
+	user_genres = genre_rating_dict.get(userId)
+	fav_genre = ('Unknown', 0.0)
+	for genre in user_genres:
+		if user_genres.get(genre) > fav_genre[1]:
+			fav_genre = (genre, user_genres.get(genre))
+	return fav_genre[0]
+
+def get_favorite_movie_for_user(userId):
+	user_movies = user_rating_dict.get(userId)
+	fav_movie = ('Unknown', 0.0, 0)
+	for movie in user_movies:
+		rating = float(user_movies.get(movie).get('rating'))
+		time = user_movies.get(movie).get('time')
+		if rating > fav_movie[1]:
+			fav_movie = (movie, rating, time)
+		elif rating == fav_movie[1] and time > fav_movie[2]:
+			fav_movie = (movie, rating, time)
+	return fav_movie[0]
+
+
 def expand_semantic():
 	endpoint = SPARQLWrapper(SPARQL_ENDPOINT_UPDATE)
 	endpoint.setHTTPAuth(BASIC)
 	endpoint.setCredentials('admin', 'admin')
 	endpoint.setMethod(POST)
-	insert_query = QUERY_HEADER.format('INSERT DATA {{}}')
-	for userId in user_rating_dict:
-		user = user_rating_dict.get(userId)
-		for movie in user:
-			rating = user.get(movie).get('rating')
-			time = user.get(movie).get('time')
-			rating_record = ['fr:{}_{}'.format(userId, movie), 'jt:wasGivenBy', 'user:{}'.format(userId)]
-			rating_record.extend(['jt:hasRated', 'movie:{}'.format(movie)])
-			rating_record.extend(['jt:atTime', time])
-			rating_record.extend(['jt:withRating', rating])
-			# print(make_ttl_string(rating_record))
-			endpoint.setQuery(insert_query.format(make_ttl_string(rating_record)))
-			endpoint.setReturnFormat(JSON)
-			endpoint.setMethod('POST')
-			result = endpoint.query()
-			print(result)
-			exit(5)
-		
-	# print(insert_query, insert_query.format('test'))
-	exit(4)
+	endpoint.setReturnFormat(JSON)
+	insert_query = QUERY_HEADER.format('INSERT DATA{{{}}}')
+	# insert user film ratings
+	print('starting inserts')
+	insert_favorite_genre(endpoint, insert_query)
+	print('done favoriteGenre')
+	insert_user_filmrating(endpoint, insert_query)
+	print('done filmratings')
+	insert_user_genrerating(endpoint, insert_query)
+	print('done genreRatings')
+	insert_user_regionrating(endpoint, insert_query)
+	print('done regionRatings')
+	insert_user_directorrating(endpoint, insert_query)
+	print('done directorRatings')
+	print('done')
 
 
 
@@ -135,6 +219,7 @@ def load_all_movie_info():
 				movie_info_dict.get(movieId).get('regions').append(region)
 			if trait is not None and not trait in movie.get('traits'):
 				movie_info_dict.get(movieId).get('traits').append(trait)
+	print(len(movie_info_dict))
 
 
 def read_ratings_file():
@@ -150,6 +235,8 @@ def read_ratings_file():
 
 
 def main():
+	# dummy()
+	# exit(2)
 	load_all_movie_info()
 	read_ratings_file()
 	process_ratings()

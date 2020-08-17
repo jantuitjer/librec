@@ -39,3 +39,28 @@ def get_header():
     str += '@prefix gr:   <http://genrerating.example.org/>.\n'
     str += '@prefix ex:   <http://example.org/>.\n\n'
     return str
+	
+QUERY_HEADER = """
+prefix schema: <https://schema.org/place> 
+prefix rr:    <http://regionrating.example.org/> 
+prefix country: <http://country.example.org/> 
+prefix dbc:   <http://dbpedia.org/resource/Category:> 
+prefix movie: <http://movie.example.org/> 
+prefix owl:   <http://www.w3.org/2002/07/owl#> 
+prefix director: <http://director.example.org/> 
+prefix xsd:   <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> 
+prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> 
+prefix jt:    <http://schema.example.org/> 
+prefix gr:    <http://genrerating.example.org/> 
+prefix fr:    <http://filmrating.example.org/> 
+prefix dr:    <http://directorrating.example.org/> 
+prefix dbo:   <http://dbpedia.org/ontology/> 
+prefix ex:    <http://example.org/>
+prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix genre: <http://genre.example.org/> 
+prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> 
+prefix region: <http://region.example.org/>
+prefix user:  <http://user.example.org/> 
+prefix foaf:  <http://xmlns.com/foaf/0.1/> 
+
+{}"""
