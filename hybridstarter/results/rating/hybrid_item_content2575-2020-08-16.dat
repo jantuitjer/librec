@@ -1,0 +1,92 @@
+Results of hybrid_librec.jar for starter_configs/ranking/item_content/hybrid_item_content2575.properties2020-08-16ranking: true
+weights = 0.25:0.75
+20/08/16 03:58:18 INFO TextDataConvertor: Dataset: [../data/movielens-2k/ratings-timestamps.txt]
+20/08/16 03:58:20 INFO TextDataConvertor: DataSet: ...movielens-2k/ratings-timestamps.txt is finished
+20/08/16 03:58:20 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/16 03:58:20 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/16 03:58:20 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/16 03:58:23 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/16 03:58:23 INFO ArffDataModel: Transform data to Convertor successfully!
+20/08/16 03:58:23 INFO ArffDataConvertor: Dataset: [../data/movielens-2k-arff-extended/records_working.arff]
+20/08/16 03:58:28 INFO ArffDataModel: Split data to train Set and test Set successfully!
+20/08/16 05:35:18 INFO ItemKNNRecommender: Job Setup completed.
+20/08/16 05:35:42 INFO ItemKNNRecommender: Job Train completed.
+20/08/16 05:35:44 INFO HFTRecommender: number of users : 2113
+20/08/16 05:35:44 INFO HFTRecommender: number of Items : 10109
+20/08/16 05:35:44 INFO HFTRecommender: number of words : 5360
+20/08/16 05:35:48 INFO HFTRecommender: Job Setup completed.
+20/08/16 06:40:53 INFO HFTRecommender:  iter:1, loss:4.2836635050843E8
+20/08/16 06:40:53 INFO HFTRecommender:  iter:1, sampling
+20/08/16 06:40:54 INFO HFTRecommender:  iter:1, sample finished
+20/08/16 06:40:54 INFO HFTRecommender: Job Train completed.
+20/08/16 06:40:54 INFO ItemKNNRecommender: begin recommend
+20/08/16 06:41:09 INFO ItemKNNRecommender: end recommend
+20/08/16 06:41:09 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.04147727272727264
+20/08/16 06:41:09 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.010779928854038955
+20/08/16 06:41:09 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.69928729198242
+20/08/16 08:27:58 INFO ItemKNNRecommender: Job Setup completed.
+20/08/16 08:28:21 INFO ItemKNNRecommender: Job Train completed.
+20/08/16 08:28:22 INFO HFTRecommender: number of users : 2113
+20/08/16 08:28:22 INFO HFTRecommender: number of Items : 10109
+20/08/16 08:28:22 INFO HFTRecommender: number of words : 5360
+20/08/16 08:28:26 INFO HFTRecommender: Job Setup completed.
+20/08/16 09:34:32 INFO HFTRecommender:  iter:1, loss:4.2839152836009246E8
+20/08/16 09:34:32 INFO HFTRecommender:  iter:1, sampling
+20/08/16 09:34:34 INFO HFTRecommender:  iter:1, sample finished
+20/08/16 09:34:34 INFO HFTRecommender: Job Train completed.
+20/08/16 09:34:34 INFO ItemKNNRecommender: begin recommend
+20/08/16 09:34:47 INFO ItemKNNRecommender: end recommend
+20/08/16 09:34:47 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.03764204545454543
+20/08/16 09:34:47 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.00882930122213979
+20/08/16 09:34:47 INFO RecommenderJob: Evaluator value:Entropy top 10 is 37.35209376536531
+20/08/16 11:21:17 INFO ItemKNNRecommender: Job Setup completed.
+20/08/16 11:21:39 INFO ItemKNNRecommender: Job Train completed.
+20/08/16 11:21:41 INFO HFTRecommender: number of users : 2113
+20/08/16 11:21:41 INFO HFTRecommender: number of Items : 10109
+20/08/16 11:21:41 INFO HFTRecommender: number of words : 5360
+20/08/16 11:21:45 INFO HFTRecommender: Job Setup completed.
+20/08/16 12:05:11 INFO HFTRecommender:  iter:1, loss:4.2828611120884293E8
+20/08/16 12:05:11 INFO HFTRecommender:  iter:1, sampling
+20/08/16 12:05:12 INFO HFTRecommender:  iter:1, sample finished
+20/08/16 12:05:12 INFO HFTRecommender: Job Train completed.
+20/08/16 12:05:12 INFO ItemKNNRecommender: begin recommend
+20/08/16 12:05:26 INFO ItemKNNRecommender: end recommend
+20/08/16 12:05:27 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.04071969696969686
+20/08/16 12:05:27 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.009802597644310138
+20/08/16 12:05:27 INFO RecommenderJob: Evaluator value:Entropy top 10 is 37.110054844621715
+20/08/16 13:51:56 INFO ItemKNNRecommender: Job Setup completed.
+20/08/16 13:52:18 INFO ItemKNNRecommender: Job Train completed.
+20/08/16 13:52:20 INFO HFTRecommender: number of users : 2113
+20/08/16 13:52:20 INFO HFTRecommender: number of Items : 10109
+20/08/16 13:52:20 INFO HFTRecommender: number of words : 5360
+20/08/16 13:52:23 INFO HFTRecommender: Job Setup completed.
+20/08/16 14:35:48 INFO HFTRecommender:  iter:1, loss:4.282242309630534E8
+20/08/16 14:35:48 INFO HFTRecommender:  iter:1, sampling
+20/08/16 14:35:50 INFO HFTRecommender:  iter:1, sample finished
+20/08/16 14:35:50 INFO HFTRecommender: Job Train completed.
+20/08/16 14:35:50 INFO ItemKNNRecommender: begin recommend
+20/08/16 14:36:03 INFO ItemKNNRecommender: end recommend
+20/08/16 14:36:04 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.0446284902981541
+20/08/16 14:36:04 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.010552705218769935
+20/08/16 14:36:04 INFO RecommenderJob: Evaluator value:Entropy top 10 is 36.93159849672581
+20/08/16 16:22:25 INFO ItemKNNRecommender: Job Setup completed.
+20/08/16 16:22:47 INFO ItemKNNRecommender: Job Train completed.
+20/08/16 16:22:49 INFO HFTRecommender: number of users : 2113
+20/08/16 16:22:49 INFO HFTRecommender: number of Items : 10109
+20/08/16 16:22:49 INFO HFTRecommender: number of words : 5360
+20/08/16 16:22:52 INFO HFTRecommender: Job Setup completed.
+20/08/16 17:06:33 INFO HFTRecommender:  iter:1, loss:4.281112075841313E8
+20/08/16 17:06:33 INFO HFTRecommender:  iter:1, sampling
+20/08/16 17:06:35 INFO HFTRecommender:  iter:1, sample finished
+20/08/16 17:06:35 INFO HFTRecommender: Job Train completed.
+20/08/16 17:06:35 INFO ItemKNNRecommender: begin recommend
+20/08/16 17:06:49 INFO ItemKNNRecommender: end recommend
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.03818095689246797
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.009096226216666966
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:Entropy top 10 is 37.029387010012776
+20/08/16 17:06:49 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:Entropy top 10 is 37.02448428174161
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.009812151831185157
+20/08/16 17:06:49 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.0405296924684274
+20/08/16 17:06:49 INFO ItemKNNRecommender: begin recommend
+20/08/16 17:07:03 INFO ItemKNNRecommender: end recommend
