@@ -120,3 +120,5 @@ jt:mustWatch rdfs:subPropertyOf jt:shouldWatch.
 jt:PopularFilm rdfs:SubClassOf dbo:Film.
 jt:UnpopularFilm rdfs:SubClassOf dbo:Film.
 jt:PopularFilm owl:disjointWith jt:UnpopularFilm.
+
+jt:partOf rdfs:subPropertyOf schema:countryOfOrigin.
