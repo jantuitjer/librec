@@ -5,10 +5,16 @@ from SPARQLWrapper import SPARQLWrapper, TURTLE, RDF, JSON, DIGEST,BASIC, POST
 
 SPARQL_ENDPOINT_QUERY = 'http://localhost:3030/movielens-2k/query'
 SPARQL_ENDPOINT_UPDATE = 'http://localhost:3030/movielens-2k/update'
+SPARQL_ENDPOINT_UPDATE_GENRE = 'http://localhost:3030/movielens-2k-genre/update'
+SPARQL_ENDPOINT_UPDATE_DIRECTOR = 'http://localhost:3030/movielens-2k-director/update'
+SPARQL_ENDPOINT_UPDATE_REGION = 'http://localhost:3030/movielens-2k-region/update'
+
+
+
 rdfextras.registerplugins() 
 QUERY_HEADER = """
 prefix schema: <https://schema.org/place> 
-prefix rr:    <http://regionrating.example.org/> 
+prefix rr:	<http://regionrating.example.org/> 
 prefix country: <http://country.example.org/> 
 prefix dbc:   <http://dbpedia.org/resource/Category:> 
 prefix movie: <http://movie.example.org/> 
@@ -16,12 +22,12 @@ prefix owl:   <http://www.w3.org/2002/07/owl#>
 prefix director: <http://director.example.org/> 
 prefix xsd:   <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> 
 prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> 
-prefix jt:    <http://schema.example.org/> 
-prefix gr:    <http://genrerating.example.org/> 
-prefix fr:    <http://filmrating.example.org/> 
-prefix dr:    <http://directorrating.example.org/> 
+prefix jt:	<http://schema.example.org/> 
+prefix gr:	<http://genrerating.example.org/> 
+prefix fr:	<http://filmrating.example.org/> 
+prefix dr:	<http://directorrating.example.org/> 
 prefix dbo:   <http://dbpedia.org/ontology/> 
-prefix ex:    <http://example.org/>
+prefix ex:	<http://example.org/>
 prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 prefix genre: <http://genre.example.org/> 
 prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> 
@@ -39,7 +45,11 @@ director_rating_dict = dict()
 region_rating_dict = dict()
 
 def insert_user_regionrating(endpoint,insert_query):
-	records = ''
+	region_endpoint = SPARQLWrapper(SPARQL_ENDPOINT_UPDATE_REGION)
+	region_endpoint.setHTTPAuth(BASIC)
+	region_endpoint.setCredentials('admin', 'admin')
+	region_endpoint.setMethod(POST)
+	region_endpoint.setReturnFormat(JSON)
 	for userId in region_rating_dict:
 		user = region_rating_dict.get(userId)
 		for region in user:
@@ -51,8 +61,15 @@ def insert_user_regionrating(endpoint,insert_query):
 			records += make_ttl_string(record)
 	endpoint.setQuery(insert_query.format(records))
 	endpoint.query()
+	region_endpoint.setQuery(insert_query.format(records))
+	region_endpoint.query()
 
 def insert_user_genrerating(endpoint,insert_query):
+	genre_endpoint = SPARQLWrapper(SPARQL_ENDPOINT_UPDATE_GENRE)
+	genre_endpoint.setHTTPAuth(BASIC)
+	genre_endpoint.setCredentials('admin', 'admin')
+	genre_endpoint.setMethod(POST)
+	genre_endpoint.setReturnFormat(JSON)
 	records = ''
 	for userId in genre_rating_dict:
 		user = genre_rating_dict.get(userId)
@@ -65,10 +82,16 @@ def insert_user_genrerating(endpoint,insert_query):
 			records += make_ttl_string(record)
 	endpoint.setQuery(insert_query.format(records))
 	endpoint.query()
+	genre_endpoint.setQuery(insert_query.format(records))
+	genre_endpoint.query()
 
 
 def insert_user_directorrating(endpoint, insert_query):
-	
+	director_endpoint = SPARQLWrapper(SPARQL_ENDPOINT_UPDATE_DIRECTOR)
+	director_endpoint.setHTTPAuth(BASIC)
+	director_endpoint.setCredentials('admin', 'admin')
+	director_endpoint.setMethod(POST)
+	director_endpoint.setReturnFormat(JSON)
 	for userId in director_rating_dict:
 		records = ''
 		user = director_rating_dict.get(userId)
@@ -81,7 +104,8 @@ def insert_user_directorrating(endpoint, insert_query):
 			records += make_ttl_string(record)
 		endpoint.setQuery(insert_query.format(records))
 		endpoint.query()
-
+        director_endpoint.setQuery(insert_query.format(records))
+        director_endpoint.query()
 
 def insert_user_filmrating(endpoint, insert_query):
 	for userId in user_rating_dict:
