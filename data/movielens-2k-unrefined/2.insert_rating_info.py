@@ -47,6 +47,7 @@ def insert_user_regionrating(endpoint,insert_query):
 			regionRatingName = 'rr:{}_{}'.format(userId, region)
 			record = [regionRatingName, 'jt:regionRatingBelongsTo', 'user:{}'.format(userId)]
 			record.extend(['jt:avgRegionRating', avg_region_rating])
+			record.extend(['jt:forRegion', 'region:{}'.format(region)])
 			records += make_ttl_string(record)
 	endpoint.setQuery(insert_query.format(records))
 	endpoint.query()
