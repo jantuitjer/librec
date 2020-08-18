@@ -60,6 +60,7 @@ def insert_user_genrerating(endpoint,insert_query):
 			genreRatingName = 'gr:{}_{}'.format(userId, genre)
 			record = [genreRatingName, 'jt:genreRatingBelongsTo', 'user:{}'.format(userId)]
 			record.extend(['jt:avgGenreRating', avg_genre_rating])
+			record.extend(['jt:forGenre', 'genre:{}'.format(genre)])
 			records += make_ttl_string(record)
 	endpoint.setQuery(insert_query.format(records))
 	endpoint.query()
