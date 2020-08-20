@@ -50,6 +50,7 @@ def insert_user_regionrating(endpoint,insert_query):
 	region_endpoint.setCredentials('admin', 'admin')
 	region_endpoint.setMethod(POST)
 	region_endpoint.setReturnFormat(JSON)
+	records = ''
 	for userId in region_rating_dict:
 		user = region_rating_dict.get(userId)
 		for region in user:
@@ -97,6 +98,8 @@ def insert_user_directorrating(endpoint, insert_query):
 		user = director_rating_dict.get(userId)
 		for directorId in user:
 			avg_director_rating = user.get(directorId)
+			if avg_director_rating < 3.0:
+				continue
 			directorRatingName = 'dr:{}_{}'.format(userId,directorId)
 			record = [directorRatingName,'jt:directorRatingBelongsTo', 'user:{}'.format(userId)]
 			record.extend(['jt:avgDirectorRating', avg_director_rating])
@@ -104,8 +107,8 @@ def insert_user_directorrating(endpoint, insert_query):
 			records += make_ttl_string(record)
 		endpoint.setQuery(insert_query.format(records))
 		endpoint.query()
-        director_endpoint.setQuery(insert_query.format(records))
-        director_endpoint.query()
+		director_endpoint.setQuery(insert_query.format(records))
+		director_endpoint.query()
 
 def insert_user_filmrating(endpoint, insert_query):
 	for userId in user_rating_dict:
@@ -161,7 +164,7 @@ def expand_semantic():
 	endpoint.setMethod(POST)
 	endpoint.setReturnFormat(JSON)
 	insert_query = QUERY_HEADER.format('INSERT DATA{{{}}}')
-	# insert user film ratings
+	insert user film ratings
 	print('starting inserts')
 	insert_favorite_genre(endpoint, insert_query)
 	print('done favoriteGenre')
@@ -248,23 +251,23 @@ def load_all_movie_info():
 	print(len(movie_info_dict))
 
 
-def read_ratings_file():
+def read_ratings_file(dict):
 	f = open('user_ratedmovies-timestamps.dat')
 	next(f)
 	for line in f:
 		user, movie, rating, time = line.split('\t')
 		insert_dict = {'rating': rating, 'time': time.strip()}
-		if user_rating_dict.get(user) is None:
-			user_rating_dict[user] = {movie: insert_dict}
+		if dict.get(user) is None:
+			dict[user] = {movie: insert_dict}
 		else:
-			user_rating_dict.get(user)[movie] = insert_dict
+			dict.get(user)[movie] = insert_dict
 
 
 def main():
 	# dummy()
 	# exit(2)
 	load_all_movie_info()
-	read_ratings_file()
+	read_ratings_file(user_rating_dict)
 	process_ratings()
 	expand_semantic()
 
