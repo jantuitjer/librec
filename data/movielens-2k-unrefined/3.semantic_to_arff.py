@@ -1,6 +1,7 @@
 import rdflib
 import rdfextras
 import sys
+import operator
 from arff_util import get_arff_header
 from ttl_util import make_ttl_string, get_header, QUERY_HEADER
 from SPARQLWrapper import SPARQLWrapper, TURTLE, RDF, JSON, DIGEST,BASIC, POST
@@ -24,6 +25,8 @@ year_encoding_dict = dict()
 trait_encoding_dict = dict()
 country_encoding_dict = dict()
 
+movie_arff_info_dict = dict()
+topk_likes_dict = dict()
 year_set = set()
 director_set = set()
 region_set=set()
@@ -32,6 +35,44 @@ trait_set=set()
 genre_set=set()
 
 favorite_dict = dict()
+
+def fill_tmp_dict(dicy: dict, results, key : str):
+	for record in results["results"]["bindings"]:
+		user = record.get('user').get('value').split('/')[-1]
+		entry = record.get(key).get('value').split('/')[-1]
+		rating = record.get('rating').get('value')
+		if dicy.get(user) is None:
+			dicy[user] = {entry: rating}
+		else:
+			dicy.get(user).update({entry: rating})
+
+
+def get_preference_values():
+	director_query = 'SELECT ?user ?director ?rating WHERE {?dr jt:avgDirectorRating ?rating;  jt:forDirector ?director; jt:directorRatingBelongsTo ?user} ORDER BY ?user'
+	genre_query = 'SELECT ?user ?genre ?rating WHERE {?gr jt:genreRatingBelongsTo ?user; jt:forGenre ?genre; jt:avgGenreRating ?rating} ORDER BY ?user'
+	region_query= 'SELECT ?user ?region ?rating WHERE {?rr jt:regionRatingBelongsTo ?user; jt:forRegion ?region; jt:avgRegionRating ?rating} ORDER BY ?user'
+	endpoint = SPARQLWrapper(SPARQL_ENDPOINT_QUERY_ALL)
+	endpoint.setReturnFormat(JSON)
+	# endpoint.setQuery(QUERY_HEADER.format(query.format(ratingType='director', ratingProperty='hasDirectorRating', avgRatingProperty = 'avgDirectorRating')))
+	endpoint.setQuery(QUERY_HEADER.format(director_query))
+	director_results = endpoint.query().convert()
+	# endpoint.setQuery(QUERY_HEADER.format(query.format(rating_type='genre', rating_property='hasGenreRating', avg_rating_property = 'avgGenreRating')))
+	endpoint.setQuery(QUERY_HEADER.format(genre_query))
+	genre_results = endpoint.query().convert()
+	# endpoint.setQuery(QUERY_HEADER.format(query.format(rating_type='region', rating_property='hasRegionRating', avg_rating_property = 'avgRegionRating')))
+	endpoint.setQuery(QUERY_HEADER.format(region_query))
+	region_results = endpoint.query().convert()
+	likes_directors = dict()
+	likes_genres = dict()
+	likes_regions = dict()
+	fill_tmp_dict(likes_directors, director_results,'director')
+	fill_tmp_dict(likes_genres, genre_results, 'genre')
+	fill_tmp_dict(likes_regions, region_results, 'region')
+	for userId in likes_directors:
+		sorted_directors = sorted(likes_directors.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
+		sorted_genres = sorted(likes_genres.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
+		sorted_regions = sorted(likes_regions.get(userId).items(),key=operator.itemgetter(1), reverse=True)[:5]
+		topk_likes_dict[userId] = {'directors': sorted_directors, 'genres' : sorted_genres, 'regions' : sorted_regions}
 
 
 def write_encoding_file(preEncoded: bool):
@@ -82,36 +123,38 @@ def preencode():
 
 def get_movie_infos_for(id, preEncoded: bool):
 	movie_info = []
-	movie = movie_info_dict.get(id)
-	year = movie.get('year')
-	director = movie.get('director')
-	country = movie.get('country')
-	regions = movie.get('regions')
-	genres = movie.get('genres')
-	traits = movie.get('traits')
-	if preEncoded:
-		movie_info.append(year_encoding_dict.get(year))
-		movie_info.append(country_encoding_dict.get(country))
-		movie_info.append(director_encoding_dict.get(director))
-		for region in regions:
-			movie_info.append(region_endcoding_dict.get(region))
-		for genre in genres:
-			movie_info.append(genre_encoding_dict.get(genre))
-		for trait in traits:
-			if trait is not None:
-				movie_info.append(trait_encoding_dict.get(trait))
-	else:
-		movie_info.append(get_encoding_of(year_encoding_dict, year))
-		movie_info.append(get_encoding_of(country_encoding_dict, country))
-		movie_info.append(get_encoding_of(director_encoding_dict, director))
-		for region in regions:
-			movie_info.append(get_encoding_of(region_endcoding_dict,region))
-		for genre in genres:
-			movie_info.append(get_encoding_of(genre_encoding_dict, genre))
-		for trait in traits:
-			if trait is not None:
-				movie_info.append(get_encoding_of(trait_encoding_dict, trait))
-	return movie_info
+	if movie_arff_info_dict.get(id) is None:
+		movie = movie_info_dict.get(id)
+		year = movie.get('year')
+		director = movie.get('director')
+		country = movie.get('country')
+		regions = movie.get('regions')
+		genres = movie.get('genres')
+		traits = movie.get('traits')
+		if preEncoded:
+			movie_info.append(year_encoding_dict.get(year))
+			movie_info.append(country_encoding_dict.get(country))
+			movie_info.append(director_encoding_dict.get(director))
+			for region in regions:
+				movie_info.append(region_endcoding_dict.get(region))
+			for genre in genres:
+				movie_info.append(genre_encoding_dict.get(genre))
+			for trait in traits:
+				if trait is not None:
+					movie_info.append(trait_encoding_dict.get(trait))
+		else:
+			movie_info.append(get_encoding_of(year_encoding_dict, year))
+			movie_info.append(get_encoding_of(country_encoding_dict, country))
+			movie_info.append(get_encoding_of(director_encoding_dict, director))
+			for region in regions:
+				movie_info.append(get_encoding_of(region_endcoding_dict,region))
+			for genre in genres:
+				movie_info.append(get_encoding_of(genre_encoding_dict, genre))
+			for trait in traits:
+				if trait is not None:
+					movie_info.append(get_encoding_of(trait_encoding_dict, trait))
+		movie_arff_info_dict[id] = movie_info
+	return movie_arff_info_dict.get(id)
 
 def get_user_likes_for(id, preEncoded: bool):
 	likes = []
