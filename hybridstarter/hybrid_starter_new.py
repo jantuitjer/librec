@@ -26,18 +26,18 @@ def run_hybrid(mode, run_file):
 	for run_config in runs:
 		now = date.today()
 		conf_name = run_config.split('.')[-2]
-		if mode == True or mode == 1 or mode == 'true' or mode == 'True':
+		if (mode == True or mode == 1 or mode == 'true' or mode == 'True'):
 			print('starting ranking {} with {} at {}\n'.format(HYBRID_JAR, conf_name, datetime.now()))
 			output_header = 'Results of ranking' + HYBRID_JAR + " for " + run_config + str(now)
 		else:
-			print('starting {} with {} at {}\n'.format(HYBRID_JAR, conf_name, datetime.now()))
+			print('starting rating {} with {} at {}\n'.format(HYBRID_JAR, conf_name, datetime.now()))
 			output_header = 'Results of ' + HYBRID_JAR + " for " + run_config + str(now)
 		if '/' in conf_name:
 			conf_name = conf_name.split('/')[-1]
 		process = subprocess.run('java {} -jar {} {}'.format(AMOUNT_OF_RAM, HYBRID_JAR, run_config), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 		output = process.stderr.decode()
 		print(output)
-		if mode == True or mode == 1 or mode == 'true' or mode == 'True':
+		if (mode == True or mode == 1 or mode == 'true' or mode == 'True'):
 			output_file = open('results/ranking/' + conf_name +'-' + str(now) +  '.dat', 'w+')
 		else:
 			output_file = open('results/rating/' + conf_name +'-' + str(now) +  '.dat', 'w+')
