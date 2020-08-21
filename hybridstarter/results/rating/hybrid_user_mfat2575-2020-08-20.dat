@@ -1,0 +1,12 @@
+Results of hybrid_librec.jar for starter_configs/semantic/rating/user_item_mfat/hybrid_user_mfat2575.properties
+2020-08-20Exception in thread "main" java.io.FileNotFoundException: starter_configs/semantic/rating/user_item_mfat/hybrid_user_mfat2575.properties (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:212)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:154)
+	at java.base/java.util.Scanner.<init>(Scanner.java:639)
+	at net.librec.conf.ConfigurationParser.parseHybridConfiguration(ConfigurationParser.java:19)
+	at net.librec.conf.ConfigurationParser.parseHybridConfiguration(ConfigurationParser.java:15)
+	at net.librec.conf.HybridConfiguration.<init>(HybridConfiguration.java:18)
+	at Main.hybridJobExecution(Main.java:47)
+	at Main.run(Main.java:32)
+	at Main.main(Main.java:19)
