@@ -5,7 +5,7 @@ import operator
 from arff_util import get_arff_header
 from ttl_util import make_ttl_string, get_header, QUERY_HEADER
 from SPARQLWrapper import SPARQLWrapper, TURTLE, RDF, JSON, DIGEST,BASIC, POST
-
+from contextlib import suppress
 
 SPARQL_ENDPOINT_QUERY_GENRE = 'http://localhost:3030/movielens-2k-genre-likes/query'
 SPARQL_ENDPOINT_QUERY_DIRECTOR = 'http://localhost:3030/movielens-2k-director-likes/query'
@@ -53,13 +53,10 @@ def get_preference_values():
 	region_query= 'SELECT ?user ?region ?rating WHERE {?rr jt:regionRatingBelongsTo ?user; jt:forRegion ?region; jt:avgRegionRating ?rating} ORDER BY ?user'
 	endpoint = SPARQLWrapper(SPARQL_ENDPOINT_QUERY_ALL)
 	endpoint.setReturnFormat(JSON)
-	# endpoint.setQuery(QUERY_HEADER.format(query.format(ratingType='director', ratingProperty='hasDirectorRating', avgRatingProperty = 'avgDirectorRating')))
 	endpoint.setQuery(QUERY_HEADER.format(director_query))
 	director_results = endpoint.query().convert()
-	# endpoint.setQuery(QUERY_HEADER.format(query.format(rating_type='genre', rating_property='hasGenreRating', avg_rating_property = 'avgGenreRating')))
 	endpoint.setQuery(QUERY_HEADER.format(genre_query))
 	genre_results = endpoint.query().convert()
-	# endpoint.setQuery(QUERY_HEADER.format(query.format(rating_type='region', rating_property='hasRegionRating', avg_rating_property = 'avgRegionRating')))
 	endpoint.setQuery(QUERY_HEADER.format(region_query))
 	region_results = endpoint.query().convert()
 	likes_directors = dict()
@@ -121,7 +118,47 @@ def preencode():
 				dicty[entry] = encoding()
 
 
-def get_movie_infos_for(id, preEncoded: bool):
+def filter_genres(_genres):
+	filter_genres.cnt += 1
+	toRemove = set()
+	if 'Detective' in _genres:
+		toRemove.add('PoliceMovie')
+		toRemove.add('Film-Noir')
+	if 'ActionThriller' in _genres:
+		toRemove.add('Action')
+		toRemove.add('Thriller')
+	if 'ActionComedy' in _genres:
+		toRemove.add('Action')
+		toRemove.add('Comedy')
+	if 'PoliceMovie' in _genres:
+		toRemove.add('Crime')
+		toRemove.add('Action')
+		toRemove.add('Thriller')
+	if 'ChildrenAnimation' in _genres:
+		toRemove.add('Children')
+		toRemove.add('Animation')
+	if 'Supernatural' in _genres:
+		toRemove.add('Horror')
+		toRemove.add('Fantasy')
+	if 'RomCom' in _genres:
+		toRemove.add('Romance')
+		toRemove.add('Comedy')
+	if 'SpaceOpera' in _genres:
+		toRemove.add('Adventure')
+		toRemove.add('Sci-Fi')
+	if 'AsianComedy' in _genres:
+		toRemove.add('Comedy')
+	if 'MartialArts' in _genres:
+		toRemove.add('Action')
+	for entry in toRemove:
+		with suppress(ValueError):
+			_genres.remove(entry)
+	if len(_genres)>5:
+		_genres = sorted(_genres, key=len, reverse=True)
+		print(_genres)
+filter_genres.cnt = 0
+
+def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 	movie_info = []
 	if movie_arff_info_dict.get(id) is None:
 		movie = movie_info_dict.get(id)
@@ -130,6 +167,8 @@ def get_movie_infos_for(id, preEncoded: bool):
 		country = movie.get('country')
 		regions = movie.get('regions')
 		genres = movie.get('genres')
+		if len(genres)> 5:
+			filter_genres(genres)
 		traits = movie.get('traits')
 		if preEncoded:
 			movie_info.append(year_encoding_dict.get(year))
@@ -156,12 +195,16 @@ def get_movie_infos_for(id, preEncoded: bool):
 		movie_arff_info_dict[id] = movie_info
 	return movie_arff_info_dict.get(id)
 
-def get_user_likes_for(id, preEncoded: bool):
+def get_user_likes_for(id, preEncoded: bool, limit: bool):
 	likes = []
-	regions = user_likes_region_dict.get(id)
-	directors = user_likes_director_dict.get(id)
-	genres = user_likes_genre_dict.get(id)
-	entires_like = [regions, directors, genres]
+	if limit:
+		regions = topk_likes_dict.get(id).get('regions')
+		genres = topk_likes_dict.get(id).get('directors')
+		directors = topk_likes_dict.get(id).get('genres')
+	else:
+		regions = user_likes_region_dict.get(id)
+		directors = user_likes_director_dict.get(id)
+		genres = user_likes_genre_dict.get(id)
 	if preEncoded:
 		if regions is not None:
 			for region in regions:
@@ -184,7 +227,7 @@ def get_user_likes_for(id, preEncoded: bool):
 				likes.append(get_encoding_of(genre_encoding_dict, genre))
 	return likes
 
-def write_arff_file(preEncoded: bool):
+def write_arff_file(preEncoded: bool, limit: bool):
 	if preEncoded:
 		path = '../movielens-2k-arff-extended/records_semantic_preencoded.arff'
 	else:
@@ -197,9 +240,9 @@ def write_arff_file(preEncoded: bool):
 		user_likes = None
 		for movieId in user:
 			rating = user.get(movieId).get('rating')
-			movie_infos = get_movie_infos_for(movieId, preEncoded)
+			movie_infos = get_movie_infos_for(movieId, preEncoded, limit)
 			if user_likes is None:
-				user_likes = get_user_likes_for(userId, preEncoded)
+				user_likes = get_user_likes_for(userId, preEncoded, limit)
 			movie_infos.extend(user_likes)
 			f.write(insert_line.format(u=userId, m=movieId, rat = rating, rev=make_review_string(movie_infos)))
 	f.close()
@@ -308,15 +351,31 @@ def fill_dicts():
 
 def main():
 	args = sys.argv
-	if len(args)==2:
-		mode = True
-	else:
-		mode = False
+	mode, limit = None, None
+	if len(args) > 1: 
+		mode = args[1]
+	if len(args) > 2: 
+		limit = args[2]
+	if mode is not None:
+		if mode == '1':
+			mode = True
+		else:
+			mode = False
+	if limit is not None:
+		if limit == '1':
+			limit = True
+		else:
+			limit = False
+	print(mode, limit)
 	fill_dicts()
+	print('dicts filled')
 	if mode:
 		preencode()
-	write_arff_file(mode)
-	write_encoding_file(mode)
+	if limit:
+		get_preference_values()
+		print('received preferences')
+	write_arff_file(mode, limit)
+	write_encoding_file(mode, limit)
 
 
 if __name__ == "__main__":
