@@ -20,7 +20,7 @@ user_likes_genre_dict = dict()
 
 genre_encoding_dict = dict()
 director_encoding_dict = dict()
-region_endcoding_dict = dict()
+region_encoding_dict = dict()
 year_encoding_dict = dict()
 trait_encoding_dict = dict()
 country_encoding_dict = dict()
@@ -69,10 +69,19 @@ def get_preference_values():
 		sorted_directors = sorted(likes_directors.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
 		sorted_genres = sorted(likes_genres.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
 		sorted_regions = sorted(likes_regions.get(userId).items(),key=operator.itemgetter(1), reverse=True)[:5]
-		topk_likes_dict[userId] = {'directors': sorted_directors, 'genres' : sorted_genres, 'regions' : sorted_regions}
+		directors = []
+		genres = []
+		regions = []
+		for director in sorted_directors:
+			directors.append(director[0])
+		for genre in sorted_genres:
+			genres.append(genre[0])
+		for region in sorted_regions:
+			regions.append(region[0])
+		topk_likes_dict[userId] = {'directors': directors, 'genres' : genres, 'regions' : regions}
 
 
-def write_encoding_file(preEncoded: bool):
+def write_encoding_file(preEncoded: bool, limit: bool):
 	if preEncoded:
 		path = '../movielens-2k-arff-extended/pre_encoding_table_.txt'
 	else:
@@ -85,8 +94,8 @@ def write_encoding_file(preEncoded: bool):
 		f.write(line.format(country_encoding_dict.get(country), country, 'country'))
 	for director in director_encoding_dict:
 		f.write(line.format(director_encoding_dict.get(director), director, 'director'))
-	for region in region_endcoding_dict:
-		f.write(line.format(region_endcoding_dict.get(region), region, 'region'))
+	for region in region_encoding_dict:
+		f.write(line.format(region_encoding_dict.get(region), region, 'region'))
 	for genre in genre_encoding_dict:
 		f.write(line.format(genre_encoding_dict.get(genre), genre, 'genre'))
 	for trait in trait_encoding_dict:
@@ -97,6 +106,7 @@ def write_encoding_file(preEncoded: bool):
 def get_encoding_of(dicty: dict, entry):
 	if dicty.get(entry) is None:
 		dicty[entry] = encoding()
+		# print(entry, dicty.get(entry))
 	return dicty.get(entry)
 
 
@@ -109,7 +119,7 @@ def make_review_string(info: list):
 def preencode():
 	# year, country, director, region, genre, trait
 	sets = [year_set, country_set, director_set, region_set, genre_set, trait_set]
-	dicts = [year_encoding_dict, country_encoding_dict, director_encoding_dict, region_endcoding_dict, genre_encoding_dict, trait_encoding_dict]
+	dicts = [year_encoding_dict, country_encoding_dict, director_encoding_dict, region_encoding_dict, genre_encoding_dict, trait_encoding_dict]
 	for i in range(len(sets)):
 		set = sorted(sets[i])
 		dicty = dicts[i]
@@ -131,9 +141,11 @@ def filter_genres(_genres):
 		toRemove.add('Action')
 		toRemove.add('Comedy')
 	if 'PoliceMovie' in _genres:
+		if 'Thriller' in _genres:
+			toRemove.add('Thriller')
+		if 'Action' in _genres:
+			toRemove.add('Action')
 		toRemove.add('Crime')
-		toRemove.add('Action')
-		toRemove.add('Thriller')
 	if 'ChildrenAnimation' in _genres:
 		toRemove.add('Children')
 		toRemove.add('Animation')
@@ -151,11 +163,10 @@ def filter_genres(_genres):
 	if 'MartialArts' in _genres:
 		toRemove.add('Action')
 	for entry in toRemove:
-		with suppress(ValueError):
-			_genres.remove(entry)
+		#with suppress(ValueError):
+		_genres.remove(entry)
 	if len(_genres)>5:
 		_genres = sorted(_genres, key=len, reverse=True)
-		print(_genres)
 filter_genres.cnt = 0
 
 def get_movie_infos_for(id, preEncoded: bool, limit: bool):
@@ -167,15 +178,20 @@ def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 		country = movie.get('country')
 		regions = movie.get('regions')
 		genres = movie.get('genres')
-		if len(genres)> 5:
+		if len(genres)> 5 and limit:
 			filter_genres(genres)
+			print(type(genres))
+			print(genres)
+			for genre in genres:
+				print(genre)
+			# exit(4)
 		traits = movie.get('traits')
 		if preEncoded:
 			movie_info.append(year_encoding_dict.get(year))
 			movie_info.append(country_encoding_dict.get(country))
 			movie_info.append(director_encoding_dict.get(director))
 			for region in regions:
-				movie_info.append(region_endcoding_dict.get(region))
+				movie_info.append(region_encoding_dict.get(region))
 			for genre in genres:
 				movie_info.append(genre_encoding_dict.get(genre))
 			for trait in traits:
@@ -186,21 +202,36 @@ def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 			movie_info.append(get_encoding_of(country_encoding_dict, country))
 			movie_info.append(get_encoding_of(director_encoding_dict, director))
 			for region in regions:
-				movie_info.append(get_encoding_of(region_endcoding_dict,region))
+				movie_info.append(get_encoding_of(region_encoding_dict,region))
+			# print(genres)
 			for genre in genres:
+				# print(genre)
 				movie_info.append(get_encoding_of(genre_encoding_dict, genre))
 			for trait in traits:
 				if trait is not None:
 					movie_info.append(get_encoding_of(trait_encoding_dict, trait))
 		movie_arff_info_dict[id] = movie_info
+		
+		# print(genre_encoding_dict)
+		# print(director_encoding_dict)
+		# print(region_encoding_dict)
+		# for genre in genres:
+			# print(genre, get_encoding_of(genre_encoding_dict, genre))
+		# for region in regions:
+			# print(region, get_encoding_of(region_encoding_dict,region))
+		# for trait in traits:
+			# if trait is not None:
+				# print(get_encoding_of(trait_encoding_dict, trait))
+		# print(movie_info)
+		# exit(5)
 	return movie_arff_info_dict.get(id)
 
 def get_user_likes_for(id, preEncoded: bool, limit: bool):
 	likes = []
 	if limit:
 		regions = topk_likes_dict.get(id).get('regions')
-		genres = topk_likes_dict.get(id).get('directors')
-		directors = topk_likes_dict.get(id).get('genres')
+		genres = topk_likes_dict.get(id).get('genres')
+		directors = topk_likes_dict.get(id).get('directors')
 	else:
 		regions = user_likes_region_dict.get(id)
 		directors = user_likes_director_dict.get(id)
@@ -208,7 +239,7 @@ def get_user_likes_for(id, preEncoded: bool, limit: bool):
 	if preEncoded:
 		if regions is not None:
 			for region in regions:
-				likes.append(region_endcoding_dict.get(region))
+				likes.append(region_encoding_dict.get(region))
 		if directors is not None:
 			for director in directors:
 				likes.append(director_encoding_dict.get(director))
@@ -218,7 +249,7 @@ def get_user_likes_for(id, preEncoded: bool, limit: bool):
 	else:
 		if regions is not None:
 			for region in regions:
-				likes.append(get_encoding_of(region_endcoding_dict, region))
+				likes.append(get_encoding_of(region_encoding_dict, region))
 		if directors is not None:
 			for director in directors:
 				likes.append(get_encoding_of(director_encoding_dict, director))
@@ -236,20 +267,29 @@ def write_arff_file(preEncoded: bool, limit: bool):
 	f.write(get_arff_header())
 	insert_line = '{u}, {m}, {rat}, {rev}\n'
 	for userId in user_rating_dict:
-		user = user_rating_dict.get(userId)
 		user_likes = None
+		user = user_rating_dict.get(userId)
 		for movieId in user:
 			rating = user.get(movieId).get('rating')
 			movie_infos = get_movie_infos_for(movieId, preEncoded, limit)
 			if user_likes is None:
 				user_likes = get_user_likes_for(userId, preEncoded, limit)
-			movie_infos.extend(user_likes)
-			f.write(insert_line.format(u=userId, m=movieId, rat = rating, rev=make_review_string(movie_infos)))
+			# movie_infos.extend(user_likes)
+			print(len(user_likes), len(movie_infos), len(movie_infos + user_likes))
+			# f.write(insert_line.format(u=userId, m=movieId, rat = rating, rev=make_review_string(movie_infos)))
+			f.write(insert_line.format(u=userId, m=movieId, rat = rating, rev=make_review_string(movie_infos + user_likes)))
 	f.close()
 
 
 def encoding():
 	encoding.cnt += 1
+	if encoding.cnt % 1000 == 0:
+		print('genres',len(genre_encoding_dict))
+		print('directors',len(director_encoding_dict))
+		print('regions',len(region_encoding_dict))
+		# print(region_encoding_dict)
+		# print(genre_encoding_dict)
+		# exit(5)
 	return encoding.cnt
 encoding.cnt = -1
 
@@ -367,15 +407,18 @@ def main():
 		else:
 			limit = False
 	print(mode, limit)
+	if limit:
+		get_preference_values()
 	fill_dicts()
 	print('dicts filled')
 	if mode:
 		preencode()
-	if limit:
-		get_preference_values()
 		print('received preferences')
 	write_arff_file(mode, limit)
+	print('arff file written')
 	write_encoding_file(mode, limit)
+	print('encoding table written')
+	print('done')
 
 
 if __name__ == "__main__":
