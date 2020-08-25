@@ -276,8 +276,11 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         }else {
             ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
             for (AbstractRecommender rec : recommenders) {
-//                recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
-                recommendationLists.add(rec.recommendRank());
+                if(hybridConf.getBoolean("rec.rating.rank", true)) {
+                    recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
+                }else {
+                    recommendationLists.add(rec.recommendRank());
+                }
             }
 //            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
             recommendedItemList = recommendationLists.get(0);
@@ -285,7 +288,11 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             for (RecommendedList listy : recommendationLists) {
                 iterators.add(listy.iterator());
             }
-            combineRecommendedListsRanking(iterators);
+            if(hybridConf.getBoolean("rec.rating.rank", true)) {
+                combineRecommendedLists(iterators);
+            }else{
+                combineRecommendedListsRanking(iterators);
+            }
             recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
             return  recommendedItemList;
         }
