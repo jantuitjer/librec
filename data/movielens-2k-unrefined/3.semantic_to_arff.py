@@ -47,7 +47,7 @@ def fill_tmp_dict(dicy: dict, results, key : str):
 			dicy.get(user).update({entry: rating})
 
 
-def get_preference_values():
+def get_preference_values(limit: bool):
 	director_query = 'SELECT ?user ?director ?rating WHERE {?dr jt:avgDirectorRating ?rating;  jt:forDirector ?director; jt:directorRatingBelongsTo ?user} ORDER BY ?user'
 	genre_query = 'SELECT ?user ?genre ?rating WHERE {?gr jt:genreRatingBelongsTo ?user; jt:forGenre ?genre; jt:avgGenreRating ?rating} ORDER BY ?user'
 	region_query= 'SELECT ?user ?region ?rating WHERE {?rr jt:regionRatingBelongsTo ?user; jt:forRegion ?region; jt:avgRegionRating ?rating} ORDER BY ?user'
@@ -66,9 +66,13 @@ def get_preference_values():
 	fill_tmp_dict(likes_genres, genre_results, 'genre')
 	fill_tmp_dict(likes_regions, region_results, 'region')
 	for userId in likes_directors:
-		sorted_directors = sorted(likes_directors.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
-		sorted_genres = sorted(likes_genres.get(userId).items(),key=operator.itemgetter(1),reverse=True)[:5]
-		sorted_regions = sorted(likes_regions.get(userId).items(),key=operator.itemgetter(1), reverse=True)[:5]
+		sorted_directors = sorted(likes_directors.get(userId).items(),key=operator.itemgetter(1),reverse=True)
+		sorted_genres = sorted(likes_genres.get(userId).items(),key=operator.itemgetter(1),reverse=True)
+		sorted_regions = sorted(likes_regions.get(userId).items(),key=operator.itemgetter(1), reverse=True)
+        if limit:
+            sorted_directors = sorted_directors[:5]
+            sorted_genres = sorted_directors[:5]
+            sorted_regions = sorted_regions[:5]
 		directors = []
 		genres = []
 		regions = []
@@ -129,7 +133,6 @@ def preencode():
 
 
 def filter_genres(_genres):
-	filter_genres.cnt += 1
 	toRemove = set()
 	if 'Detective' in _genres:
 		toRemove.add('PoliceMovie')
@@ -163,11 +166,8 @@ def filter_genres(_genres):
 	if 'MartialArts' in _genres:
 		toRemove.add('Action')
 	for entry in toRemove:
-		#with suppress(ValueError):
 		_genres.remove(entry)
-	if len(_genres)>5:
-		_genres = sorted(_genres, key=len, reverse=True)
-filter_genres.cnt = 0
+
 
 def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 	movie_info = []
@@ -180,11 +180,6 @@ def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 		genres = movie.get('genres')
 		if len(genres)> 5 and limit:
 			filter_genres(genres)
-			print(type(genres))
-			print(genres)
-			for genre in genres:
-				print(genre)
-			# exit(4)
 		traits = movie.get('traits')
 		if preEncoded:
 			movie_info.append(year_encoding_dict.get(year))
@@ -203,27 +198,12 @@ def get_movie_infos_for(id, preEncoded: bool, limit: bool):
 			movie_info.append(get_encoding_of(director_encoding_dict, director))
 			for region in regions:
 				movie_info.append(get_encoding_of(region_encoding_dict,region))
-			# print(genres)
 			for genre in genres:
-				# print(genre)
 				movie_info.append(get_encoding_of(genre_encoding_dict, genre))
 			for trait in traits:
 				if trait is not None:
 					movie_info.append(get_encoding_of(trait_encoding_dict, trait))
 		movie_arff_info_dict[id] = movie_info
-		
-		# print(genre_encoding_dict)
-		# print(director_encoding_dict)
-		# print(region_encoding_dict)
-		# for genre in genres:
-			# print(genre, get_encoding_of(genre_encoding_dict, genre))
-		# for region in regions:
-			# print(region, get_encoding_of(region_encoding_dict,region))
-		# for trait in traits:
-			# if trait is not None:
-				# print(get_encoding_of(trait_encoding_dict, trait))
-		# print(movie_info)
-		# exit(5)
 	return movie_arff_info_dict.get(id)
 
 def get_user_likes_for(id, preEncoded: bool, limit: bool):
@@ -407,8 +387,7 @@ def main():
 		else:
 			limit = False
 	print(mode, limit)
-	if limit:
-		get_preference_values()
+	get_preference_values(limit)
 	fill_dicts()
 	print('dicts filled')
 	if mode:
