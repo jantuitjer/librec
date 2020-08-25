@@ -8,9 +8,8 @@ SPARQL_ENDPOINT_UPDATE = 'http://localhost:3030/movielens-2k/update'
 SPARQL_ENDPOINT_UPDATE_GENRE = 'http://localhost:3030/movielens-2k-genre/update'
 SPARQL_ENDPOINT_UPDATE_DIRECTOR = 'http://localhost:3030/movielens-2k-director/update'
 SPARQL_ENDPOINT_UPDATE_REGION = 'http://localhost:3030/movielens-2k-region/update'
-
-
-
+SPARQL_USER = 'admin'
+SPARQL_PASSWORD = 'admin'
 rdfextras.registerplugins() 
 QUERY_HEADER = """
 prefix schema: <https://schema.org/place> 
@@ -160,7 +159,7 @@ def get_favorite_movie_for_user(userId):
 def expand_semantic():
 	endpoint = SPARQLWrapper(SPARQL_ENDPOINT_UPDATE)
 	endpoint.setHTTPAuth(BASIC)
-	endpoint.setCredentials('admin', 'admin')
+	endpoint.setCredentials(SPARQL_USER, SPARQL_PASSWORD)
 	endpoint.setMethod(POST)
 	endpoint.setReturnFormat(JSON)
 	insert_query = QUERY_HEADER.format('INSERT DATA{{{}}}')
@@ -169,13 +168,13 @@ def expand_semantic():
 	insert_favorite_genre(endpoint, insert_query)
 	print('done favoriteGenre')
 	insert_user_filmrating(endpoint, insert_query)
-	print('done filmratings')
+	print('done film ratings')
 	insert_user_genrerating(endpoint, insert_query)
-	print('done genreRatings')
+	print('done genre ratings')
 	insert_user_regionrating(endpoint, insert_query)
-	print('done regionRatings')
+	print('done region ratings')
 	insert_user_directorrating(endpoint, insert_query)
-	print('done directorRatings')
+	print('done director ratings')
 	print('done')
 
 
@@ -264,8 +263,6 @@ def read_ratings_file(dict):
 
 
 def main():
-	# dummy()
-	# exit(2)
 	load_all_movie_info()
 	read_ratings_file(user_rating_dict)
 	process_ratings()
