@@ -277,7 +277,7 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
             ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
             for (AbstractRecommender rec : recommenders) {
                 if(hybridConf.getBoolean("rec.rating.rank", true)) {
-                    recommendationLists.add(rec.recommendRating(getCommonTestDataSet()));
+                    recommendationLists.add(rec.recommendRating(rec.getDataModel().getTestDataSet()));
                 }else {
                     recommendationLists.add(rec.recommendRank());
                 }
