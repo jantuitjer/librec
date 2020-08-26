@@ -7,7 +7,7 @@ import json
 from datetime import date
 from datetime import datetime
 
-AMOUNT_OF_RAM='-Xmx16894m'
+AMOUNT_OF_RAM='-Xmx16394m'
 REC_LEN = 2
 RUN_CONFIG_FILE = ''
 HYBRID_JAR = 'hybrid_librec.jar'
