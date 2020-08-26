@@ -7,7 +7,7 @@ import json
 from datetime import date
 from datetime import datetime
 
-AMOUNT_OF_RAM='-Xmx30720m'
+AMOUNT_OF_RAM='-Xmx16894m'
 REC_LEN = 2
 RUN_CONFIG_FILE = ''
 HYBRID_JAR = 'hybrid_librec.jar'
@@ -38,9 +38,9 @@ def run_hybrid(mode, run_file):
 		output = process.stderr.decode()
 		print(output)
 		if (mode == True or mode == 1 or mode == 'true' or mode == 'True'):
-			output_file = open('results/ranking/' + conf_name +'-' + str(now) +  '.dat', 'w+')
+			output_file = open('results/semantic/' + conf_name +'-' + str(now) +  '.dat', 'w+')
 		else:
-			output_file = open('results/rating/' + conf_name +'-' + str(now) +  '.dat', 'w+')
+			output_file = open('results/semantic/' + conf_name +'-' + str(now) +  '.dat', 'w+')
 		output_file.write(output_header)
 		output_file.writelines(output)
 		output_file.close()
