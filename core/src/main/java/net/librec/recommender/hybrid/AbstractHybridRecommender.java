@@ -276,23 +276,24 @@ public abstract class AbstractHybridRecommender extends AbstractRecommender {
         }else {
             ArrayList<RecommendedList> recommendationLists = new ArrayList<>(recommenders.size());
             for (AbstractRecommender rec : recommenders) {
-                if(hybridConf.getBoolean("rec.rating.rank", true)) {
-                    recommendationLists.add(rec.recommendRating(rec.getDataModel().getTestDataSet()));
-                }else {
-                    recommendationLists.add(rec.recommendRank());
-                }
+//                if(hybridConf.getBoolean("rec.rating.rank", true)) {
+//                    recommendationLists.add(rec.recommendRating(rec.getDataModel().getTestDataSet()));
+//                }else {
+//                    recommendationLists.add(rec.recommendRank());
+//                }
+                recommendationLists.add(rec.recommendRank());
             }
-//            recommendedItemList = new RecommendedList(recommenders.get(0).getDataModel().getUserMappingData().size());
             recommendedItemList = recommendationLists.get(0);
             ArrayList<Iterator<ContextKeyValueEntry>> iterators = new ArrayList<>(recommendationLists.size());
             for (RecommendedList listy : recommendationLists) {
                 iterators.add(listy.iterator());
             }
-            if(hybridConf.getBoolean("rec.rating.rank", true)) {
-                combineRecommendedLists(iterators);
-            }else{
-                combineRecommendedListsRanking(iterators);
-            }
+//            if(hybridConf.getBoolean("rec.rating.rank", true)) {
+//                combineRecommendedLists(iterators);
+//            }else{
+//                combineRecommendedListsRanking(iterators);
+//            }
+            combineRecommendedListsRanking(iterators);
             recommendedItemList.topNRank(hybridConf.getInt("rec.recommender.ranking.topn", 10));
             return  recommendedItemList;
         }
