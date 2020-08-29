@@ -1,0 +1,306 @@
+Results of hybrid_librec.jar for starter_configs/semantic/ranking/user_item_mfat/hybrid_user_item_mfat151570.properties
+2020-08-29ranking: true
+weights = 0.15:0.15:0.70
+20/08/29 05:47:19 INFO TextDataConvertor: Dataset: [../data/movielens-2k/ratings-timestamps.txt]
+20/08/29 05:47:20 INFO TextDataConvertor: DataSet: ...movielens-2k/ratings-timestamps.txt is finished
+20/08/29 05:47:20 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/29 05:47:20 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/29 05:47:20 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/29 05:47:23 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/29 05:47:23 INFO TextDataConvertor: Dataset: [../data/movielens-2k/ratings-timestamps.txt]
+20/08/29 05:47:24 INFO TextDataConvertor: DataSet: ...movielens-2k/ratings-timestamps.txt is finished
+20/08/29 05:47:24 INFO TextDataConvertor: rating Scale: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+20/08/29 05:47:24 INFO TextDataConvertor: user number: 2113,	 item number is: 10109
+20/08/29 05:47:24 INFO TextDataModel: Transform data to Convertor successfully!
+20/08/29 05:47:26 INFO TextDataModel: Split data to train Set and test Set successfully!
+20/08/29 05:47:26 INFO ArffDataModel: Transform data to Convertor successfully!
+20/08/29 05:47:26 INFO ArffDataConvertor: Dataset: [../data/movielens-2k-arff-extended/records_semantic.arff]
+20/08/29 05:47:30 INFO ArffDataModel: Split data to train Set and test Set successfully!
+20/08/29 07:19:21 INFO UserKNNRecommender: Job Setup completed.
+20/08/29 07:19:24 INFO UserKNNRecommender: Job Train completed.
+20/08/29 07:19:24 INFO ItemKNNRecommender: Job Setup completed.
+20/08/29 07:19:47 INFO ItemKNNRecommender: Job Train completed.
+20/08/29 07:19:59 INFO TopicMFATRecommender: number of users : 2113
+20/08/29 07:19:59 INFO TopicMFATRecommender: number of Items : 10109
+20/08/29 07:19:59 INFO TopicMFATRecommender: number of words : 4189
+20/08/29 07:19:59 INFO TopicMFATRecommender: Job Setup completed.
+20/08/29 07:20:42 INFO TopicMFATRecommender:  iter:1, finish factors update
+20/08/29 07:20:42 INFO TopicMFATRecommender:  iter:1, finish theta update
+20/08/29 07:20:46 INFO TopicMFATRecommender:  iter:1, finish phi update
+20/08/29 07:20:46 INFO TopicMFATRecommender:  iter:1, loss:555881.1596279164, wordLoss:305580.72597124666
+20/08/29 07:21:40 INFO TopicMFATRecommender:  iter:2, finish factors update
+20/08/29 07:21:40 INFO TopicMFATRecommender:  iter:2, finish theta update
+20/08/29 07:21:44 INFO TopicMFATRecommender:  iter:2, finish phi update
+20/08/29 07:21:44 INFO TopicMFATRecommender:  iter:2, loss:473686.65682271804, wordLoss:243161.1014418498
+20/08/29 07:22:37 INFO TopicMFATRecommender:  iter:3, finish factors update
+20/08/29 07:22:38 INFO TopicMFATRecommender:  iter:3, finish theta update
+20/08/29 07:22:42 INFO TopicMFATRecommender:  iter:3, finish phi update
+20/08/29 07:22:42 INFO TopicMFATRecommender:  iter:3, loss:468646.89955567004, wordLoss:243161.1119110672
+20/08/29 07:23:35 INFO TopicMFATRecommender:  iter:4, finish factors update
+20/08/29 07:23:36 INFO TopicMFATRecommender:  iter:4, finish theta update
+20/08/29 07:23:40 INFO TopicMFATRecommender:  iter:4, finish phi update
+20/08/29 07:23:40 INFO TopicMFATRecommender:  iter:4, loss:466192.37354757596, wordLoss:243161.12624872327
+20/08/29 07:24:33 INFO TopicMFATRecommender:  iter:5, finish factors update
+20/08/29 07:24:34 INFO TopicMFATRecommender:  iter:5, finish theta update
+20/08/29 07:24:38 INFO TopicMFATRecommender:  iter:5, finish phi update
+20/08/29 07:24:38 INFO TopicMFATRecommender:  iter:5, loss:464613.52829348936, wordLoss:243161.13616597076
+20/08/29 07:25:31 INFO TopicMFATRecommender:  iter:6, finish factors update
+20/08/29 07:25:32 INFO TopicMFATRecommender:  iter:6, finish theta update
+20/08/29 07:25:36 INFO TopicMFATRecommender:  iter:6, finish phi update
+20/08/29 07:25:36 INFO TopicMFATRecommender:  iter:6, loss:462964.70717756986, wordLoss:243161.12805108348
+20/08/29 07:26:29 INFO TopicMFATRecommender:  iter:7, finish factors update
+20/08/29 07:26:29 INFO TopicMFATRecommender:  iter:7, finish theta update
+20/08/29 07:26:34 INFO TopicMFATRecommender:  iter:7, finish phi update
+20/08/29 07:26:34 INFO TopicMFATRecommender:  iter:7, loss:459744.62095171504, wordLoss:243161.11035355605
+20/08/29 07:27:27 INFO TopicMFATRecommender:  iter:8, finish factors update
+20/08/29 07:27:28 INFO TopicMFATRecommender:  iter:8, finish theta update
+20/08/29 07:27:32 INFO TopicMFATRecommender:  iter:8, finish phi update
+20/08/29 07:27:32 INFO TopicMFATRecommender:  iter:8, loss:454109.6005243517, wordLoss:243161.09562395033
+20/08/29 07:28:25 INFO TopicMFATRecommender:  iter:9, finish factors update
+20/08/29 07:28:26 INFO TopicMFATRecommender:  iter:9, finish theta update
+20/08/29 07:28:30 INFO TopicMFATRecommender:  iter:9, finish phi update
+20/08/29 07:28:30 INFO TopicMFATRecommender:  iter:9, loss:448112.942639677, wordLoss:243161.60377837275
+20/08/29 07:29:24 INFO TopicMFATRecommender:  iter:10, finish factors update
+20/08/29 07:29:24 INFO TopicMFATRecommender:  iter:10, finish theta update
+20/08/29 07:29:29 INFO TopicMFATRecommender:  iter:10, finish phi update
+20/08/29 07:29:29 INFO TopicMFATRecommender:  iter:10, loss:442571.527954867, wordLoss:243163.74348153974
+20/08/29 07:29:29 INFO TopicMFATRecommender: Job Train completed.
+20/08/29 07:29:29 INFO UserKNNRecommender: begin recommend
+20/08/29 07:29:34 INFO UserKNNRecommender: end recommend
+20/08/29 07:29:34 INFO ItemKNNRecommender: begin recommend
+20/08/29 07:29:46 INFO ItemKNNRecommender: end recommend
+20/08/29 07:30:11 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3682915286322776
+20/08/29 07:30:11 INFO RecommenderJob: Evaluator value:Entropy top 10 is 30.505325413515177
+20/08/29 07:30:11 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.06507499198570005
+20/08/29 09:11:21 INFO UserKNNRecommender: Job Setup completed.
+20/08/29 09:11:23 INFO UserKNNRecommender: Job Train completed.
+20/08/29 09:11:24 INFO ItemKNNRecommender: Job Setup completed.
+20/08/29 09:11:45 INFO ItemKNNRecommender: Job Train completed.
+20/08/29 09:11:58 INFO TopicMFATRecommender: number of users : 2113
+20/08/29 09:11:58 INFO TopicMFATRecommender: number of Items : 10109
+20/08/29 09:11:58 INFO TopicMFATRecommender: number of words : 4192
+20/08/29 09:11:58 INFO TopicMFATRecommender: Job Setup completed.
+20/08/29 09:12:51 INFO TopicMFATRecommender:  iter:1, finish factors update
+20/08/29 09:12:51 INFO TopicMFATRecommender:  iter:1, finish theta update
+20/08/29 09:12:56 INFO TopicMFATRecommender:  iter:1, finish phi update
+20/08/29 09:12:56 INFO TopicMFATRecommender:  iter:1, loss:554779.0447003847, wordLoss:304750.525365147
+20/08/29 09:13:49 INFO TopicMFATRecommender:  iter:2, finish factors update
+20/08/29 09:13:49 INFO TopicMFATRecommender:  iter:2, finish theta update
+20/08/29 09:13:54 INFO TopicMFATRecommender:  iter:2, finish phi update
+20/08/29 09:13:54 INFO TopicMFATRecommender:  iter:2, loss:473489.9762608912, wordLoss:243168.152708903
+20/08/29 09:14:47 INFO TopicMFATRecommender:  iter:3, finish factors update
+20/08/29 09:14:47 INFO TopicMFATRecommender:  iter:3, finish theta update
+20/08/29 09:14:53 INFO TopicMFATRecommender:  iter:3, finish phi update
+20/08/29 09:14:53 INFO TopicMFATRecommender:  iter:3, loss:468424.62844503205, wordLoss:243168.14885460926
+20/08/29 09:15:45 INFO TopicMFATRecommender:  iter:4, finish factors update
+20/08/29 09:15:46 INFO TopicMFATRecommender:  iter:4, finish theta update
+20/08/29 09:15:51 INFO TopicMFATRecommender:  iter:4, finish phi update
+20/08/29 09:15:51 INFO TopicMFATRecommender:  iter:4, loss:465929.5985604436, wordLoss:243168.15444401078
+20/08/29 09:16:44 INFO TopicMFATRecommender:  iter:5, finish factors update
+20/08/29 09:16:44 INFO TopicMFATRecommender:  iter:5, finish theta update
+20/08/29 09:16:49 INFO TopicMFATRecommender:  iter:5, finish phi update
+20/08/29 09:16:49 INFO TopicMFATRecommender:  iter:5, loss:464203.3926628653, wordLoss:243168.1938813921
+20/08/29 09:17:42 INFO TopicMFATRecommender:  iter:6, finish factors update
+20/08/29 09:17:42 INFO TopicMFATRecommender:  iter:6, finish theta update
+20/08/29 09:17:47 INFO TopicMFATRecommender:  iter:6, finish phi update
+20/08/29 09:17:47 INFO TopicMFATRecommender:  iter:6, loss:461961.99652587756, wordLoss:243168.3739147252
+20/08/29 09:18:40 INFO TopicMFATRecommender:  iter:7, finish factors update
+20/08/29 09:18:40 INFO TopicMFATRecommender:  iter:7, finish theta update
+20/08/29 09:18:45 INFO TopicMFATRecommender:  iter:7, finish phi update
+20/08/29 09:18:45 INFO TopicMFATRecommender:  iter:7, loss:457600.9161317309, wordLoss:243169.036341135
+20/08/29 09:19:38 INFO TopicMFATRecommender:  iter:8, finish factors update
+20/08/29 09:19:38 INFO TopicMFATRecommender:  iter:8, finish theta update
+20/08/29 09:19:44 INFO TopicMFATRecommender:  iter:8, finish phi update
+20/08/29 09:19:44 INFO TopicMFATRecommender:  iter:8, loss:452069.75125083176, wordLoss:243170.7668560915
+20/08/29 09:20:36 INFO TopicMFATRecommender:  iter:9, finish factors update
+20/08/29 09:20:37 INFO TopicMFATRecommender:  iter:9, finish theta update
+20/08/29 09:20:42 INFO TopicMFATRecommender:  iter:9, finish phi update
+20/08/29 09:20:42 INFO TopicMFATRecommender:  iter:9, loss:447058.83416198776, wordLoss:243172.11082967982
+20/08/29 09:21:35 INFO TopicMFATRecommender:  iter:10, finish factors update
+20/08/29 09:21:35 INFO TopicMFATRecommender:  iter:10, finish theta update
+20/08/29 09:21:40 INFO TopicMFATRecommender:  iter:10, finish phi update
+20/08/29 09:21:40 INFO TopicMFATRecommender:  iter:10, loss:442034.68039981375, wordLoss:243170.29828196677
+20/08/29 09:21:40 INFO TopicMFATRecommender: Job Train completed.
+20/08/29 09:21:40 INFO UserKNNRecommender: begin recommend
+20/08/29 09:21:44 INFO UserKNNRecommender: end recommend
+20/08/29 09:21:44 INFO ItemKNNRecommender: begin recommend
+20/08/29 09:21:59 INFO ItemKNNRecommender: end recommend
+20/08/29 09:22:23 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.36627190904784596
+20/08/29 09:22:23 INFO RecommenderJob: Evaluator value:Entropy top 10 is 30.080059387236485
+20/08/29 09:22:23 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.061640972285466625
+20/08/29 11:03:21 INFO UserKNNRecommender: Job Setup completed.
+20/08/29 11:03:23 INFO UserKNNRecommender: Job Train completed.
+20/08/29 11:03:23 INFO ItemKNNRecommender: Job Setup completed.
+20/08/29 11:03:45 INFO ItemKNNRecommender: Job Train completed.
+20/08/29 11:03:58 INFO TopicMFATRecommender: number of users : 2113
+20/08/29 11:03:58 INFO TopicMFATRecommender: number of Items : 10109
+20/08/29 11:03:58 INFO TopicMFATRecommender: number of words : 4190
+20/08/29 11:03:58 INFO TopicMFATRecommender: Job Setup completed.
+20/08/29 11:04:34 INFO TopicMFATRecommender:  iter:1, finish factors update
+20/08/29 11:04:34 INFO TopicMFATRecommender:  iter:1, finish theta update
+20/08/29 11:04:39 INFO TopicMFATRecommender:  iter:1, finish phi update
+20/08/29 11:04:39 INFO TopicMFATRecommender:  iter:1, loss:556684.7031165382, wordLoss:305838.8579259089
+20/08/29 11:05:15 INFO TopicMFATRecommender:  iter:2, finish factors update
+20/08/29 11:05:15 INFO TopicMFATRecommender:  iter:2, finish theta update
+20/08/29 11:05:20 INFO TopicMFATRecommender:  iter:2, finish phi update
+20/08/29 11:05:20 INFO TopicMFATRecommender:  iter:2, loss:474256.6612237452, wordLoss:243153.7056486796
+20/08/29 11:05:56 INFO TopicMFATRecommender:  iter:3, finish factors update
+20/08/29 11:05:56 INFO TopicMFATRecommender:  iter:3, finish theta update
+20/08/29 11:06:01 INFO TopicMFATRecommender:  iter:3, finish phi update
+20/08/29 11:06:01 INFO TopicMFATRecommender:  iter:3, loss:469196.49275863287, wordLoss:243153.70128828994
+20/08/29 11:06:37 INFO TopicMFATRecommender:  iter:4, finish factors update
+20/08/29 11:06:37 INFO TopicMFATRecommender:  iter:4, finish theta update
+20/08/29 11:06:41 INFO TopicMFATRecommender:  iter:4, finish phi update
+20/08/29 11:06:41 INFO TopicMFATRecommender:  iter:4, loss:466712.4073689325, wordLoss:243153.70106943807
+20/08/29 11:07:18 INFO TopicMFATRecommender:  iter:5, finish factors update
+20/08/29 11:07:18 INFO TopicMFATRecommender:  iter:5, finish theta update
+20/08/29 11:07:22 INFO TopicMFATRecommender:  iter:5, finish phi update
+20/08/29 11:07:22 INFO TopicMFATRecommender:  iter:5, loss:465088.90015744243, wordLoss:243153.69738753064
+20/08/29 11:07:58 INFO TopicMFATRecommender:  iter:6, finish factors update
+20/08/29 11:07:58 INFO TopicMFATRecommender:  iter:6, finish theta update
+20/08/29 11:08:03 INFO TopicMFATRecommender:  iter:6, finish phi update
+20/08/29 11:08:03 INFO TopicMFATRecommender:  iter:6, loss:463299.12659246963, wordLoss:243153.68564627357
+20/08/29 11:08:39 INFO TopicMFATRecommender:  iter:7, finish factors update
+20/08/29 11:08:39 INFO TopicMFATRecommender:  iter:7, finish theta update
+20/08/29 11:08:43 INFO TopicMFATRecommender:  iter:7, finish phi update
+20/08/29 11:08:43 INFO TopicMFATRecommender:  iter:7, loss:459752.4375474218, wordLoss:243153.5584429622
+20/08/29 11:09:20 INFO TopicMFATRecommender:  iter:8, finish factors update
+20/08/29 11:09:20 INFO TopicMFATRecommender:  iter:8, finish theta update
+20/08/29 11:09:24 INFO TopicMFATRecommender:  iter:8, finish phi update
+20/08/29 11:09:24 INFO TopicMFATRecommender:  iter:8, loss:454107.08424912917, wordLoss:243153.26876609106
+20/08/29 11:10:01 INFO TopicMFATRecommender:  iter:9, finish factors update
+20/08/29 11:10:01 INFO TopicMFATRecommender:  iter:9, finish theta update
+20/08/29 11:10:05 INFO TopicMFATRecommender:  iter:9, finish phi update
+20/08/29 11:10:05 INFO TopicMFATRecommender:  iter:9, loss:448583.60012248106, wordLoss:243152.88750568204
+20/08/29 11:10:41 INFO TopicMFATRecommender:  iter:10, finish factors update
+20/08/29 11:10:42 INFO TopicMFATRecommender:  iter:10, finish theta update
+20/08/29 11:10:46 INFO TopicMFATRecommender:  iter:10, finish phi update
+20/08/29 11:10:46 INFO TopicMFATRecommender:  iter:10, loss:443573.6138482229, wordLoss:243152.28927226472
+20/08/29 11:10:46 INFO TopicMFATRecommender: Job Train completed.
+20/08/29 11:10:46 INFO UserKNNRecommender: begin recommend
+20/08/29 11:10:51 INFO UserKNNRecommender: end recommend
+20/08/29 11:10:51 INFO ItemKNNRecommender: begin recommend
+20/08/29 11:11:05 INFO ItemKNNRecommender: end recommend
+20/08/29 11:11:27 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3698390151515171
+20/08/29 11:11:27 INFO RecommenderJob: Evaluator value:Entropy top 10 is 30.837434468596136
+20/08/29 11:11:27 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.06483181562561549
+20/08/29 12:52:23 INFO UserKNNRecommender: Job Setup completed.
+20/08/29 12:52:25 INFO UserKNNRecommender: Job Train completed.
+20/08/29 12:52:25 INFO ItemKNNRecommender: Job Setup completed.
+20/08/29 12:52:47 INFO ItemKNNRecommender: Job Train completed.
+20/08/29 12:52:59 INFO TopicMFATRecommender: number of users : 2113
+20/08/29 12:52:59 INFO TopicMFATRecommender: number of Items : 10109
+20/08/29 12:52:59 INFO TopicMFATRecommender: number of words : 4184
+20/08/29 12:52:59 INFO TopicMFATRecommender: Job Setup completed.
+20/08/29 12:53:35 INFO TopicMFATRecommender:  iter:1, finish factors update
+20/08/29 12:53:36 INFO TopicMFATRecommender:  iter:1, finish theta update
+20/08/29 12:53:41 INFO TopicMFATRecommender:  iter:1, finish phi update
+20/08/29 12:53:41 INFO TopicMFATRecommender:  iter:1, loss:555060.6448737702, wordLoss:305214.9204926916
+20/08/29 12:54:17 INFO TopicMFATRecommender:  iter:2, finish factors update
+20/08/29 12:54:17 INFO TopicMFATRecommender:  iter:2, finish theta update
+20/08/29 12:54:23 INFO TopicMFATRecommender:  iter:2, finish phi update
+20/08/29 12:54:23 INFO TopicMFATRecommender:  iter:2, loss:473280.8848854309, wordLoss:243173.2092935915
+20/08/29 12:54:59 INFO TopicMFATRecommender:  iter:3, finish factors update
+20/08/29 12:54:59 INFO TopicMFATRecommender:  iter:3, finish theta update
+20/08/29 12:55:04 INFO TopicMFATRecommender:  iter:3, finish phi update
+20/08/29 12:55:04 INFO TopicMFATRecommender:  iter:3, loss:468240.7959338179, wordLoss:243173.21265273524
+20/08/29 12:55:40 INFO TopicMFATRecommender:  iter:4, finish factors update
+20/08/29 12:55:40 INFO TopicMFATRecommender:  iter:4, finish theta update
+20/08/29 12:55:46 INFO TopicMFATRecommender:  iter:4, finish phi update
+20/08/29 12:55:46 INFO TopicMFATRecommender:  iter:4, loss:465772.20254097, wordLoss:243173.21267174667
+20/08/29 12:56:22 INFO TopicMFATRecommender:  iter:5, finish factors update
+20/08/29 12:56:22 INFO TopicMFATRecommender:  iter:5, finish theta update
+20/08/29 12:56:27 INFO TopicMFATRecommender:  iter:5, finish phi update
+20/08/29 12:56:27 INFO TopicMFATRecommender:  iter:5, loss:464096.9101754849, wordLoss:243173.2043282042
+20/08/29 12:57:03 INFO TopicMFATRecommender:  iter:6, finish factors update
+20/08/29 12:57:04 INFO TopicMFATRecommender:  iter:6, finish theta update
+20/08/29 12:57:09 INFO TopicMFATRecommender:  iter:6, finish phi update
+20/08/29 12:57:09 INFO TopicMFATRecommender:  iter:6, loss:461999.90655058343, wordLoss:243173.17153355712
+20/08/29 12:57:45 INFO TopicMFATRecommender:  iter:7, finish factors update
+20/08/29 12:57:45 INFO TopicMFATRecommender:  iter:7, finish theta update
+20/08/29 12:57:51 INFO TopicMFATRecommender:  iter:7, finish phi update
+20/08/29 12:57:51 INFO TopicMFATRecommender:  iter:7, loss:457784.85510034487, wordLoss:243173.1135761394
+20/08/29 12:58:26 INFO TopicMFATRecommender:  iter:8, finish factors update
+20/08/29 12:58:27 INFO TopicMFATRecommender:  iter:8, finish theta update
+20/08/29 12:58:32 INFO TopicMFATRecommender:  iter:8, finish phi update
+20/08/29 12:58:32 INFO TopicMFATRecommender:  iter:8, loss:451990.2083564225, wordLoss:243172.94589822815
+20/08/29 12:59:08 INFO TopicMFATRecommender:  iter:9, finish factors update
+20/08/29 12:59:08 INFO TopicMFATRecommender:  iter:9, finish theta update
+20/08/29 12:59:14 INFO TopicMFATRecommender:  iter:9, finish phi update
+20/08/29 12:59:14 INFO TopicMFATRecommender:  iter:9, loss:446783.98369281646, wordLoss:243172.49838763708
+20/08/29 12:59:50 INFO TopicMFATRecommender:  iter:10, finish factors update
+20/08/29 12:59:50 INFO TopicMFATRecommender:  iter:10, finish theta update
+20/08/29 12:59:55 INFO TopicMFATRecommender:  iter:10, finish phi update
+20/08/29 12:59:55 INFO TopicMFATRecommender:  iter:10, loss:442085.67733098625, wordLoss:243170.60949748667
+20/08/29 12:59:55 INFO TopicMFATRecommender: Job Train completed.
+20/08/29 12:59:55 INFO UserKNNRecommender: begin recommend
+20/08/29 13:00:00 INFO UserKNNRecommender: end recommend
+20/08/29 13:00:00 INFO ItemKNNRecommender: begin recommend
+20/08/29 13:00:12 INFO ItemKNNRecommender: end recommend
+20/08/29 13:00:37 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.37373402744912565
+20/08/29 13:00:37 INFO RecommenderJob: Evaluator value:Entropy top 10 is 30.402212218667675
+20/08/29 13:00:37 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.06418252330905677
+20/08/29 14:44:47 INFO UserKNNRecommender: Job Setup completed.
+20/08/29 14:44:50 INFO UserKNNRecommender: Job Train completed.
+20/08/29 14:44:50 INFO ItemKNNRecommender: Job Setup completed.
+20/08/29 14:45:11 INFO ItemKNNRecommender: Job Train completed.
+20/08/29 14:45:24 INFO TopicMFATRecommender: number of users : 2113
+20/08/29 14:45:24 INFO TopicMFATRecommender: number of Items : 10109
+20/08/29 14:45:24 INFO TopicMFATRecommender: number of words : 4188
+20/08/29 14:45:24 INFO TopicMFATRecommender: Job Setup completed.
+20/08/29 14:46:01 INFO TopicMFATRecommender:  iter:1, finish factors update
+20/08/29 14:46:01 INFO TopicMFATRecommender:  iter:1, finish theta update
+20/08/29 14:46:05 INFO TopicMFATRecommender:  iter:1, finish phi update
+20/08/29 14:46:05 INFO TopicMFATRecommender:  iter:1, loss:556401.8262430552, wordLoss:305665.0770352711
+20/08/29 14:46:41 INFO TopicMFATRecommender:  iter:2, finish factors update
+20/08/29 14:46:41 INFO TopicMFATRecommender:  iter:2, finish theta update
+20/08/29 14:46:45 INFO TopicMFATRecommender:  iter:2, finish phi update
+20/08/29 14:46:45 INFO TopicMFATRecommender:  iter:2, loss:474163.13175976573, wordLoss:243169.17861317686
+20/08/29 14:47:22 INFO TopicMFATRecommender:  iter:3, finish factors update
+20/08/29 14:47:22 INFO TopicMFATRecommender:  iter:3, finish theta update
+20/08/29 14:47:26 INFO TopicMFATRecommender:  iter:3, finish phi update
+20/08/29 14:47:26 INFO TopicMFATRecommender:  iter:3, loss:469108.3620341986, wordLoss:243169.17298250567
+20/08/29 14:48:02 INFO TopicMFATRecommender:  iter:4, finish factors update
+20/08/29 14:48:02 INFO TopicMFATRecommender:  iter:4, finish theta update
+20/08/29 14:48:06 INFO TopicMFATRecommender:  iter:4, finish phi update
+20/08/29 14:48:06 INFO TopicMFATRecommender:  iter:4, loss:466645.61987333, wordLoss:243169.1645275192
+20/08/29 14:48:43 INFO TopicMFATRecommender:  iter:5, finish factors update
+20/08/29 14:48:43 INFO TopicMFATRecommender:  iter:5, finish theta update
+20/08/29 14:48:47 INFO TopicMFATRecommender:  iter:5, finish phi update
+20/08/29 14:48:47 INFO TopicMFATRecommender:  iter:5, loss:465045.2045036022, wordLoss:243169.1305315459
+20/08/29 14:49:23 INFO TopicMFATRecommender:  iter:6, finish factors update
+20/08/29 14:49:23 INFO TopicMFATRecommender:  iter:6, finish theta update
+20/08/29 14:49:28 INFO TopicMFATRecommender:  iter:6, finish phi update
+20/08/29 14:49:28 INFO TopicMFATRecommender:  iter:6, loss:463302.66698318813, wordLoss:243168.98442227292
+20/08/29 14:50:04 INFO TopicMFATRecommender:  iter:7, finish factors update
+20/08/29 14:50:04 INFO TopicMFATRecommender:  iter:7, finish theta update
+20/08/29 14:50:08 INFO TopicMFATRecommender:  iter:7, finish phi update
+20/08/29 14:50:08 INFO TopicMFATRecommender:  iter:7, loss:459894.50595912186, wordLoss:243168.53737724075
+20/08/29 14:50:44 INFO TopicMFATRecommender:  iter:8, finish factors update
+20/08/29 14:50:44 INFO TopicMFATRecommender:  iter:8, finish theta update
+20/08/29 14:50:49 INFO TopicMFATRecommender:  iter:8, finish phi update
+20/08/29 14:50:49 INFO TopicMFATRecommender:  iter:8, loss:454495.1897398577, wordLoss:243167.45324098278
+20/08/29 14:51:25 INFO TopicMFATRecommender:  iter:9, finish factors update
+20/08/29 14:51:25 INFO TopicMFATRecommender:  iter:9, finish theta update
+20/08/29 14:51:29 INFO TopicMFATRecommender:  iter:9, finish phi update
+20/08/29 14:51:29 INFO TopicMFATRecommender:  iter:9, loss:449184.4705262365, wordLoss:243165.53822581042
+20/08/29 14:52:05 INFO TopicMFATRecommender:  iter:10, finish factors update
+20/08/29 14:52:06 INFO TopicMFATRecommender:  iter:10, finish theta update
+20/08/29 14:52:10 INFO TopicMFATRecommender:  iter:10, finish phi update
+20/08/29 14:52:10 INFO TopicMFATRecommender:  iter:10, loss:444109.0587257335, wordLoss:243162.49739448813
+20/08/29 14:52:10 INFO TopicMFATRecommender: Job Train completed.
+20/08/29 14:52:10 INFO UserKNNRecommender: begin recommend
+20/08/29 14:52:15 INFO UserKNNRecommender: end recommend
+20/08/29 14:52:15 INFO ItemKNNRecommender: begin recommend
+20/08/29 14:52:30 INFO ItemKNNRecommender: end recommend
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.37345007098911615
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:Entropy top 10 is 29.7142770987641
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.063986184268684
+20/08/29 14:52:53 INFO RecommenderJob: Average Evaluation Result of Cross Validation:
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:Entropy top 10 is 30.307861717355912
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:RECALL top 10 is 0.06394329749490457
+20/08/29 14:52:53 INFO RecommenderJob: Evaluator value:PRECISION top 10 is 0.3703173102539765
+20/08/29 14:52:53 INFO UserKNNRecommender: begin recommend
+20/08/29 14:52:58 INFO UserKNNRecommender: end recommend
+20/08/29 14:52:58 INFO ItemKNNRecommender: begin recommend
+20/08/29 14:53:14 INFO ItemKNNRecommender: end recommend
