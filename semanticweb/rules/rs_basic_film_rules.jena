@@ -1,0 +1,59 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbc: <http://dbpedia.org/resource/Category:> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://dublincore.org/documents/2012/06/14/dcmi-terms/> .
+@prefix schema: <https://schema.org/place> .
+@prefix jt: <http://schema.example.org/> .
+@prefix xsd: <https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes> .
+@prefix movie:  <http://movie.example.org/>.
+@prefix user:  <http://user.example.org/>.
+@prefix director:  <http://director.example.org/>.
+@prefix country:  <http://country.example.org/>.
+@prefix genre:  <http://genre.example.org/>.
+@prefix region:  <http://region.example.org/>.
+@prefix fr:  <http://filmrating.example.org/>.
+@prefix dr:  <http://directorrating.example.org/>.
+@prefix rr:  <http://regionrating.example.org/>.
+@prefix gr:  <http://genrerating.example.org/>.
+@prefix ex:  <http://example.org/>.
+
+[film_region_basis: (?m schema:countryOfOrigin ?c) (?c jt:partOf ?r) -> (?m jt:createdInRegion ?r)]
+
+[film_region_ex: (?m jt:createdInRegion ?subR) (?subR jt:subRegionOf ?r) ->(?m jt:createdInRegion ?r) ]
+
+[film_rule1: (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) greaterThan(?av, 4.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:PopularFilm)]
+
+[film_rule2: (?m jt:avgRating ?av) (?m jt:numberOfRatings ?nr) lessThan(?av, 2.0) greaterThan(?nr, 1000) -> (?m rdf:type jt:UnpopularFilm)]
+
+[film_rule3: (?m schema:datePublished ?y) lessThan(?y, 2000) (?m jt:avgRating ?av) greaterThan(?av, 3.5) -> (?m jt:movieTrait 'classic')]
+
+[film_rule4: (?m jt:avgRating ?ar) greaterThan(?ar, 4.0) (?m jt:numberOfRatings ?nr) lessThan(?nr, 100) -> (?m jt:movieTrait 'hidden gem')]
+
+[film_genre_rule1: (?m jt:ofGenre genre:Action) (?m jt:ofGenre genre:Comedy) -> (?m jt:ofGenre genre:ActionComedy)]
+
+[film_genre_rule2: (?m jt:ofGenre genre:Children) (?m jt:ofGenre genre:Animation) -> (?m jt:ofGenre genre:ChildrenAnimation)]
+
+[film_genre_rule3: (?m jt:ofGenre genre:Action) (?m jt:ofGenre genre:Thriller) -> (?m jt:ofGenre genre:ActionThriller)]
+
+[film_genre_rule4: (?m jt:ofGenre genre:Romance) (?m jt:ofGenre genre:Comedy) -> (?m jt:ofGenre genre:RomCom)]
+
+[film_genre_rule5: (?m jt:ofGenre genre:Crime) (?m jt:ofGenre genre:Action) -> (?m jt:ofGenre genre:PoliceMovie)]
+
+[film_genre_rule6: (?m jt:ofGenre genre:Crime) (?m jt:ofGenre genre:Thriller) -> (?m jt:ofGenre genre:PoliceMovie)]
+
+[film_genre_rule7: (?m jt:ofGenre genre:PoliceMovie) (?m jt:ofGenre genre:Film-Noir) -> (?m jt:ofGenre genre:Detective)]
+
+[film_genre_rule8: (?m jt:ofGenre genre:Fantasy) (?m jt:ofGenre genre:Horror) -> (?m jt:ofGenre genre:Supernatural)]
+
+[film_genre_rule9: (?m jt:ofGenre genre:Sci-Fi) (?m jt:ofGenre genre:Adventure) -> (?m jt:ofGenre genre:SpaceOpera)]
+
+[film_genre_rule10: (?m jt:ofGenre genre:Comedy) (?m jt:createdInRegion region:Asia) -> (?m jt:ofGenre genre:AsianComedy)]
+
+[film_genre_rule11: (?m jt:ofGenre genre:Action) (?m jt:createdInRegion region:Asia) -> (?m jt:ofGenre genre:MartialArts)]
+
+[film_genre_rule12: (?m jt:ofGenre genre:Musical) (?m jt:countryOfOrigin country:India) -> (?m jt:ofGenre genre:Bollywood)]
+
+[film_genre_rule11: (?m jt:ofGenre genre:Darama) (?m jt:countryOfOrigin country:France) (?m jt:numberOfRatings ?num) lessThan(?num, 200) -> (?m jt:ofGenre genre:ArtHouse)]
